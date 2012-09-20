@@ -1,0 +1,53 @@
+{
+	"route" : {
+		
+		"/site/" : {			
+			"hostname"					: {
+					"dev"		: "www2-u.storebrand.no",
+					"test"	: "www2-t.storebrand.no"
+				},
+			"port"					: 443,
+			"method"				: "GET",
+			"contentType"		: false,
+			"protocol"			: "https",
+			"headers"				: false
+			
+		},
+		"/rest-api/" : {			
+			"hostname"					: {
+					"dev"		: "www2-u.storebrand.no",
+					"test"	: "www2-ts.storebrand.no"
+				},
+			"port"					: 443,
+			"method"				: "GET",
+			"contentType"		: "application/json",
+			"protocol"			: "https",
+			"headers"				: false
+
+		},
+		"/fpi/" : {			
+			"hostname"					: {
+					"dev"		: "www2-u.storebrand.no",
+					"test"	: "www2-ts.storebrand.no"
+				},
+			"port"					: 443,
+			"method"				: "GET",
+			"contentType"		: false,
+			"protocol"			: "https",
+			"headers"				: false
+		},
+		"/prognosis-rest-api/" : {			
+			"hostname"					: {
+					"dev"		: "http://alt-stb-002.stb.local",
+					"test"	: "www2-ts.storebrand.no"
+				},
+			"port"					: 12010,
+			"method"				: "GET",
+			"contentType"		: "application/json",
+			"protocol"			: "http",
+			"headers"				: {
+				"SM_USERDN"	: 10118339156
+			}
+		}
+	}
+}
