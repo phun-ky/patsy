@@ -2,15 +2,26 @@ lag en githubkonto hvis du ikke har
 
 bli lagt til phun-ky/stage repo'en
 
-installer git (command line)
+installer git (command line)  msysgit!!
 
-clone repositoriet
+clone repositoriet i en mappe som har samme forelder som prosjektet du jobber i
 
-installer node globalt
+Har du problemer med nøkler, lag egne nøkler! https://help.github.com/articles/generating-ssh-keys
 
-installer grunt@devel globalt
+installer node, siste versjon >= 0.9.2 
 
-endre evt filepaths i Gruntfile.js
+Go to: C:\Users\YourUserName
+Create a file named .npmrc
+
+Legg til: 
+
+registry = http://registry.npmjs.org
+
+Lagre
+
+installer grunt@devel -g
+
+endre evt filepaths i Gruntfile.js ( fra ../fpi-client/ til <ditt prosjekt navn, der mustachefilene ligger)
 
 kjør grunt --force fra stage mappen
 
