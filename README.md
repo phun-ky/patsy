@@ -2,6 +2,7 @@ lag en githubkonto hvis du ikke har
 
 bli lagt til phun-ky/stage repo'en
 
+
 installer git (command line)  msysgit!!
 
 clone repositoriet i en mappe som har samme forelder som prosjektet du jobber i
@@ -25,7 +26,10 @@ endre evt filepaths i Gruntfile.js ( fra ../fpi-client/ til <ditt prosjekt navn,
 
 kjør grunt --force fra stage mappen
 
-da vil alle .mustachefilene bli overvåket og bakt til template.js-filen 
 
-dette systemet "stage", kan settes opp til å route til restapi, bake/minifisere less-filer (css) , bake/minifisere javascriptfiler
+kjï¿½r grunt --force fra stage mappen
+
+da vil alle .mustachefilene bli overvï¿½ket og bakt til template.js-filen 
+
+dette systemet "stage", kan settes opp til ï¿½ route til restapi, bake/minifisere less-filer (css) , bake/minifisere javascriptfiler
 
