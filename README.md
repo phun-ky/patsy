@@ -3,20 +3,20 @@ DOWNLOAD THIS PROJECT
 
 1. Download this project and put it into the same root folder as all your projects, like this:
 
-	C:\Users\QE1\Workspace\Storebrand>dir
-	 Volumet i stasjon C er System
-	 Volumserienummeret er DC1C-6C6E
+```C:\Users\QE1\Workspace\Storebrand>dir
+Volumet i stasjon C er System
+Volumserienummeret er DC1C-6C6E
 
-	 Innhold i C:\Users\QE1\Workspace\Storebrand
+Innhold i C:\Users\QE1\Workspace\Storebrand
 
-	18.09.2012  14:42    <DIR>          .
-	18.09.2012  14:42    <DIR>          ..
-	02.10.2012  09:00    <DIR>          fpi-client
-	03.10.2012  08:44    <DIR>          stage
-	               0 fil(er)                0 byte
-	               4 mappe(r)  70 398 836 736 byte ledig
+18.09.2012  14:42    <DIR>          .
+18.09.2012  14:42    <DIR>          ..
+02.10.2012  09:00    <DIR>          fpi-client
+03.10.2012  08:44    <DIR>          stage
+             0 fil(er)                0 byte
+             4 mappe(r)  70 398 836 736 byte ledig
 
-	C:\Users\QE1\Workspace\Storebrand>
+C:\Users\QE1\Workspace\Storebrand>```
 
 **THIS IS VERY IMPORTANT**
 
@@ -34,27 +34,27 @@ INSTALL GRUNT
 
 1. Open a command line window with administrator priviligies (use a user with superuser priviligies on Linux)
 2. Go to your home folder
-	In Windows:     C:\Users\YourUserName
+	In Windows:     `C:\Users\YourUserName`
 
-	In Linux:     cd ~/
+	In Linux:     `cd ~/`
 
 3. Create a file named .npmrc
-    touch .npmrc
+```touch .npmrc```
 
 4. Add: 
 
-	registry = http://registry.npmjs.org
+```registry = http://registry.npmjs.org```
 
 5. Save the file
 6. Go into your stage folder 
 6. Copy and paste this into your command line:
-    npm install grunt@devel -g
+```npm install grunt@devel -g```
 
 
 RUN BUILD SYSTEM
 ================
 
 1. Type this in your command line in your **stage** folder and follow the instructions
-    node start.js
+```node start.js```
 
 **All your mustache files will now be monitored and updated on change.**
