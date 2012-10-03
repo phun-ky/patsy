@@ -34,12 +34,12 @@ INSTALL GRUNT
 
 1. Open a command line window with administrator priviligies (use a user with superuser priviligies on Linux)
 2. Go to your home folder
-	In Windows: C:\Users\YourUserName
+	In Windows:     C:\Users\YourUserName
 
-	In Linux: cd ~/
+	In Linux:     cd ~/
 
 3. Create a file named .npmrc
-	touch .npmrc
+    touch .npmrc
 
 4. Add: 
 
@@ -48,13 +48,13 @@ INSTALL GRUNT
 5. Save the file
 6. Go into your stage folder 
 6. Copy and paste this into your command line:
-	npm install grunt@devel -g
+    npm install grunt@devel -g
 
 
 RUN BUILD SYSTEM
 ================
 
 1. Type this in your command line in your **stage** folder and follow the instructions
-	node start.js
+    node start.js
 
 **All your mustache files will now be monitored and updated on change.**
