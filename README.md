@@ -3,8 +3,8 @@ DOWNLOAD THIS PROJECT
 
 1. Download this project and put it into the same root folder as all your projects, like this:
 
-```fpi-client
-stage```
+* fpi-client
+* stage
              
 
 **THIS IS VERY IMPORTANT**
