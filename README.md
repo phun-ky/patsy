@@ -4,19 +4,12 @@ DOWNLOAD THIS PROJECT
 1. Download this project and put it into the same root folder as all your projects, like this:
 
 ```C:\Users\QE1\Workspace\Storebrand>dir
-Volumet i stasjon C er System
-Volumserienummeret er DC1C-6C6E
-
-Innhold i C:\Users\QE1\Workspace\Storebrand
 
 18.09.2012  14:42    <DIR>          .
 18.09.2012  14:42    <DIR>          ..
 02.10.2012  09:00    <DIR>          fpi-client
 03.10.2012  08:44    <DIR>          stage
-             0 fil(er)                0 byte
-             4 mappe(r)  70 398 836 736 byte ledig
-
-C:\Users\QE1\Workspace\Storebrand>```
+             ```
 
 **THIS IS VERY IMPORTANT**
 
