@@ -17,18 +17,20 @@ stdin.setEncoding('utf8');
 stdout.write("\n\nWhat project are you working on today?: ".yellow);
 
 
+
 function checkInput(chunk) {
   
   chunk = chunk.trim();
-  if(chunk == "development" || chunk == "test"){
+  /*if(chunk == "development" || chunk == "test"){
     loadStage(chunk);
-  } else if(checkProject(chunk)){
+  } else */
+  if(checkProject(chunk)){
     util.puts('1. FOUND PROJECT....');
     
-    stdout.write("\n\nWhat stage are we loading today?: ".cyan);
+    //stdout.write("\n\nWhat stage are we loading today?: ".cyan);
     
   } else {
-    console.log("You have to send a valid parameter to the startup file!!\n\nValid parameters: \n\n\t" + "* development\n\t* test\n\t* <project name>\n\n".green)
+    console.log("You have to send a valid parameter to the startup file!!\n\nValid parameters: \n\n\t* <project name>\n\n".green)
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!! Fatal Error: No valid parameter found, exiting...".red);
     process.exit(1);      
   }
@@ -46,7 +48,7 @@ function checkProject(isProject){
     if (typeof (encoding) == 'undefined') encoding = 'utf8';
     
     // read file synchroneously
-    var contents = fs.readFileSync(__dirname + '/' + isProject + '.JSON', encoding);
+    var contents = fs.readFileSync('../' + isProject + '/stage.JSON', encoding);
 
 
     // parse contents as JSON
@@ -68,13 +70,23 @@ function loadStage(stage){
     
     var stageServerFile   = "env_" + stage + ".js";
 
-    //var grunt       = spawn('grunt',['--config','Gruntfile.js']);
-    var stageServer = spawn('node',[stageServerFile,project]);
+    if(process.platform == 'win32'){
+
+      var bin = "cmd";
+      var cmdName = 'grunt';
+      //New args will go to cmd.exe, then we append the args passed in to the list
+      newArgs = ["/c", cmdName].concat(['--config','Gruntfile.js']);  //  the /c part tells it to run the command.  Thanks, Windows...
+      var grunt = spawn(bin, newArgs);
+      
+    } else {
+      var grunt       = spawn('grunt',['--config','Gruntfile.js']);
+    }
+    //var stageServer = spawn('node',[stageServerFile,project]);
+    util.puts('############## LOADING GRUNT....'.magenta); 
+    //util.puts('############## LOADING ENVIRONMENT....'.green); 
     
-    util.puts('############## LOADING ENVIRONMENT....'.green); 
-    
-    /*grunt.stderr.pipe(process.stdout);
-    stageServer.stderr.pipe(process.stdout);
+    grunt.stderr.pipe(process.stdout);
+    //stageServer.stderr.pipe(process.stdout);
 
     grunt.stdout.on('data',function(data){
       util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ ".magenta + data);
@@ -86,9 +98,9 @@ function loadStage(stage){
 
     grunt.on('exit',function(code){
       util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ GRUNT HAS FINISHED: ".magenta + code);
-    });*/
+    });
 
-    stageServer.stdout.on('data',function(data){
+    /*stageServer.stdout.on('data',function(data){
       util.puts("-------------- ".yellow + data);
     });
 
@@ -99,11 +111,11 @@ function loadStage(stage){
     stageServer.on('exit',function(code){
       util.puts("-------------- STAGE IS SHUT DOWN: ".yellow + code);
       process.exit(1);
-    });
+    });*/
 
         
     
 
-    util.puts('############## ENVIRONMENT LOADED!'.green);
+    //util.puts('############## ENVIRONMENT LOADED!'.green);
   
 }

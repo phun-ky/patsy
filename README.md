@@ -1,35 +1,60 @@
-lag en githubkonto hvis du ikke har
+DOWNLOAD THIS PROJECT
+=====================
 
-bli lagt til phun-ky/stage repo'en
+1. Download this project and put it into the same root folder as all your projects, like this:
+
+	C:\Users\QE1\Workspace\Storebrand>dir
+	 Volumet i stasjon C er System
+	 Volumserienummeret er DC1C-6C6E
+
+	 Innhold i C:\Users\QE1\Workspace\Storebrand
+
+	18.09.2012  14:42    <DIR>          .
+	18.09.2012  14:42    <DIR>          ..
+	02.10.2012  09:00    <DIR>          fpi-client
+	03.10.2012  08:44    <DIR>          stage
+	               0 fil(er)                0 byte
+	               4 mappe(r)  70 398 836 736 byte ledig
+
+	C:\Users\QE1\Workspace\Storebrand>
+
+**THIS IS VERY IMPORTANT**
+
+INSTALL NODE
+============
+
+Install the latest version of node >= 0.9.2 
+
+Use this link for Windows: http://nodejs.org/dist/v0.9.2/node-v0.9.2-x86.msi
+Use this link for other platforms and choose your OS: http://nodejs.org/dist/v0.9.2/
 
 
-installer git (command line)  msysgit!!
+INSTALL GRUNT
+=============
 
-clone repositoriet i en mappe som har samme forelder som prosjektet du jobber i
+1. Open a command line window with administrator priviligies (use a user with superuser priviligies on Linux)
+2. Go to your home folder
+	In Windows: C:\Users\YourUserName
 
-Har du problemer med nøkler, lag egne nøkler! https://help.github.com/articles/generating-ssh-keys
+	In Linux: cd ~/
 
-installer node, siste versjon >= 0.9.2 
+3. Create a file named .npmrc
+	touch .npmrc
 
-Go to: C:\Users\YourUserName
-Create a file named .npmrc
+4. Add: 
 
-Legg til: 
+	registry = http://registry.npmjs.org
 
-registry = http://registry.npmjs.org
-
-Lagre
-
-installer grunt@devel -g
-
-endre evt filepaths i Gruntfile.js ( fra ../fpi-client/ til <ditt prosjekt navn, der mustachefilene ligger)
-
-kjør grunt --force fra stage mappen
+5. Save the file
+6. Go into your stage folder 
+6. Copy and paste this into your command line:
+	npm install grunt@devel -g
 
 
-kjï¿½r grunt --force fra stage mappen
+RUN BUILD SYSTEM
+================
 
-da vil alle .mustachefilene bli overvï¿½ket og bakt til template.js-filen 
+1. Type this in your command line in your **stage** folder and follow the instructions
+	node start.js
 
-dette systemet "stage", kan settes opp til ï¿½ route til restapi, bake/minifisere less-filer (css) , bake/minifisere javascriptfiler
-
+**All your mustache files will now be monitored and updated on change.**

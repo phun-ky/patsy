@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       sources.src.forEach(function(source){        
         
         grunt.file.recurse( source, concat_to_json_string);
-
+        console.log(templateContent);
         templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
         
         
@@ -46,6 +46,8 @@ module.exports = function(grunt) {
       grunt.file.write( sources.dest, templateOutput );  
       
     });
+
+    templateContent = '';
 
   });
 
