@@ -4,8 +4,8 @@ DOWNLOAD THIS PROJECT
 1. Download this project and put it into the same root folder as all your projects, like this:
 
 ```C:\Users\QE1\Workspace\Storebrand>dir
-02.10.2012  09:00    <DIR>          fpi-client
-03.10.2012  08:44    <DIR>          stage```
+fpi-client
+stage```
              
 
 **THIS IS VERY IMPORTANT**
