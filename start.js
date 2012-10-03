@@ -21,13 +21,12 @@ stdout.write("\n\nWhat project are you working on today?: ".yellow);
 function checkInput(chunk) {
   
   chunk = chunk.trim();
-  /*if(chunk == "development" || chunk == "test"){
+  if(chunk == "development" || chunk == "test"){
     loadStage(chunk);
-  } else */
-  if(checkProject(chunk)){
+  } else if(checkProject(chunk)){
     util.puts('1. FOUND PROJECT....');
     
-    //stdout.write("\n\nWhat stage are we loading today?: ".cyan);
+    stdout.write("\n\nWhat stage are we loading today?: ".cyan);
     
   } else {
     console.log("You have to send a valid parameter to the startup file!!\n\nValid parameters: \n\n\t* <project name>\n\n".green)
