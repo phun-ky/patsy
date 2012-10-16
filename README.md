@@ -46,4 +46,6 @@ RUN BUILD SYSTEM
 1. Type this in your command line in your **stage** folder and follow the instructions
 ```node start.js```
 
-**All your mustache files will now be monitored and updated on change.**
+
+
+**All your mustache files will now be monitored and updated on change. HAPPY HACKING**

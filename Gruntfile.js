@@ -58,14 +58,65 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     watch: {
-      files : [ '../fpi-client/src/main/webapp/js/mustache/*.mustache'], 
-      tasks: ['mustached']
+      files : [ 
+                '../fpi-client/src/main/webapp/js/mustache/*.mustache',
+                '../fpi-client/src/main/webapp/js/services/*.js',
+                '../fpi-client/src/main/webapp/js/src/*.js',                ,
+                '../fpi-client/src/main/webapp/js/dist/fpi.services.js',
+                '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
+              ], 
+      tasks: ['mustached','concat','min']
     },
     clean: {
       folder: "dist/debug/*"
     },
     test: {
       all: ['test/**/*.js']
+    },    
+    concat: {
+      basic: {
+        src:  [
+                '../fpi-client/src/main/webapp/js/src/ext.js',
+                '../fpi-client/src/main/webapp/js/src/templates.js',                
+                '../fpi-client/src/main/webapp/js/src/cms.js',
+                '../fpi-client/src/main/webapp/js/src/progressbar.js',
+                '../fpi-client/src/main/webapp/js/src/api.js',
+                '../fpi-client/src/main/webapp/js/src/utils.js',
+                '../fpi-client/src/main/webapp/js/src/callbacks.js',
+                '../fpi-client/src/main/webapp/js/src/charts.js',
+                '../fpi-client/src/main/webapp/js/src/parallaxe.js',
+                '../fpi-client/src/main/webapp/js/src/fpi.js'
+              ],
+        dest: '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
+      },
+      extras:{
+        src:  [
+                '../fpi-client/src/main/webapp/js/services/index.js',
+                '../fpi-client/src/main/webapp/js/services/policies.js',
+                '../fpi-client/src/main/webapp/js/services/receipt.js',
+                '../fpi-client/src/main/webapp/js/services/signing.js',
+                '../fpi-client/src/main/webapp/js/services/calculations.js'
+              ],
+        dest: '../fpi-client/src/main/webapp/js/dist/fpi.services.js'
+      }
+    },
+    min: {
+      dist: {
+        src: ['../fpi-client/src/main/webapp/js/dist/fpi.services.js', '../fpi-client/src/main/webapp/js/dist/fpi.core.js'],
+        dest: '../fpi-client/src/main/webapp/js/dist/fpi.min.js'
+      }
+    },
+    uglify: {
+      
+      squeeze: {dead_code: false},
+      codegen: {
+        beautify: true,
+        indent_start : 0,
+        indent_level : 4,
+        space_colon   : true,
+        quote_keys: true
+        
+      }
     },
     mustached:{
       dist: {
