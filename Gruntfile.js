@@ -59,11 +59,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       files : [ 
-                '../fpi-client/src/main/webapp/js/mustache/*.mustache',
-                '../fpi-client/src/main/webapp/js/services/*.js',
-                '../fpi-client/src/main/webapp/js/src/*.js',                ,
-                '../fpi-client/src/main/webapp/js/dist/fpi.services.js',
-                '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
+                tmpDir + '/js/mustache/*.mustache',
+                tmpDir + '/js/services/*.js',
+                tmpDir + '/js/src/*.js',                ,
+                tmpDir + '/js/dist/fpi.services.js',
+                tmpDir + '/js/dist/fpi.core.js'
               ], 
       tasks: ['mustached','concat','min']
     },
@@ -76,34 +76,34 @@ module.exports = function(grunt) {
     concat: {
       basic: {
         src:  [
-                '../fpi-client/src/main/webapp/js/src/ext.js',
-                '../fpi-client/src/main/webapp/js/src/templates.js',                
-                '../fpi-client/src/main/webapp/js/src/cms.js',
-                '../fpi-client/src/main/webapp/js/src/progressbar.js',
-                '../fpi-client/src/main/webapp/js/src/api.js',
-                '../fpi-client/src/main/webapp/js/src/utils.js',
-                '../fpi-client/src/main/webapp/js/src/callbacks.js',
-                '../fpi-client/src/main/webapp/js/src/charts.js',
-                '../fpi-client/src/main/webapp/js/src/parallaxe.js',
-                '../fpi-client/src/main/webapp/js/src/fpi.js'
+                tmpDir + '/js/src/ext.js',
+                tmpDir + '/js/src/templates.js',                
+                tmpDir + '/js/src/cms.js',
+                tmpDir + '/js/src/progressbar.js',
+                tmpDir + '/js/src/api.js',
+                tmpDir + '/js/src/utils.js',
+                tmpDir + '/js/src/callbacks.js',
+                tmpDir + '/js/src/charts.js',
+                tmpDir + '/js/src/parallaxe.js',
+                tmpDir + '/js/src/fpi.js'
               ],
-        dest: '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
+        dest: tmpDir + '/js/dist/fpi.core.js'
       },
       extras:{
         src:  [
-                '../fpi-client/src/main/webapp/js/services/index.js',
-                '../fpi-client/src/main/webapp/js/services/policies.js',
-                '../fpi-client/src/main/webapp/js/services/receipt.js',
-                '../fpi-client/src/main/webapp/js/services/signing.js',
-                '../fpi-client/src/main/webapp/js/services/calculations.js'
+                tmpDir + '/js/services/index.js',
+                tmpDir + '/js/services/policies.js',
+                tmpDir + '/js/services/receipt.js',
+                tmpDir + '/js/services/signing.js',
+                tmpDir + '/js/services/calculations.js'
               ],
-        dest: '../fpi-client/src/main/webapp/js/dist/fpi.services.js'
+        dest: tmpDir + '/js/dist/fpi.services.js'
       }
     },
     min: {
       dist: {
-        src: ['../fpi-client/src/main/webapp/js/dist/fpi.services.js', '../fpi-client/src/main/webapp/js/dist/fpi.core.js'],
-        dest: '../fpi-client/src/main/webapp/js/dist/fpi.min.js'
+        src: [tmpDir + '/js/dist/fpi.services.js', tmpDir + '/js/dist/fpi.core.js'],
+        dest: tmpDir + '/js/dist/fpi.min.js'
       }
     },
     uglify: {
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
     mustached:{
       dist: {
         files : {
-          '../fpi-client/src/main/webapp/js/src/templates.js' : ['../fpi-client/src/main/webapp/js/mustache/']
+          tmpDir + '/js/src/templates.js' : [tmpDir + '/js/mustache/']
         }
       }
     },
