@@ -13,7 +13,7 @@ var arguments = process.argv;
 //console.log(arguments);
 
     
-
+  var uglifyjs = require('uglify-js');
 
 module.exports = function(grunt) {
 
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       sources.src.forEach(function(source){        
         
         grunt.file.recurse( source, concat_to_json_string);
-        console.log(templateContent);
+        
         templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
         
         
@@ -51,6 +51,78 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerMultiTask('minified', 'Concat javascript files a single javascript file.', function() {
+    var destPath = '';
+    var minifyJS = function(abspath, rootdir, subdir, filename){        
+
+      var src     = grunt.file.read(abspath);
+      var minSrc  = grunt.helper('uglify', src);
+      grunt.log.writeln('Original size: ' + src.length + ' bytes.');
+      grunt.log.writeln('Minified size: ' + minSrc.length + ' bytes.');
+
+      var minDest = '';
+
+      if(rootdir.indexOf('js/src') != -1){
+
+        minDest = destPath + 'src/'+ filename.replace('.js','.min.js')
+      } else if(rootdir.indexOf('js/services') != -1){
+        
+        minDest = destPath + 'services/'+ filename.replace('.js','.min.js')
+      }
+      
+      grunt.file.write( minDest, minSrc );
+      
+      
+
+    };
+
+    this.files.forEach(function( sources ) {
+      
+      destPath = sources.dest;
+      
+      sources.src.forEach(function(source){              
+        
+        grunt.file.recurse( source, minifyJS);
+        
+        
+        
+      });
+      
+      //grunt.file.write( sources.dest, templateOutput );  
+      
+    });
+
+  });
+
+   // Minify with UglifyJS.
+  // From https://github.com/mishoo/UglifyJS
+  grunt.registerHelper('uglify', function(src, options) {
+    if (!options) { options = {}; }
+    var jsp = uglifyjs.parser;
+    var pro = uglifyjs.uglify;
+    var ast, pos;
+    var msg = 'Minifying with UglifyJS...';
+    grunt.verbose.write(msg);
+    try {
+      ast = jsp.parse(src);
+      ast = pro.ast_mangle(ast, options.mangle || {});
+      ast = pro.ast_squeeze(ast, options.squeeze || {});
+      src = pro.gen_code(ast, options.codegen || {});
+      // Success!
+      grunt.verbose.ok();
+      // UglifyJS adds a trailing semicolon only when run as a binary.
+      // So we manually add the trailing semicolon when using it as a module.
+      // https://github.com/mishoo/UglifyJS/issues/126
+      return src + ';';
+    } catch(e) {
+      // Something went wrong.
+      grunt.verbose.or.write(msg);
+      pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.col).yellow + ']'.red;
+      grunt.log.error().writeln(pos + ' ' + (e.message + ' (position: ' + e.pos + ')').yellow);
+      grunt.warn('UglifyJS found errors.', 10);
+    }
+  });
+
   var tmpDir = '../fpi-client/src/main/webapp';
   
 
@@ -62,10 +134,10 @@ module.exports = function(grunt) {
                 '../fpi-client/src/main/webapp/js/mustache/*.mustache',
                 '../fpi-client/src/main/webapp/js/services/*.js',
                 '../fpi-client/src/main/webapp/js/src/*.js',                ,
-                '../fpi-client/src/main/webapp/js/dist/fpi.services.js',
-                '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
+                '../fpi-client/src/main/webapp/js/min/services/*.js',
+                '../fpi-client/src/main/webapp/js/min/src/*.js'
               ], 
-      tasks: ['mustached','concat','min']
+      tasks: ['mustached','minified','concat']
     },
     clean: {
       folder: "dist/debug/*"
@@ -73,19 +145,18 @@ module.exports = function(grunt) {
     test: {
       all: ['test/**/*.js']
     },    
+    minified : {
+      dist: {
+        files : {
+          '../fpi-client/src/main/webapp/js/min/' : ['../fpi-client/src/main/webapp/js/services/','../fpi-client/src/main/webapp/js/src/']
+        }
+      }
+    },
     concat: {
       basic: {
         src:  [
-                '../fpi-client/src/main/webapp/js/src/ext.js',
-                '../fpi-client/src/main/webapp/js/src/templates.js',                
-                '../fpi-client/src/main/webapp/js/src/cms.js',
-                '../fpi-client/src/main/webapp/js/src/progressbar.js',
-                '../fpi-client/src/main/webapp/js/src/api.js',
-                '../fpi-client/src/main/webapp/js/src/utils.js',
-                '../fpi-client/src/main/webapp/js/src/callbacks.js',
-                '../fpi-client/src/main/webapp/js/src/charts.js',
-                '../fpi-client/src/main/webapp/js/src/parallaxe.js',
-                '../fpi-client/src/main/webapp/js/src/fpi.js'
+                '../fpi-client/src/main/webapp/js/min/services/*.js',
+                '../fpi-client/src/main/webapp/js/min/src/*.js'                   
               ],
         dest: '../fpi-client/src/main/webapp/js/dist/fpi.core.js'
       },
@@ -99,25 +170,7 @@ module.exports = function(grunt) {
               ],
         dest: '../fpi-client/src/main/webapp/js/dist/fpi.services.js'
       }
-    },
-    min: {
-      dist: {
-        src: ['../fpi-client/src/main/webapp/js/dist/fpi.services.js', '../fpi-client/src/main/webapp/js/dist/fpi.core.js'],
-        dest: '../fpi-client/src/main/webapp/js/dist/fpi.min.js'
-      }
-    },
-    uglify: {
-      
-      squeeze: {dead_code: false},
-      codegen: {
-        beautify: true,
-        indent_start : 0,
-        indent_level : 4,
-        space_colon   : true,
-        quote_keys: true
-        
-      }
-    },
+    },        
     mustached:{
       dist: {
         files : {
