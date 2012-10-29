@@ -16,7 +16,7 @@ var arguments = process.argv;
   var uglifyjs = require('uglify-js');
 
 module.exports = function(grunt) {
-
+grunt.loadNpmTasks('grunt-dox');
     
   
 
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         
       });
       templateOutput += '"done":true}});';
-      grunt.file.write( sources.dest, templateOutput );  
+      grunt.file.write( tmpDir + sources.dest, templateOutput );  
       
     });
 
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 
     this.files.forEach(function( sources ) {
       
-      destPath = sources.dest;
+      destPath = tmpDir + sources.dest;
       
       sources.src.forEach(function(source){              
         
@@ -131,13 +131,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       files : [ 
-
                 tmpDir + '/js/mustache/*.mustache',
                 tmpDir + '/js/services/*.js',
-                tmpDir + '/js/src/*.js',                ,
-                tmpDir + '/js/dist/fpi.services.js',
-                tmpDir + '/js/dist/fpi.core.js'
-
+                tmpDir + '/js/src/*.js',                
+                tmpDir + '/js/min/services/*.js',
+                tmpDir + '/js/min/src/*.js'
               ], 
       tasks: ['mustached','minified','concat']
     },
@@ -150,66 +148,32 @@ module.exports = function(grunt) {
     minified : {
       dist: {
         files : {
-          '../fpi-client/src/main/webapp/js/min/' : ['../fpi-client/src/main/webapp/js/services/','../fpi-client/src/main/webapp/js/src/']
+          '/js/min/' : [tmpDir + '/js/services/',tmpDir + '/js/src/']
         }
       }
     },
     concat: {
       basic: {
         src:  [
-
-                tmpDir + '/js/src/ext.js',
-                tmpDir + '/js/src/templates.js',                
-                tmpDir + '/js/src/cms.js',
-                tmpDir + '/js/src/progressbar.js',
-                tmpDir + '/js/src/api.js',
-                tmpDir + '/js/src/utils.js',
-                tmpDir + '/js/src/callbacks.js',
-                tmpDir + '/js/src/charts.js',
-                tmpDir + '/js/src/parallaxe.js',
-                tmpDir + '/js/src/fpi.js'
-
+                tmpDir + '/js/min/services/*.js',
+                tmpDir + '/js/min/src/*.js'                   
               ],
         dest: tmpDir + '/js/dist/fpi.core.js'
-      },
-      extras:{
-        src:  [
-                tmpDir + '/js/services/index.js',
-                tmpDir + '/js/services/policies.js',
-                tmpDir + '/js/services/receipt.js',
-                tmpDir + '/js/services/signing.js',
-                tmpDir + '/js/services/calculations.js'
-              ],
-        dest: tmpDir + '/js/dist/fpi.services.js'
       }
-    },
-    min: {
-      dist: {
-        src: [tmpDir + '/js/dist/fpi.services.js', tmpDir + '/js/dist/fpi.core.js'],
-        dest: tmpDir + '/js/dist/fpi.min.js'
-      }
-    },
-    uglify: {
-      
-      squeeze: {dead_code: false},
-      codegen: {
-        beautify: true,
-        indent_start : 0,
-        indent_level : 4,
-        space_colon   : true,
-        quote_keys: true
-        
-      }
-    },
+    },        
     mustached:{
       dist: {
         files : {
-          tmpDir + '/js/src/templates.js' : [tmpDir + '/js/mustache/']
+          '/js/src/templates.js' : [tmpDir + '/js/mustache/']
         }
       }
     },
-
-    
+    dox: {
+      files: {
+        src: [tmpDir + '/js/src/fpi.js'],
+        dest: tmpDir + '/js/docs'
+      }
+    },    
     globals: {
 
     }      
