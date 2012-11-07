@@ -16,7 +16,8 @@ var arguments = process.argv;
   var uglifyjs = require('uglify-js');
 
 module.exports = function(grunt) {
-grunt.loadNpmTasks('grunt-dox');
+
+grunt.loadNpmTasks('grunt-recess');
     
   
 
@@ -135,21 +136,28 @@ grunt.loadNpmTasks('grunt-dox');
                 tmpDir + '/js/services/*.js',
                 tmpDir + '/js/src/*.js',                
                 tmpDir + '/js/min/services/*.js',
-                tmpDir + '/js/min/src/*.js'
+                tmpDir + '/js/min/src/*.js',
+                tmpDir + '/css/src/*.css'
               ], 
-      tasks: ['mustached','minified','concat']
+      tasks: ['mustached','minified','concat','lint']
     },
     clean: {
       folder: "dist/debug/*"
-    },
-    test: {
-      all: ['test/**/*.js']
-    },    
+    },     
     minified : {
       dist: {
         files : {
           '/js/min/' : [tmpDir + '/js/services/',tmpDir + '/js/src/']
         }
+      }
+    },
+    lint : {
+      
+      files: [ tmpDir + '/js/src/*.js' ]
+    },
+    jshint : {
+      options : {
+        indent : 2        
       }
     },
     concat: {
@@ -167,13 +175,12 @@ grunt.loadNpmTasks('grunt-dox');
           '/js/src/templates.js' : [tmpDir + '/js/mustache/']
         }
       }
-    },
-    dox: {
-      files: {
-        src: [tmpDir + '/js/src/fpi.js'],
-        dest: tmpDir + '/js/docs'
-      }
     },    
+    recess: {
+      dist: {
+        src: [ tmpDir + '/css/src/style.css' ]
+      }
+    },  
     globals: {
 
     }      
