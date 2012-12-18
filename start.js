@@ -11,6 +11,10 @@ var stage = arguments[2];
 
  var stdin = process.stdin, stdout = process.stdout;
 
+ 
+var path = '';
+
+
 stdin.resume();
 stdin.setEncoding('utf8');
 
@@ -21,12 +25,16 @@ stdout.write("\n\nWhat project are you working on today?: ".yellow);
 function checkInput(chunk) {
   
   chunk = chunk.trim();
-  if(chunk == "development" || chunk == "test"){
-    loadStage(chunk);
-  } else if(checkProject(chunk)){
-    util.puts('1. FOUND PROJECT....');
+  if(chunk == 'nostage'){
     
-    stdout.write("\n\nWhat stage are we loading today?: ".cyan);
+    loadEnvironment();
+  } else if(chunk == "development" || chunk == "test"){
+    
+    loadEnvironment(chunk);
+  } else if(checkProject(chunk)){
+    util.puts('1. FOUND "' + project + '" PROJECT....');
+    
+    stdout.write('\n\nWhat stage are we loading for "' + project.cyan + '":');
     
   } else {
     console.log("You have to send a valid parameter to the startup file!!\n\nValid parameters: \n\n\t* <project name>\n\n".green)
@@ -47,16 +55,17 @@ function checkProject(isProject){
     if (typeof (encoding) == 'undefined') encoding = 'utf8';
     
     // read file synchroneously
-    var contents = fs.readFileSync('../' + isProject + '/stage.JSON', encoding);
-
+    var contents = fs.readFileSync('../' + isProject + '/patsy.JSON', encoding);
 
     // parse contents as JSON
     
     var tmp = JSON.parse(contents);
     project = isProject;
+    path = '../' + isProject + tmp.webroot;
     return true;
     
   } catch (err) {    
+
     project = false;
     return false;
   }
@@ -64,28 +73,49 @@ function checkProject(isProject){
 
 stdin.on('data', checkInput);
 
-function loadStage(stage){
+function loadEnvironment(stage){
   
+  util.puts('############## LOADING ENVIRONMENT....'.green); 
+
+    if(typeof stage !== 'undefined'){
+      var stageServerFile   = "env_" + stage + ".js";  
+      var stageServer = spawn('node',[stageServerFile,project]);
+      util.puts('############## LOADING STAGE....'.green); 
+      stageServer.stderr.pipe(process.stdout);
+      stageServer.stdout.on('data',function(data){
+        util.puts("-------------- ".yellow + data);
+      });
+
+      stageServer.stderr.on('data',function(data){
+        util.puts("-------------- STAGE ERROR: ".red + data);
+      });
+
+      stageServer.on('exit',function(code){
+        util.puts("-------------- STAGE IS SHUT DOWN: ".yellow + code);
+        process.exit(1);
+      });
+
+    }
     
-    var stageServerFile   = "env_" + stage + ".js";
 
     if(process.platform == 'win32'){
 
       var bin = "cmd";
       var cmdName = 'grunt';
       //New args will go to cmd.exe, then we append the args passed in to the list
-      newArgs = ["/c", cmdName].concat(['--config','Gruntfile.js']);  //  the /c part tells it to run the command.  Thanks, Windows...
+      newArgs = ["/c", cmdName].concat(['--config', 'Gruntfile.js','--path', path, '--project',project]);  //  the /c part tells it to run the command.  Thanks, Windows...
       var grunt = spawn(bin, newArgs);
       
     } else {
-      var grunt       = spawn('grunt',['--config','Gruntfile.js']);
+      var grunt       = spawn('grunt',['--config', 'Gruntfile.js','--path', path, '--project',project]); 
     }
-    //var stageServer = spawn('node',[stageServerFile,project]);
+
+    
     util.puts('############## LOADING GRUNT....'.magenta); 
-    //util.puts('############## LOADING ENVIRONMENT....'.green); 
+    
     
     grunt.stderr.pipe(process.stdout);
-    //stageServer.stderr.pipe(process.stdout);
+    
 
     grunt.stdout.on('data',function(data){
       util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ ".magenta + data);
@@ -99,22 +129,10 @@ function loadStage(stage){
       util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ GRUNT HAS FINISHED: ".magenta + code);
     });
 
-    /*stageServer.stdout.on('data',function(data){
-      util.puts("-------------- ".yellow + data);
-    });
-
-    stageServer.stderr.on('data',function(data){
-      util.puts("-------------- STAGE ERROR: ".red + data);
-    });
-
-    stageServer.on('exit',function(code){
-      util.puts("-------------- STAGE IS SHUT DOWN: ".yellow + code);
-      process.exit(1);
-    });*/
-
+    
         
     
 
-    //util.puts('############## ENVIRONMENT LOADED!'.green);
+    util.puts('############## ENVIRONMENT LOADED!'.green);
   
 }

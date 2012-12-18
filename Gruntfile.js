@@ -9,20 +9,26 @@
 var templateContent = '';
 var templateCount = 0;
 
-var arguments = process.argv;
-//console.log(arguments);
 
-    
-  var uglifyjs = require('uglify-js');
+
+var project = '';
+
+var path = '';
+
+  
+var uglifyjs = require('uglify-js');
 
 module.exports = function(grunt) {
-
-grunt.loadNpmTasks('grunt-recess');
-    
   
+  path = grunt.option('path');  
+  project = grunt.option('project');  
 
-  grunt.registerMultiTask('mustached', 'Concat mustache templates into a JSON string.', function() {
-    
+  //grunt.loadNpmTasks('grunt-dox');   
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-recess');
+
+  grunt.registerMultiTask('mustached', 'Concat mustache templates into a JSON string.', function() {    
 
     var templateOutput  = '';
 
@@ -44,7 +50,7 @@ grunt.loadNpmTasks('grunt-recess');
         
       });
       templateOutput += '"done":true}});';
-      grunt.file.write( tmpDir + sources.dest, templateOutput );  
+      grunt.file.write( path + sources.dest, templateOutput );  
       
     });
 
@@ -79,7 +85,7 @@ grunt.loadNpmTasks('grunt-recess');
 
     this.files.forEach(function( sources ) {
       
-      destPath = tmpDir + sources.dest;
+      destPath = path + sources.dest;
       
       sources.src.forEach(function(source){              
         
@@ -95,59 +101,34 @@ grunt.loadNpmTasks('grunt-recess');
 
   });
 
-   // Minify with UglifyJS.
-  // From https://github.com/mishoo/UglifyJS
-  grunt.registerHelper('uglify', function(src, options) {
-    if (!options) { options = {}; }
-    var jsp = uglifyjs.parser;
-    var pro = uglifyjs.uglify;
-    var ast, pos;
-    var msg = 'Minifying with UglifyJS...';
-    grunt.verbose.write(msg);
-    try {
-      ast = jsp.parse(src);
-      ast = pro.ast_mangle(ast, options.mangle || {});
-      ast = pro.ast_squeeze(ast, options.squeeze || {});
-      src = pro.gen_code(ast, options.codegen || {});
-      // Success!
-      grunt.verbose.ok();
-      // UglifyJS adds a trailing semicolon only when run as a binary.
-      // So we manually add the trailing semicolon when using it as a module.
-      // https://github.com/mishoo/UglifyJS/issues/126
-      return src + ';';
-    } catch(e) {
-      // Something went wrong.
-      grunt.verbose.or.write(msg);
-      pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.col).yellow + ']'.red;
-      grunt.log.error().writeln(pos + ' ' + (e.message + ' (position: ' + e.pos + ')').yellow);
-      grunt.warn('UglifyJS found errors.', 10);
-    }
-  });
-
-  var tmpDir = '../fpi-client/src/main/webapp';
-  
-
     
   // Project configuration.
   grunt.initConfig({
     watch: {
-      files : [ 
-                tmpDir + '/js/mustache/*.mustache',
-                tmpDir + '/js/services/*.js',
-                tmpDir + '/js/src/*.js',                
-                tmpDir + '/js/min/services/*.js',
-                tmpDir + '/js/min/src/*.js',
-                tmpDir + '/css/src/*.css'
-              ], 
-      tasks: ['mustached','minified','concat','lint']
+      scripts : {
+        files : [ 
+          path + 'js/mustache/*.mustache',
+          path + 'js/services/*.js',
+          path + 'js/src/*.js',                
+          path + 'js/min/services/*.js',
+          path + 'js/min/src/*.js'
+        ], 
+        tasks: ['mustached','minified','concat','lint'],
+        options: {
+          debounceDelay: 2500
+        }
+      }
     },
     clean: {
       folder: "dist/debug/*"
-    },     
+    },
+    test: {
+      all: ['test/**/*.js']
+    },    
     minified : {
       dist: {
         files : {
-          '/js/min/' : [tmpDir + '/js/services/',tmpDir + '/js/src/']
+          'js/min/' : [path + 'js/services/',path + 'js/src/']
         }
       }
     },
@@ -163,36 +144,29 @@ grunt.loadNpmTasks('grunt-recess');
     concat: {
       basic: {
         src:  [
-                tmpDir + '/js/min/services/*.js',
-                tmpDir + '/js/min/src/*.js'                   
+                path + 'js/min/services/*.js',
+                path + 'js/min/src/*.js'                   
               ],
-        dest: tmpDir + '/js/dist/fpi.core.js'
+        dest: path + 'js/dist/' +  project + '.core.js'
       }
     },        
     mustached:{
       dist: {
         files : {
-          '/js/src/templates.js' : [tmpDir + '/js/mustache/']
+          'js/src/templates.js' : [path + 'js/mustache/']
         }
       }
     },    
     recess: {
       dist: {
-        src: [ tmpDir + '/css/src/style.css' ]
+        src: [ path + 'css/src/style.css' ]
       }
-    },  
+    },
     globals: {
 
     }      
   });
 
-
-
-
-
-
   grunt.registerTask('default', 'watch');
 
-
-  
 };

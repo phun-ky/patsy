@@ -1,18 +1,16 @@
 
-
-
+// Load modules into vars
 var fs        = require('fs');
-
 var http      = require('http');
 var https     = require('https');
 var connect   = require('connect');
 var util      = require('util');
 var static    = require('node-static');
 
+// Set current stage
 var stage     = 'dev';
 
 // log streams
-
 var access_log  = fs.createWriteStream('access.log', {'flags': 'w'});
 var routing_log = fs.createWriteStream('route.log', {'flags': 'w'});
 
@@ -35,7 +33,7 @@ function loadJSONfile (filename, encoding) {
     if (typeof (encoding) == 'undefined') encoding = 'utf8';
     
     // read file synchroneously
-    var contents = fs.readFileSync(__dirname + '/' + filename, encoding);
+    var contents = fs.readFileSync('../'+ project + '/patsy.JSON', encoding);    
 
 
     // parse contents as JSON
@@ -50,15 +48,16 @@ function loadJSONfile (filename, encoding) {
 } // loadJSONfile
 
 // this is what we needed to do now
-var routes            = loadJSONfile('routes.JSON');
+
 var projectSettings   = loadJSONfile(project + '.JSON');
+var routes            = projectSettings.routes;
 var foundRoute        = false;
 var currentRoute      = '';
 var currentRouteTmp   = '';
-
 var serverRunning     = false;
 
-var file = new(static.Server)(projectSettings.www_root, { cache: 0, headers: {"Cache-Control": "no-cache, must-revaliate"} });
+// Start fileserver
+var file              = new(static.Server)('../' + project + projectSettings.webroot, { cache: 0, headers: {"Cache-Control": "no-cache, must-revalidate"} });
 
 /**
  * Check if URL is to be routed
@@ -310,7 +309,7 @@ function serveStaticFiles(webreq, webres){
   });
 }
 
-var port    = process.env.PORT || 8080;
+var port    = process.env.PORT || 8094;
 
 util.puts("3. CREATING SERVER ON PORT " + port + "..");
 
