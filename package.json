@@ -4,9 +4,7 @@
   "description": "A frontend build system for frontend developers",
   "main": "start.js",
   "dependencies": {
-    "grunt": "~0.4.0rc2"
-  },
-  "devDependencies": {
+    "grunt": "~0.4.0rc2",
     "grunt-contrib-concat": "~0.1.1",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-uglify": "~0.1.0",
@@ -17,6 +15,9 @@
     "connect": "~2.7.1",
     "node-static": "~0.6.5",
     "grunt-lib-legacyhelpers": "~0.1.0"
+  },
+  "devDependencies": {
+    
   },
   "scripts": {
     "test": "node start"
