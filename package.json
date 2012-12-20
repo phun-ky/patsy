@@ -1,32 +1,39 @@
 {
   "name": "patsy",
-  "version": "0.1.0",
-  "description": "Patsy, the silent helper that does all the hard labour",
+  "version": "0.0.1",
+  "description": "A frontend build system for frontend developers",
   "main": "start.js",
+  "dependencies": {
+    "grunt": "~0.4.0rc2"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.1.1",
+    "grunt-contrib-jshint": "~0.1.0",
+    "grunt-contrib-uglify": "~0.1.0",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-recess": "~0.1.4",
+    "uglify-js": "~2.2.2",
+    "colors": "~0.6.0-1",
+    "connect": "~2.7.1",
+    "node-static": "~0.6.5",
+    "grunt-lib-legacyhelpers": "~0.1.0"
+  },
   "scripts": {
     "test": "node start"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:phun-ky/stage.git"
+    "url": "git://github.com/phun-ky/patsy.git"
   },
   "keywords": [
-    "build",
-    "concat",
+    "gruntjs",
+    "node",
+    "javascript",
+    "css",
+    "jshint",
     "minify",
-    "test"
+    "handlebars"
   ],
-  "engines": {
-    "node": ">= 0.6.0"
-  },
   "author": "Alexander Vassbotn Røyne-Helgesen",
-  "license": "GPL",
-  "dependencies": {
-    "grunt-contrib-watch": "~0.1.4",
-    "grunt-contrib-concat": "~0.1.0",
-    "colors" : "~0.6.0-1",
-    "uglify-js" : "~1.3.4",
-    "connect" : "~2.6.1",
-    "grunt-contrib-uglify" : "~0.1.0"
-  }
+  "license": "BSD"
 }

@@ -16,16 +16,22 @@ var project = '';
 var path = '';
 
   
-var uglifyjs = require('uglify-js');
+var uglify = require('uglify-js');
+
+
+
 
 module.exports = function(grunt) {
   
   path = grunt.option('path');  
   project = grunt.option('project');  
 
+  
+
   //grunt.loadNpmTasks('grunt-dox');   
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-recess');
 
   grunt.registerMultiTask('mustached', 'Concat mustache templates into a JSON string.', function() {    
@@ -37,22 +43,22 @@ module.exports = function(grunt) {
       templateContent += '"' + filename.replace('.mustache','') + '"' + " : '" + grunt.file.read(abspath) + "',";
     };
     
-    this.files.forEach(function( sources ) {
-      //SB.extend({templates: {"done":true}});
-      var templateOutput = 'SB.extend({templates: {';
+    
+    //SB.extend({templates: {"done":true}});
+    var templateOutput = 'SB.extend({templates: {';
+    
+    this.data.src.forEach(function(source){        
       
-      sources.src.forEach(function(source){        
-        
-        grunt.file.recurse( source, concat_to_json_string);
-        
-        templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
-        
-        
-      });
-      templateOutput += '"done":true}});';
-      grunt.file.write( path + sources.dest, templateOutput );  
+      grunt.file.recurse( source, concat_to_json_string);
+      
+      templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
+      
       
     });
+    templateOutput += ' "done": "true"}});';
+    grunt.file.write( path + this.file.dest, templateOutput );  
+    
+    
 
     templateContent = '';
 
@@ -60,62 +66,65 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('minified', 'Concat javascript files a single javascript file.', function() {
     var destPath = '';
+    var pathToProcess;
+    
     var minifyJS = function(abspath, rootdir, subdir, filename){        
 
+      
+
       var src     = grunt.file.read(abspath);
-      var minSrc  = grunt.helper('uglify', src);
-      grunt.log.writeln('Original size: ' + src.length + ' bytes.');
-      grunt.log.writeln('Minified size: ' + minSrc.length + ' bytes.');
+      var ast     = uglify.minify(abspath);
+      var minSrc  = ast.code
+      
+      grunt.log.writeln(filename + ":");
+      grunt.log.writeln("_________________________________________");
+      grunt.log.writeln('Original size: \t\t' + src.length + ' bytes.');
+      grunt.log.writeln('Minified size: \t\t' + minSrc.length + ' bytes.\n');
 
       var minDest = '';
 
-      if(rootdir.indexOf('js/src') != -1){
-
-        minDest = destPath + 'src/'+ filename.replace('.js','.min.js')
-      } else if(rootdir.indexOf('js/services') != -1){
-        
-        minDest = destPath + 'services/'+ filename.replace('.js','.min.js')
-      }
+      minDest = destPath + filename.replace('.js','.min.js')
       
+      console.log(minDest, minSrc);
       grunt.file.write( minDest, minSrc );
       
       
 
     };
 
-    this.files.forEach(function( sources ) {
+    
       
-      destPath = path + sources.dest;
+      destPath = path + this.file.dest;
       
-      sources.src.forEach(function(source){              
+      
+      this.file.src.forEach(function(source){              
         
-        grunt.file.recurse( source, minifyJS);
+          grunt.file.recurse( require('path').dirname(source) , minifyJS);
         
         
         
       });
       
-      //grunt.file.write( sources.dest, templateOutput );  
-      
-    });
 
   });
 
     
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     watch: {
       scripts : {
         files : [ 
-          path + 'js/mustache/*.mustache',
-          path + 'js/services/*.js',
-          path + 'js/src/*.js',                
-          path + 'js/min/services/*.js',
-          path + 'js/min/src/*.js'
+          path + 'js/mustache/*.mustache',          
+          path + 'js/src/**/*.js',                
+          path + 'js/src/*.js', 
+          path + 'js/min/*.js'          
         ], 
-        tasks: ['mustached','minified','concat','lint'],
+        tasks: ['mustached','minified','concat','jshint'],
         options: {
           debounceDelay: 2500
+
+
         }
       }
     },
@@ -126,35 +135,32 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },    
     minified : {
-      dist: {
-        files : {
-          'js/min/' : [path + 'js/services/',path + 'js/src/']
-        }
+      files: {
+        src: [path + 'js/src/*.js', path + 'js/src/**/*.js'],
+        dest: 'js/min/'
       }
-    },
-    lint : {
+        
       
-      files: [ tmpDir + '/js/src/*.js' ]
+      
     },
     jshint : {
       options : {
         indent : 2        
-      }
+      },
+      files: [ path + '/js/src/*.js' ]
     },
     concat: {
-      basic: {
+      dist: {
         src:  [
-                path + 'js/min/services/*.js',
-                path + 'js/min/src/*.js'                   
+                path + 'js/min/*.js'
               ],
         dest: path + 'js/dist/' +  project + '.core.js'
       }
     },        
     mustached:{
-      dist: {
-        files : {
-          'js/src/templates.js' : [path + 'js/mustache/']
-        }
+      files: {
+        dest : 'js/src/templates.js',
+        src : [path + 'js/src/mustache/']
       }
     },    
     recess: {

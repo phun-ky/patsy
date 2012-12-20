@@ -58,10 +58,12 @@ function checkProject(isProject){
     var contents = fs.readFileSync('../' + isProject + '/patsy.JSON', encoding);
 
     // parse contents as JSON
-    
+      
     var tmp = JSON.parse(contents);
+    
     project = isProject;
     path = '../' + isProject + tmp.webroot;
+
     return true;
     
   } catch (err) {    
