@@ -2,7 +2,12 @@
   "name": "patsy",
   "version": "0.0.1",
   "description": "A frontend build system for frontend developers",
-  "main": "start.js",
+  "main": "patsy",
+  "homepage" : "https://github.com/phun-ky/patsy",  
+  "bugs" : "https://github.com/phun-ky/patsy/issues",
+  "engines" : {
+    "node" : ">= 0.8.0"
+    },
   "dependencies": {
     "grunt": "~0.4.0rc2",
     "grunt-contrib-concat": "~0.1.1",
@@ -19,9 +24,7 @@
   "devDependencies": {
     
   },
-  "scripts": {
-    "test": "node start"
-  },
+  "bin" : "./start.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/phun-ky/patsy.git"
