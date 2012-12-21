@@ -30,11 +30,7 @@ module.exports = function(grunt) {
 
   // Get config options from project if available
   try{
-      // default encoding is utf8
-      if (typeof (encoding) === 'undefined') var encoding = 'utf8';
-          
-      // Read file synchroneously and parse contents as JSON      
-      projectConfig = JSON.parse(fs.readFileSync(path + 'patsy.JSON', encoding));
+      projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject();
 
       if(typeof projectConfig !== 'undefined'){
         if( typeof projectConfig.template !== 'undefined' && 

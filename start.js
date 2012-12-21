@@ -13,6 +13,8 @@ var path      = '';
 var project   = '';
 
 var appPath   = require('path').dirname(require.main.filename) + "/";
+
+var patsyHelpers = require('./lib/patsyHelpers');
 var projectPath;
 
 stdin.resume();
@@ -34,14 +36,8 @@ function checkInput(chunk) {
 
 function checkProject(){
   try {
-    // default encoding is utf8
-    if (typeof (encoding) == 'undefined') encoding = 'utf8';
-    
-    // read file synchroneously
-    var contents = fs.readFileSync('patsy.JSON', encoding);
-    
-    // parse contents as JSON      
-    var projectConfig = JSON.parse(contents);
+    // Get projectConfig   
+    var projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject();
 
     projectPath   = require('path').resolve(require('path').dirname('patsy.JSON'));
     

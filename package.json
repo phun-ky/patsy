@@ -3,30 +3,30 @@
   "version": "0.0.2",
   "description": "A frontend build system for frontend developers",
   "main": "patsy",
-  "homepage" : "https://github.com/phun-ky/patsy",  
-  "bugs" : "https://github.com/phun-ky/patsy/issues",
-  "preferGlobal" : "true",
-  "engines" : {
-    "node" : ">= 0.8.0"
-    },
+  "homepage": "https://github.com/phun-ky/patsy",
+  "bugs": "https://github.com/phun-ky/patsy/issues",
+  "preferGlobal": "true",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "dependencies": {
     "grunt": "~0.4.0rc2",
     "grunt-contrib-concat": "~0.1.1",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-uglify": "~0.1.0",
     "grunt-contrib-watch": "~0.1.4",
-    "grunt-mustache": "~0.1.1",
     "grunt-recess": "~0.1.4",
     "uglify-js": "~2.2.2",
     "colors": "~0.6.0-1",
     "connect": "~2.7.1",
     "node-static": "~0.6.5",
-    "grunt-lib-legacyhelpers": "~0.1.0"
+    "grunt-lib-legacyhelpers": "~0.1.0",
+    "grunt-mustache": "~0.1.1"
   },
   "devDependencies": {
     
   },
-  "bin" : "./start.js",
+  "bin": "./start.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/phun-ky/patsy.git"
