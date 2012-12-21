@@ -18,6 +18,8 @@ var path = '';
   
 var uglify = require('uglify-js');
 
+var projectConfig;
+
 
 
 
@@ -26,43 +28,34 @@ module.exports = function(grunt) {
   path = grunt.option('path');  
   project = grunt.option('project');  
 
-  
+  // Get config options from project if available
+  try{
+      // default encoding is utf8
+      if (typeof (encoding) === 'undefined') var encoding = 'utf8';
+          
+      // Read file synchroneously and parse contents as JSON      
+      projectConfig = JSON.parse(fs.readFileSync(path + 'patsy.JSON', encoding));
+
+      if(typeof projectConfig !== 'undefined'){
+        if( typeof projectConfig.template !== 'undefined' && 
+            typeof projectConfig.options !== 'undefined' && 
+            typeof projectConfig.options.postfix !== 'undefined' && 
+            typeof projectConfig.options.prefix !== 'undefined' ){
+          var _mustachePostfix  = projectConfig.options.postfix;
+          var _mustachePrefix   = projectConfig.options.prefix;
+        }
+      }
+
+  } catch(e){}
+
+  console.log(path);
 
   //grunt.loadNpmTasks('grunt-dox');   
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-recess');
-
-  grunt.registerMultiTask('mustached', 'Concat mustache templates into a JSON string.', function() {    
-
-    var templateOutput  = '';
-
-    var concat_to_json_string = function(abspath, rootdir, subdir, filename){        
-      
-      templateContent += '"' + filename.replace('.mustache','') + '"' + " : '" + grunt.file.read(abspath) + "',";
-    };
-    
-    
-    //SB.extend({templates: {"done":true}});
-    var templateOutput = 'SB.extend({templates: {';
-    
-    this.data.src.forEach(function(source){        
-      
-      grunt.file.recurse( source, concat_to_json_string);
-      
-      templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
-      
-      
-    });
-    templateOutput += ' "done": "true"}});';
-    grunt.file.write( path + this.file.dest, templateOutput );  
-    
-    
-
-    templateContent = '';
-
-  });
 
   grunt.registerMultiTask('minified', 'Concat javascript files a single javascript file.', function() {
     var destPath = '';
@@ -160,7 +153,11 @@ module.exports = function(grunt) {
     mustached:{
       files: {
         dest : 'js/src/templates.js',
-        src : [path + 'js/src/mustache/']
+        src : [path + 'js/src/mustache/'],
+        options: {
+          postfix: typeof _mustachePostfix !== 'undefined' ? _mustachePostfix : undefined,
+          prefix:  typeof _mustachePrefix !== 'undefined' ? _mustachePrefix : undefined
+        }
       }
     },    
     recess: {

@@ -1,68 +1,61 @@
+#! /usr/bin/env node
+
 var fs        = require('fs');
-var spawn      = require('child_process').spawn;
+var spawn     = require('child_process').spawn;
 var util      = require('util');
-
-var colors = require('colors');
-
-var project = '';
+var colors    = require('colors');
 
 var arguments = process.argv;
-var stage = arguments[2];
-
- var stdin = process.stdin, stdout = process.stdout;
-
+var stage     = arguments[2];
+var stdin     = process.stdin, stdout = process.stdout;
  
-var path = '';
+var path      = '';
+var project   = '';
 
+var appPath   = require('path').dirname(require.main.filename) + "/";
+var projectPath;
 
 stdin.resume();
 stdin.setEncoding('utf8');
 
-stdout.write("\n\nWhat project are you working on today?: ".yellow);
+stdout.write("Come Patsy, my trusty servant!! <sound of two half coconuts banging together> .. \n".yellow);
 
-
+checkProject();
 
 function checkInput(chunk) {
   
   chunk = chunk.trim();
-  if(chunk == 'nostage'){
+  if(chunk == 'exit'){
+    stdout.write("Exiting.. May the force be with you!\n");
+    process.exit(1); 
     
-    loadEnvironment();
-  } else if(chunk == "development" || chunk == "test"){
-    
-    loadEnvironment(chunk);
-  } else if(checkProject(chunk)){
-    util.puts('1. FOUND "' + project + '" PROJECT....');
-    
-    stdout.write('\n\nWhat stage are we loading for "' + project.cyan + '":');
-    
-  } else {
-    console.log("You have to send a valid parameter to the startup file!!\n\nValid parameters: \n\n\t* <project name>\n\n".green)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!! Fatal Error: No valid parameter found, exiting...".red);
-    process.exit(1);      
-  }
+  } 
 }
 
-
- 
-
-
-
-
-function checkProject(isProject){
+function checkProject(){
   try {
     // default encoding is utf8
     if (typeof (encoding) == 'undefined') encoding = 'utf8';
     
     // read file synchroneously
-    var contents = fs.readFileSync('../' + isProject + '/patsy.JSON', encoding);
-
-    // parse contents as JSON
-      
-    var tmp = JSON.parse(contents);
+    var contents = fs.readFileSync('patsy.JSON', encoding);
     
-    project = isProject;
-    path = '../' + isProject + tmp.webroot;
+    // parse contents as JSON      
+    var projectConfig = JSON.parse(contents);
+
+    projectPath   = require('path').resolve(require('path').dirname('patsy.JSON'));
+    
+    if(typeof projectConfig.webroot !== 'undefined'){
+      path    = projectPath + projectConfig.webroot;  
+    } else {
+      path    = projectPath + '/';
+    }
+    project = require('path').basename(projectPath);
+
+    stdout.write('Found project "' + project + '" on path "' + path + '", continuing.. \n' );
+    
+
+    loadStage();
 
     return true;
     
@@ -75,66 +68,73 @@ function checkProject(isProject){
 
 stdin.on('data', checkInput);
 
-function loadEnvironment(stage){
+function loadStage(){
   
-  util.puts('############## LOADING ENVIRONMENT....'.green); 
+  util.puts('Loading build system....'.green); 
 
     if(typeof stage !== 'undefined'){
-      var stageServerFile   = "env_" + stage + ".js";  
+      var stageServerFile   = "stage.js";  
       var stageServer = spawn('node',[stageServerFile,project]);
-      util.puts('############## LOADING STAGE....'.green); 
+      
       stageServer.stderr.pipe(process.stdout);
       stageServer.stdout.on('data',function(data){
-        util.puts("-------------- ".yellow + data);
+        util.puts("".yellow + data);
+        
       });
 
       stageServer.stderr.on('data',function(data){
-        util.puts("-------------- STAGE ERROR: ".red + data);
+        util.puts("Stage error: ".red + data);
       });
 
       stageServer.on('exit',function(code){
-        util.puts("-------------- STAGE IS SHUT DOWN: ".yellow + code);
+        util.puts("Stage is exiting: ".yellow + code);
         process.exit(1);
       });
 
     }
-    
+
+    console.log(appPath + 'Gruntfile.js');
+
+    process.chdir(appPath);
 
     if(process.platform == 'win32'){
 
       var bin = "cmd";
       var cmdName = 'grunt';
       //New args will go to cmd.exe, then we append the args passed in to the list
-      newArgs = ["/c", cmdName].concat(['--config', 'Gruntfile.js','--path', path, '--project',project]);  //  the /c part tells it to run the command.  Thanks, Windows...
+      newArgs = ["/c", cmdName].concat(['--config', appPath + 'Gruntfile.js','--path', path, '--project',project]);  //  the /c part tells it to run the command.  Thanks, Windows...
       var grunt = spawn(bin, newArgs);
       
     } else {
-      var grunt       = spawn('grunt',['--config', 'Gruntfile.js','--path', path, '--project',project]); 
+      var grunt       = spawn('grunt',['--config', appPath + 'Gruntfile.js','--path', path, '--project',project]); 
     }
 
     
-    util.puts('############## LOADING GRUNT....'.magenta); 
+    util.puts('Loading GruntJS....'.magenta); 
     
     
     grunt.stderr.pipe(process.stdout);
     
 
     grunt.stdout.on('data',function(data){
-      util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ ".magenta + data);
+      util.puts("".magenta + data);
+      
     });
 
     grunt.stderr.on('data',function(data){
-      util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ GRUNT ERROR: ".red + data);
+      util.puts("GruntJS error: ".red + data);
     });
 
     grunt.on('exit',function(code){
-      util.puts("¤¤¤¤¤¤¤¤¤¤¤¤¤¤ GRUNT HAS FINISHED: ".magenta + code);
+      util.puts("GruntJS exiting: ".magenta + code);
+              process.exit(1);
+
     });
 
     
         
     
 
-    util.puts('############## ENVIRONMENT LOADED!'.green);
+    util.puts('Build system loaded'.green);
   
 }
