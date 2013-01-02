@@ -10,11 +10,12 @@
 
 var util              = require('util');
 var uglify            = require('uglify-js');
+var path              = require('path');
 
 var templateContent   = '';
 var templateCount     = 0;
 var project           = '';
-var path              = '';
+var projectPath       = '';
 
 var patsyHelpers      = require('./lib/patsyHelpers');
 var _mustachePostfix, _mustachePrefix;
@@ -22,26 +23,26 @@ var _mustachePostfix, _mustachePrefix;
 
 module.exports = function(grunt) {
   var _projectConfig;
-  path      = grunt.option('path');  
-  project   = grunt.option('project');  
+  projectPath       = grunt.option('path');  
+  project           = grunt.option('project');  
+
+  
 
 
 // Get config options from project if available
   try{
-      _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(path);
+      _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
       
       if(typeof _projectConfig !== 'undefined'){
-        if( typeof _projectConfig.template !== 'undefined' && 
-            typeof _projectConfig.template.options !== 'undefined' && 
-            typeof _projectConfig.template.options.postfix !== 'undefined' && 
-            typeof _projectConfig.template.options.prefix !== 'undefined' ){
-          _mustachePostfix  = _projectConfig.template.options.postfix;
-          _mustachePrefix   = _projectConfig.template.options.prefix;
+        if( typeof _projectConfig.templatePrefix !== 'undefined' && 
+            typeof _projectConfig.templatePostfix !== 'undefined'
+        ){
+          _mustachePostfix  = _projectConfig.templatePostfix;
+          _mustachePrefix   = _projectConfig.templatePrefix;
         }
       }
 
   } catch(e){}
-  
 
 
   //grunt.loadNpmTasks('grunt-dox');   
@@ -50,6 +51,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-recess');
+
+  
 
   grunt.registerMultiTask('minified', 'Concat javascript files a single javascript file.', function() {
     var destPath = '';
@@ -62,7 +65,7 @@ module.exports = function(grunt) {
       var src       = grunt.file.read(source);
       var ast       = uglify.minify(source);
       var minSrc    = ast.code
-      var filename  = require('path').basename(source);
+      var filename  = path.basename(source);
       
       util.puts(filename + ", ");
       util.puts('Original size: ' + src.length + ' bytes.' + ' Minified size: ' + minSrc.length + ' bytes.');      
@@ -75,7 +78,7 @@ module.exports = function(grunt) {
 
     };
       
-    destPath = path + this.file.dest;
+    destPath = projectPath + this.file.dest;
 
     this.file.src.forEach(function(source){              
       
@@ -97,19 +100,19 @@ module.exports = function(grunt) {
       scripts : {
         files : [ 
                     
-          path + 'js/src/**/*.js',                
-          path + 'js/src/*.js', 
-          path + 'js/**/mustache/*.mustache'
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                
+          projectPath + _projectConfig.pathToJavaScriptFiles + '*.js', 
+          projectPath + _projectConfig.pathToTemplateFiles + '*.mustache'
                     
         ], 
-        tasks: ['mustache','jshint', 'minified'],
+        tasks: ['jshint', 'mustache', 'minified'],
         options : {
-
+                debounceDelay: 2500
         }
         
       },      
       concatinate : {
-        files : [path + 'js/min/*.js'],
+        files : [projectPath + _projectConfig.pathToMinifiedFiles + '*.js'],
         tasks : ['concat']
       }
     },
@@ -118,11 +121,14 @@ module.exports = function(grunt) {
     },
     test: {
       all: ['test/**/*.js']
-    },    
+    },
     minified : {
       files: {
-        src: [path + 'js/src/*.js', path + 'js/src/**/*.js'],
-        dest: 'js/min/'
+        src: [
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                
+          projectPath + _projectConfig.pathToJavaScriptFiles + '*.js'
+        ],
+        dest: _projectConfig.pathToMinifiedFiles
       }
         
       
@@ -130,22 +136,24 @@ module.exports = function(grunt) {
     },
     jshint : {
       options : {
-        indent : 2        
+        indent : 2,
+        white : false,
+        passfail: false
       },
-      files: [ path + '/js/src/*.js', !path + '/js/src/templates.js' ]
+      src: [ projectPath + _projectConfig.pathToJavaScriptFiles + '*.js' ]
     },
     concat: {
       dist: {
         src:  [
-                path + 'js/min/*.js'
+                projectPath + _projectConfig.pathToMinifiedFiles + '*.js'
               ],
-        dest: path + 'js/dist/' +  project + '.core.js'
+        dest: projectPath + _projectConfig.pathToBakedFiles + project + '.core.js'
       }
     },        
     mustache:{
       files: {
-        dest : path + 'js/src/templates.js',
-        src : [path + 'js/src/mustache/'],
+        dest : projectPath + _projectConfig.pathToJavaScriptFiles + 'templates.js',
+        src : [projectPath + _projectConfig.pathToTemplateFiles],
         options: {
           postfix: typeof _mustachePostfix !== 'undefined' ? _mustachePostfix : '',
           prefix:  typeof _mustachePrefix !== 'undefined' ? _mustachePrefix : ''
@@ -154,7 +162,7 @@ module.exports = function(grunt) {
     },    
     recess: {
       dist: {
-        src: [ path + 'css/src/style.css' ]
+        src: [ projectPath + 'css/src/style.css' ]
       }
     },
     globals: {
