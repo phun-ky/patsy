@@ -1,6 +1,6 @@
 {
   "name": "patsy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A frontend build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
@@ -38,7 +38,18 @@
     "css",
     "jshint",
     "minify",
-    "handlebars"
+    "handlebars",
+    "mustache",
+    "concat",
+    "templating",
+    "templates",
+    "proxy",
+    "frontend",
+    "build system",
+    "framework",
+    "routing",
+    "recess",
+    "uglify"
   ],
   "author": "Alexander Vassbotn Røyne-Helgesen",
   "license": "BSD"

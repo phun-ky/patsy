@@ -6,45 +6,43 @@
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
-var templateContent = '';
-var templateCount = 0;
+ "use strict";
 
+var util              = require('util');
+var uglify            = require('uglify-js');
 
+var templateContent   = '';
+var templateCount     = 0;
+var project           = '';
+var path              = '';
 
-var project = '';
-
-var path = '';
-
-  
-var uglify = require('uglify-js');
-
-var projectConfig;
-
-
+var patsyHelpers      = require('./lib/patsyHelpers');
+var _mustachePostfix, _mustachePrefix;
 
 
 module.exports = function(grunt) {
-  
-  path = grunt.option('path');  
-  project = grunt.option('project');  
+  var _projectConfig;
+  path      = grunt.option('path');  
+  project   = grunt.option('project');  
 
-  // Get config options from project if available
+
+// Get config options from project if available
   try{
-      projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject();
-
-      if(typeof projectConfig !== 'undefined'){
-        if( typeof projectConfig.template !== 'undefined' && 
-            typeof projectConfig.options !== 'undefined' && 
-            typeof projectConfig.options.postfix !== 'undefined' && 
-            typeof projectConfig.options.prefix !== 'undefined' ){
-          var _mustachePostfix  = projectConfig.options.postfix;
-          var _mustachePrefix   = projectConfig.options.prefix;
+      _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(path);
+      
+      if(typeof _projectConfig !== 'undefined'){
+        if( typeof _projectConfig.template !== 'undefined' && 
+            typeof _projectConfig.template.options !== 'undefined' && 
+            typeof _projectConfig.template.options.postfix !== 'undefined' && 
+            typeof _projectConfig.template.options.prefix !== 'undefined' ){
+          _mustachePostfix  = _projectConfig.template.options.postfix;
+          _mustachePrefix   = _projectConfig.template.options.prefix;
         }
       }
 
   } catch(e){}
+  
 
-  console.log(path);
 
   //grunt.loadNpmTasks('grunt-dox');   
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -57,64 +55,62 @@ module.exports = function(grunt) {
     var destPath = '';
     var pathToProcess;
     
-    var minifyJS = function(abspath, rootdir, subdir, filename){        
+    var minifyJS = function(source){        
 
       
 
-      var src     = grunt.file.read(abspath);
-      var ast     = uglify.minify(abspath);
-      var minSrc  = ast.code
+      var src       = grunt.file.read(source);
+      var ast       = uglify.minify(source);
+      var minSrc    = ast.code
+      var filename  = require('path').basename(source);
       
-      grunt.log.writeln(filename + ":");
-      grunt.log.writeln("_________________________________________");
-      grunt.log.writeln('Original size: \t\t' + src.length + ' bytes.');
-      grunt.log.writeln('Minified size: \t\t' + minSrc.length + ' bytes.\n');
+      util.puts(filename + ", ");
+      util.puts('Original size: ' + src.length + ' bytes.' + ' Minified size: ' + minSrc.length + ' bytes.');      
 
       var minDest = '';
 
       minDest = destPath + filename.replace('.js','.min.js')
-      
-      console.log(minDest, minSrc);
-      grunt.file.write( minDest, minSrc );
-      
-      
+            
+      grunt.file.write( minDest, minSrc );      
 
     };
+      
+    destPath = path + this.file.dest;
 
-    
+    this.file.src.forEach(function(source){              
       
-      destPath = path + this.file.dest;
+        minifyJS(source);
       
       
-      this.file.src.forEach(function(source){              
-        
-          grunt.file.recurse( require('path').dirname(source) , minifyJS);
-        
-        
-        
-      });
+      
+    });
       
 
   });
 
-    
+  
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
       scripts : {
         files : [ 
-          path + 'js/mustache/*.mustache',          
+                    
           path + 'js/src/**/*.js',                
           path + 'js/src/*.js', 
-          path + 'js/min/*.js'          
+          path + 'js/**/mustache/*.mustache'
+                    
         ], 
-        tasks: ['mustached','minified','concat','jshint'],
-        options: {
-          debounceDelay: 2500
-
+        tasks: ['mustache','jshint', 'minified'],
+        options : {
 
         }
+        
+      },      
+      concatinate : {
+        files : [path + 'js/min/*.js'],
+        tasks : ['concat']
       }
     },
     clean: {
@@ -136,7 +132,7 @@ module.exports = function(grunt) {
       options : {
         indent : 2        
       },
-      files: [ path + '/js/src/*.js' ]
+      files: [ path + '/js/src/*.js', !path + '/js/src/templates.js' ]
     },
     concat: {
       dist: {
@@ -146,13 +142,13 @@ module.exports = function(grunt) {
         dest: path + 'js/dist/' +  project + '.core.js'
       }
     },        
-    mustached:{
+    mustache:{
       files: {
-        dest : 'js/src/templates.js',
+        dest : path + 'js/src/templates.js',
         src : [path + 'js/src/mustache/'],
         options: {
-          postfix: typeof _mustachePostfix !== 'undefined' ? _mustachePostfix : undefined,
-          prefix:  typeof _mustachePrefix !== 'undefined' ? _mustachePrefix : undefined
+          postfix: typeof _mustachePostfix !== 'undefined' ? _mustachePostfix : '',
+          prefix:  typeof _mustachePrefix !== 'undefined' ? _mustachePrefix : ''
         }
       }
     },    
@@ -167,5 +163,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'watch');
+
 
 };
