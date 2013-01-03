@@ -33,6 +33,8 @@ module.exports = function(grunt) {
    */
   var _projectConfig;
 
+  var _pathToJavaScriptFiles;
+
   // Populate project variables, used for better readability
   projectPath       = grunt.option('path');  
   
@@ -86,23 +88,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-minified');
   //grunt.loadNpmTasks('grunt-recess'); 
 
-  
+  console.log(projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js');
 
   // GruntJS configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
-      /**
-       * Currently, the jshint task ( grunt-contrib-jshint ) does not support to exclude files, so for now, we comment it out
-       * There's a fix with a pull request to the repo, stay tuned here: https://github.com/gruntjs/grunt-contrib-jshint/issues/1
-       */
-      /*linting : {
-        files : [
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',               
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '!(templates).js'
-        ],
-        tasks : ['jshint']
-      },*/
+            
       scripts : {
         files : [ 
                     
@@ -110,7 +102,7 @@ module.exports = function(grunt) {
           projectPath + _projectConfig.pathToTemplateFiles + '*.mustache'
                     
         ], 
-        tasks: ['mustache', 'minified'],
+        tasks: ['jshint','mustache', 'minified'],
         options : {
           debounceDelay: 2500
         }
@@ -130,7 +122,7 @@ module.exports = function(grunt) {
     minified : {
       files: {
         src: [
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',                
           projectPath + _projectConfig.pathToJavaScriptFiles + '*.js'
         ],
         dest: projectPath + _projectConfig.pathToMinifiedFiles
@@ -143,7 +135,8 @@ module.exports = function(grunt) {
         passfail: true
       },
       src: [ 
-        projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js'
+        projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',
+        projectPath + _projectConfig.pathToJavaScriptFiles + '!(templates).js'
       ]
     },
     concat: {
