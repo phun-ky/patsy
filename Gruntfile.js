@@ -88,7 +88,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-minified');
   //grunt.loadNpmTasks('grunt-recess'); 
 
-  console.log(projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js');
+  _pathToJavaScriptFiles = projectPath + _projectConfig.pathToJavaScriptFiles;
 
   // GruntJS configuration.
   grunt.initConfig({
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
       scripts : {
         files : [ 
                     
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                          
+          _pathToJavaScriptFiles + '**/*.js',                          
           projectPath + _projectConfig.pathToTemplateFiles + '*.mustache'
                     
         ], 
@@ -117,13 +117,13 @@ module.exports = function(grunt) {
       folder: projectPath + _projectConfig.pathToBakedFiles + "debug/*"
     },
     test: {
-      all: [projectPath + _projectConfig.pathToJavaScriptFiles + 'test/**/*.js']
+      all: [_pathToJavaScriptFiles + 'test/**/*.js']
     },
     minified : {
       files: {
         src: [
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',                
-          projectPath + _projectConfig.pathToJavaScriptFiles + '*.js'
+          _pathToJavaScriptFiles + '**' + path.sep + '*.js',                
+          _pathToJavaScriptFiles + '*.js'
         ],
         dest: projectPath + _projectConfig.pathToMinifiedFiles
       }
@@ -135,8 +135,8 @@ module.exports = function(grunt) {
         passfail: true
       },
       src: [ 
-        projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',
-        projectPath + _projectConfig.pathToJavaScriptFiles + '!(templates).js'
+        _pathToJavaScriptFiles + '**' + path.sep + '*.js',
+        '!' + _pathToJavaScriptFiles + 'templates.js'
       ]
     },
     concat: {
@@ -149,7 +149,7 @@ module.exports = function(grunt) {
     },        
     mustache:{
       files: {
-        dest : projectPath + _projectConfig.pathToJavaScriptFiles + 'templates.js',
+        dest : _pathToJavaScriptFiles + 'templates.js',
         src : [projectPath + _projectConfig.pathToTemplateFiles],
         options: {
           postfix: typeof _mustachePostfix !== 'undefined' ? _mustachePostfix : '',
