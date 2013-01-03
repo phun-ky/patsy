@@ -19,6 +19,18 @@ Go to the folder of where you have your web project, type `patsy` and enjoy!
 
 TOC for the [wiki]
 
+### Supported configuration (current)
+
+        {
+          "nameOfProject": "",
+          "pathToJavaScriptFiles": "js/src/",
+          "pathToMinifiedFiles": "js/min/",
+          "pathToBakedFiles": "js/dist/",
+          "pathToTemplateFiles": "js/mustache/",
+          "templatePrefix": "",
+          "templatePostfix": ""
+        }
+
 
 [node]: http://nodejs.org/
 [npm]: http://npmjs.org/
