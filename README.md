@@ -40,6 +40,7 @@ Go to the folder of where you have your web project, type `patsy` and enjoy!
 * Live content update when saving files
 * Automated testing via Jasmine AND/OR Qunit
 * Baking of LESS to CSS
+* Automagic documentation generation
 
 For a full list of planned features to come, see [features to come][features_planned]
 
