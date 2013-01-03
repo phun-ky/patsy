@@ -8,28 +8,36 @@
  */
  "use strict";
 
+
+// Prepare node plugin variables
 var util              = require('util');
 var uglify            = require('uglify-js');
 var path              = require('path');
 
-var templateContent   = '';
-var templateCount     = 0;
+// Prepare patsyHelpers variable
+var patsyHelpers      = require('./lib/patsyHelpers');
+
+// Prepare local variables for this file
 var project           = '';
 var projectPath       = '';
-
-var patsyHelpers      = require('./lib/patsyHelpers');
 var _mustachePostfix, _mustachePrefix;
 
-
+// Set up GruntJS
 module.exports = function(grunt) {
+
+  /**
+   * Variable for the project configuration
+   *
+   * @var     Object
+   * @source  patsy.json
+   */
   var _projectConfig;
+
+  // Populate project variables, used for better readability
   projectPath       = grunt.option('path');  
   project           = grunt.option('project');  
 
-  
-
-
-// Get config options from project if available
+  // Get config options from project if available
   try{
       _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
       
@@ -50,50 +58,57 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
-  grunt.loadNpmTasks('grunt-recess');
+  //grunt.loadNpmTasks('grunt-recess');
 
   
 
-  grunt.registerMultiTask('minified', 'Concat javascript files a single javascript file.', function() {
-    var destPath = '';
-    var pathToProcess;
+  grunt.registerMultiTask('minified', 'Minify given JavaScript files', function() {
+
+    // Set up vars for task
+    var _destPath = '';    
     
-    var minifyJS = function(source){        
+    // Set up callback function for file iteration
+    var minifyJS = function(source){              
 
-      
+      // Sandboxed variables
 
+      // Read file source
       var src       = grunt.file.read(source);
+
+      // Minify file source
       var ast       = uglify.minify(source);
       var minSrc    = ast.code
+
+      // Get file name
       var filename  = path.basename(source);
       
+      // Verbose output by default for now
       util.puts(filename + ", ");
       util.puts('Original size: ' + src.length + ' bytes.' + ' Minified size: ' + minSrc.length + ' bytes.');      
 
+      // Set up destiation variable
       var minDest = '';
 
-      minDest = destPath + filename.replace('.js','.min.js')
+      // Set destination
+      minDest = _destPath + filename.replace('.js','.min.js')
             
+      // Write minified sorce to destination file
       grunt.file.write( minDest, minSrc );      
 
     };
       
-    destPath = projectPath + this.file.dest;
+    // Set path of files to be stored
+    _destPath = projectPath + this.file.dest;
 
+    // Iterate over files to minify
     this.file.src.forEach(function(source){              
       
-        minifyJS(source);
-      
-      
-      
-    });
-      
+      // Bazinga!
+      minifyJS(source);
+    });     
+  });  
 
-  });
-
-  
-
-  // Project configuration.
+  // GruntJS configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
@@ -130,9 +145,6 @@ module.exports = function(grunt) {
         ],
         dest: _projectConfig.pathToMinifiedFiles
       }
-        
-      
-      
     },
     jshint : {
       options : {
@@ -160,11 +172,11 @@ module.exports = function(grunt) {
         }
       }
     },    
-    recess: {
+    /*recess: {
       dist: {
         src: [ projectPath + 'css/src/style.css' ]
       }
-    },
+    },*/
     globals: {
 
     }      
