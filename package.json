@@ -10,7 +10,9 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "grunt": "~0.4.0rc2",
+    "grunt-cli" : ">=0.1.6",
+    "grunt-init" : ">=0.2.0",
+    "grunt": ">=0.4.0rc2",
     "grunt-contrib-concat": "~0.1.1",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-uglify": "~0.1.0",
@@ -23,8 +25,9 @@
     "grunt-lib-legacyhelpers": "~0.1.0",
     "grunt-mustache": "~0.1.1",
     "grunt-minified": "~0.0.1",
-    "commander": "~1.1.1"
-  },
+    "commander": "~1.1.1",
+    "grunt-dox" : ">=0.2.2"
+  },  
   "devDependencies": {
     
   },

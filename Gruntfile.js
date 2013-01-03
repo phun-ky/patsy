@@ -19,7 +19,8 @@ var patsyHelpers      = require('./lib/patsyHelpers');
 // Prepare local variables for this file
 var project           = '';
 var projectPath       = '';
-var _mustachePostfix, _mustachePrefix;
+var _mustachePostfix  = '';
+var _mustachePrefix   = '';
 
 // Set up GruntJS
 module.exports = function(grunt) {
@@ -34,22 +35,47 @@ module.exports = function(grunt) {
 
   // Populate project variables, used for better readability
   projectPath       = grunt.option('path');  
-  project           = grunt.option('project');  
+  
+  if(typeof projectPath !== 'undefined'){
 
-  // Get config options from project if available
-  try{
-      _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
-      
-      if(typeof _projectConfig !== 'undefined'){
-        if( typeof _projectConfig.templatePrefix !== 'undefined' && 
-            typeof _projectConfig.templatePostfix !== 'undefined'
-        ){
-          _mustachePostfix  = _projectConfig.templatePostfix;
-          _mustachePrefix   = _projectConfig.templatePrefix;
+    // Get config options from project if available
+    try {
+
+        _projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
+        
+        if(typeof _projectConfig !== 'undefined'){
+
+          if( typeof _projectConfig.templatePrefix !== 'undefined' && 
+              typeof _projectConfig.templatePostfix !== 'undefined'
+          ){
+
+            _mustachePostfix  = _projectConfig.templatePostfix;
+            _mustachePrefix   = _projectConfig.templatePrefix;
+          }
+
+          if(typeof _projectConfig.nameOfProject !== 'undefined'){
+
+            project           = _projectConfig.nameOfProject;
+          } else {
+
+            project           = path.basename(projectPath);
+          }
+        } else {
+
+          console.log('Project configuration not found, exiting...');
+          process.exit(1);    
         }
-      }
 
-  } catch(e){}
+    } catch(e){
+
+      console.log('Project configuration not found, exiting...');
+      process.exit(1);
+    }
+  } else {
+
+    console.log('Project path not set, exiting...');
+    process.exit(1);
+  }
 
 
   //grunt.loadNpmTasks('grunt-dox');   
@@ -58,9 +84,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
-  //grunt.loadNpmTasks('grunt-recess');
-
-  
+  //grunt.loadNpmTasks('grunt-recess'); 
 
   
 
@@ -68,17 +92,27 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
+      /**
+       * Currently, the jshint task ( grunt-contrib-jshint ) does not support to exclude files, so for now, we comment it out
+       * There's a fix with a pull request to the repo, stay tuned here: https://github.com/gruntjs/grunt-contrib-jshint/issues/1
+       */
+      /*linting : {
+        files : [
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js',               
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '!(templates).js'
+        ],
+        tasks : ['jshint']
+      },*/
       scripts : {
         files : [ 
                     
-          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                
-          projectPath + _projectConfig.pathToJavaScriptFiles + '*.js', 
+          projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                          
           projectPath + _projectConfig.pathToTemplateFiles + '*.mustache'
                     
         ], 
-        tasks: ['jshint', 'mustache', 'minified'],
+        tasks: ['mustache', 'minified'],
         options : {
-                debounceDelay: 2500
+          debounceDelay: 2500
         }
         
       },      
@@ -88,10 +122,10 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      folder: "dist/debug/*"
+      folder: projectPath + _projectConfig.pathToBakedFiles + "debug/*"
     },
     test: {
-      all: ['test/**/*.js']
+      all: [projectPath + _projectConfig.pathToJavaScriptFiles + 'test/**/*.js']
     },
     minified : {
       files: {
@@ -106,9 +140,11 @@ module.exports = function(grunt) {
       options : {
         indent : 2,
         white : false,
-        passfail: false
+        passfail: true
       },
-      src: [ projectPath + _projectConfig.pathToJavaScriptFiles + '*.js' ]
+      src: [ 
+        projectPath + _projectConfig.pathToJavaScriptFiles + '**' + path.sep + '*.js'
+      ]
     },
     concat: {
       dist: {
