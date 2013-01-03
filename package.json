@@ -22,6 +22,7 @@
     "node-static": "~0.6.5",
     "grunt-lib-legacyhelpers": "~0.1.0",
     "grunt-mustache": "~0.1.1",
+    "grunt-minified": "~0.0.1",
     "commander": "~1.1.1"
   },
   "devDependencies": {

@@ -11,7 +11,6 @@
 
 // Prepare node plugin variables
 var util              = require('util');
-var uglify            = require('uglify-js');
 var path              = require('path');
 
 // Prepare patsyHelpers variable
@@ -58,55 +57,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
+  grunt.loadNpmTasks('grunt-minified');
   //grunt.loadNpmTasks('grunt-recess');
 
   
 
-  grunt.registerMultiTask('minified', 'Minify given JavaScript files', function() {
-
-    // Set up vars for task
-    var _destPath = '';    
-    
-    // Set up callback function for file iteration
-    var minifyJS = function(source){              
-
-      // Sandboxed variables
-
-      // Read file source
-      var src       = grunt.file.read(source);
-
-      // Minify file source
-      var ast       = uglify.minify(source);
-      var minSrc    = ast.code
-
-      // Get file name
-      var filename  = path.basename(source);
-      
-      // Verbose output by default for now
-      util.puts(filename + ", ");
-      util.puts('Original size: ' + src.length + ' bytes.' + ' Minified size: ' + minSrc.length + ' bytes.');      
-
-      // Set up destiation variable
-      var minDest = '';
-
-      // Set destination
-      minDest = _destPath + filename.replace('.js','.min.js')
-            
-      // Write minified sorce to destination file
-      grunt.file.write( minDest, minSrc );      
-
-    };
-      
-    // Set path of files to be stored
-    _destPath = projectPath + this.file.dest;
-
-    // Iterate over files to minify
-    this.file.src.forEach(function(source){              
-      
-      // Bazinga!
-      minifyJS(source);
-    });     
-  });  
+  
 
   // GruntJS configuration.
   grunt.initConfig({
@@ -143,7 +99,7 @@ module.exports = function(grunt) {
           projectPath + _projectConfig.pathToJavaScriptFiles + '**/*.js',                
           projectPath + _projectConfig.pathToJavaScriptFiles + '*.js'
         ],
-        dest: _projectConfig.pathToMinifiedFiles
+        dest: projectPath + _projectConfig.pathToMinifiedFiles
       }
     },
     jshint : {
