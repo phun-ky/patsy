@@ -55,8 +55,8 @@ For a full list of planned features to come, see [features to come][features_pla
 
 ## Documentation 
 
-See the [wiki] for full documentation. If the documentation is incomplete, please submitt an [issue][issues].
-Documentation not found in the [wiki] can be found as inline comments in the code.
+See the [wiki] for full documentation. Documentation not found in the [wiki] can be found as inline comments in the code, 
+if documentation is missing or incomplete, please submit an [issue][issues].
 
 
 [node]: http://nodejs.org/
