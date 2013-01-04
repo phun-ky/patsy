@@ -24,7 +24,9 @@ var pjson = require('./package.json');
 
 program
   .version(pjson.version)
-  .option('-v, --verbose', 'Outputs every log and debug statement from patsy')
+  .option('-v, --verbose', 'output every log and debug statement from patsy')
+  .option('-d, --default-config', 'set patsy to just use the default configuration file')
+  .option('-s, --scripture', 'no output from King Arthur, Patsy or God')
   .parse(process.argv);
 
 
@@ -72,8 +74,8 @@ stdout.write('\n'+
 '............,:=+??I7$$$ZZZOOO8OOOZ$7I?+=~~::::,,,,,,,,,..............           \n'.inverse.yellow + 
 '         ......,,:~~==============~~~~:::::,,,,,,....................  .        \n'.inverse.yellow);
 
-stdout.write("[King Arthur]: Come Patsy, my trusty servant!! <sound of two half coconuts banging together> .. \n".yellow);
 
+patsyHelpers.scripture("[King Arthur]: Come Patsy, my trusty servant!! <sound of two half coconuts banging together> .. \n".yellow);
 patsyHelpers.checkProject();
 
 stdin.on('data', patsyHelpers.checkInput);

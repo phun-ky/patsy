@@ -77,7 +77,7 @@ var templatePrefix   = '';
  * @var     Object
  * @source  patsy.json
  */
-var projectConfig;
+var config;
 
 /**
  * Varholder for path to files for better readability
@@ -134,23 +134,23 @@ module.exports = function(grunt) {
     // Get config options from project if available
     try {
 
-      // Set projectConfig from patsy.json        
-      projectConfig = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
+      // Set config from patsy.json        
+      config = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);     
       
-      if(typeof projectConfig !== 'undefined'){
+      if(typeof config !== 'undefined'){
 
-        if( typeof projectConfig.templatePrefix !== 'undefined' && 
-            typeof projectConfig.templatePostfix !== 'undefined'
+        if( typeof config.patsy.build.tmpl.templatePrefix !== 'undefined' && 
+            typeof config.patsy.build.tmpl.templatePostfix !== 'undefined'
         ){
 
-          templatePostfix  = projectConfig.templatePostfix;
-          templatePrefix   = projectConfig.templatePrefix;
+          templatePostfix  = config.patsy.build.tmpl.templatePostfix;
+          templatePrefix   = config.patsy.build.tmpl.templatePrefix;
         }
 
         // Try to set project name, if not found, use the folder name
-        if(typeof projectConfig.nameOfProject !== 'undefined'){
+        if(typeof config.patsy.project.name !== 'undefined'){
 
-          project           = projectConfig.nameOfProject;
+          project           = config.patsy.project.name;
         } else {
 
           project           = path.basename(projectPath);
@@ -184,10 +184,10 @@ module.exports = function(grunt) {
   relativeProjectPath   = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
 
   // Set up varholders for better readability
-  pathToJavaScriptFiles = relativeProjectPath + projectConfig.pathToJavaScriptFiles;
-  pathToTemplateFiles   = relativeProjectPath + projectConfig.pathToTemplateFiles;
-  pathToMinifiedFiles   = relativeProjectPath + projectConfig.pathToMinifiedFiles;
-  pathToBakedFiles      = relativeProjectPath + projectConfig.pathToBakedFiles;
+  pathToJavaScriptFiles = relativeProjectPath + config.patsy.project.js;
+  pathToTemplateFiles   = relativeProjectPath + config.patsy.build.tmpl.src;
+  pathToMinifiedFiles   = relativeProjectPath + config.patsy.build.min.src;
+  pathToBakedFiles      = relativeProjectPath + config.patsy.build.dist;
 
   // GruntJS configuration.
   grunt.initConfig({

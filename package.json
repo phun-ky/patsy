@@ -25,7 +25,8 @@
     "grunt-mustache": "~0.1.1",
     "grunt-minified": "~0.0.1",
     "commander": "~1.1.1",
-    "grunt-dox" : ">=0.2.2"
+    "grunt-dox" : ">=0.2.2",
+    "xtend" : "~1.0.3"
   },  
   "devDependencies": {
     
