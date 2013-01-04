@@ -2,7 +2,9 @@
 
 > A staging and build environment for web developers. 
 
-## Installation
+_Note that this application is depended on some bleeding edge plugins, like the development version of [GruntJS][grunt]. YMMV._
+
+## Getting started
 
 ### Requirements
 
@@ -11,17 +13,18 @@ patsy requires [Nodejs >= 0.8.0][node] and is built with these plugins:
 * Gruntjs
 * UglifyJS
 * Commander
+* etc.. ( _Read full list in the package.json file under "dependencies"_ )
 
-_Read full list in the package.json file under "dependencies"_ 
+All of the dependencies are installed automatically when you install patsy. 
 
-### Instructions
+### Installation 
 
-Following instructions will install patsy and all dependencies
+Following instructions will install patsy and all dependencies:
 
 1. Install the required version of [node]
 2. Then in your prefered CLI, type `npm install patsy`
 
-## Getting started
+### How to use
 
 Go to the folder of where you have your web project, type `patsy` and enjoy!
 
@@ -57,6 +60,7 @@ Documentation not found in the [wiki] can be found as inline comments in the cod
 
 
 [node]: http://nodejs.org/
+[grunt]: https://github.com/gruntjs/grunt
 [npm]: http://npmjs.org/
 [wiki]: http://github.com/phun-ky/patsy/wiki
 [patsy]: http://github.com/phun-ky/patsy
