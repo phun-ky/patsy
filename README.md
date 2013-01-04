@@ -25,14 +25,20 @@ Following instructions will install patsy and all dependencies
 
 Go to the folder of where you have your web project, type `patsy` and enjoy!
 
-### patsy currently does this
+Patsy will generate a configuration file for you if you have not specified one in your project root folder. 
+Patsy will ask you some questions to build a configuration file, or if you trust him, he will generate a default 
+configuration file for you.
+
+## Features
+
+### Patsy currently does this
 
 1. Bake mustache template files ( no variable passing ) into JSON string written to a *.js file
 2. Check js files with JSHint
 3. Minify files
 4. Concatinates minified files into one single file
 
-## Upcoming features
+### We want patsy to do this aswell in the future
 
 * Staging environment ( to pick sets of routes (read: proxy/reverse proxy) to use in given environment )
 * Proxy support
@@ -42,23 +48,12 @@ Go to the folder of where you have your web project, type `patsy` and enjoy!
 * Baking of LESS to CSS
 * Automagic documentation generation
 
-For a full list of planned features to come, see [features to come][features_planned]
+For a full list of planned features to come, see [features to come][features_planned].
 
-## Documentation content
+## Documentation 
 
-TOC for the [wiki]
-
-### Supported configuration (current)
-
-        {
-          "nameOfProject": "",
-          "pathToJavaScriptFiles": "js/src/",
-          "pathToMinifiedFiles": "js/min/",
-          "pathToBakedFiles": "js/dist/",
-          "pathToTemplateFiles": "js/mustache/",
-          "templatePrefix": "",
-          "templatePostfix": ""
-        }
+See the [wiki] for full documentation. If the documentation is incomplete, please submitt an [issue][issues].
+Documentation not found in the [wiki] can be found as inline comments in the code.
 
 
 [node]: http://nodejs.org/
@@ -66,6 +61,7 @@ TOC for the [wiki]
 [wiki]: http://github.com/phun-ky/patsy/wiki
 [patsy]: http://github.com/phun-ky/patsy
 [features_planned]: https://github.com/phun-ky/patsy/issues?labels=feature+planned&page=1&state=open
+[issues]: https://github.com/phun-ky/patsy/issues
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
