@@ -213,7 +213,7 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      folder: pathToBakedFiles + "debug' + path.sep + '*"
+      folder: pathToBakedFiles + 'debug' + path.sep + '*'
     },
     test: {
       all: [pathToJavaScriptFiles + 'test' + path.sep + '**' + path.sep + '*.js']
