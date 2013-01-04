@@ -26,7 +26,7 @@ var stdout    = process.stdout;
 
 var patsyHelpers = require('./lib/patsyHelpers');
 
-patsyHelpers.appPath = path.dirname(require.main.filename) + path.sep;
+
 
 stdin.resume();
 stdin.setEncoding('utf8');

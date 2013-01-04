@@ -112,6 +112,13 @@ var pathToMinifiedFiles
 var pathToBakedFiles;
 
 /**
+ * Varholder for relative project path, used to negate full window path issues
+ *
+ * @var     String 
+ */
+var relativeProjectPath;
+
+/**
  * Set up grunt and export it for use
  *
  * @var     Function 
@@ -171,9 +178,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
-  //grunt.loadNpmTasks('grunt-recess'); 
+  //grunt.loadNpmTasks('grunt-recess');  
+  
+  // Set relative project path 
+  relativeProjectPath   = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
 
-  pathToJavaScriptFiles = projectPath + projectConfig.pathToJavaScriptFiles;
+  // Set up varholders for better readability
+  pathToJavaScriptFiles = relativeProjectPath + projectConfig.pathToJavaScriptFiles;
+  pathToTemplateFiles   = relativeProjectPath + projectConfig.pathToTemplateFiles;
+  pathToMinifiedFiles   = relativeProjectPath + projectConfig.pathToMinifiedFiles;
+  pathToBakedFiles      = relativeProjectPath + projectConfig.pathToBakedFiles;
 
   // GruntJS configuration.
   grunt.initConfig({
@@ -183,8 +197,8 @@ module.exports = function(grunt) {
       scripts : {
         files : [ 
                     
-          pathToJavaScriptFiles + '**/*.js',                          
-          projectPath + projectConfig.pathToTemplateFiles + '*.mustache'
+          pathToJavaScriptFiles + '**' + path.sep + '*.js',                          
+          pathToTemplateFiles + '*.mustache'
                     
         ], 
         tasks: ['jshint','mustache', 'minified'],
@@ -194,15 +208,15 @@ module.exports = function(grunt) {
         
       },      
       concatinate : {
-        files : [projectPath + projectConfig.pathToMinifiedFiles + '*.js'],
+        files : [pathToMinifiedFiles + '*.js'],
         tasks : ['concat']
       }
     },
     clean: {
-      folder: projectPath + projectConfig.pathToBakedFiles + "debug/*"
+      folder: pathToBakedFiles + "debug' + path.sep + '*"
     },
     test: {
-      all: [pathToJavaScriptFiles + 'test/**/*.js']
+      all: [pathToJavaScriptFiles + 'test' + path.sep + '**' + path.sep + '*.js']
     },
     minified : {
       files: {
@@ -210,7 +224,7 @@ module.exports = function(grunt) {
           pathToJavaScriptFiles + '**' + path.sep + '*.js',                
           pathToJavaScriptFiles + '*.js'
         ],
-        dest: projectPath + projectConfig.pathToMinifiedFiles
+        dest: pathToMinifiedFiles
       }
     },
     jshint : {
@@ -227,15 +241,15 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src:  [
-                projectPath + projectConfig.pathToMinifiedFiles + '*.js'
+                pathToMinifiedFiles + '*.js'
               ],
-        dest: projectPath + projectConfig.pathToBakedFiles + project + '.core.js'
+        dest: pathToBakedFiles + project + '.core.js'
       }
     },        
     mustache:{
       files: {
         dest : pathToJavaScriptFiles + 'templates.js',
-        src : [projectPath + projectConfig.pathToTemplateFiles],
+        src : [pathToTemplateFiles],
         options: {
           postfix: typeof templatePostfix !== 'undefined' ? templatePostfix : '',
           prefix:  typeof templatePrefix !== 'undefined' ? templatePrefix : ''
