@@ -8,7 +8,7 @@
   "preferGlobal": "true",
   "engines": {
     "node": ">= 0.8.0"
-  },
+  },  
   "dependencies": {
     "grunt-cli" : ">=0.1.6",
     "grunt-init" : ">=0.2.0",
@@ -30,7 +30,7 @@
   "devDependencies": {
     
   },
-  "bin": "./start.js",
+  "bin": "./patsy",
   "repository": {
     "type": "git",
     "url": "git://github.com/phun-ky/patsy.git"

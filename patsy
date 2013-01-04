@@ -10,7 +10,7 @@ var path      = require('path');
 var util      = require('util');
 var colors    = require('colors');
 
-
+var program   = require('commander');
 
 
 /**
@@ -20,8 +20,12 @@ var colors    = require('colors');
 var stdin     = process.stdin;
 var stdout    = process.stdout;
  
+var pjson = require('./package.json');
 
-
+program
+  .version(pjson.version)
+  .option('-v, --verbose', 'Outputs every log and debug statement from patsy')
+  .parse(process.argv);
 
 
 var patsyHelpers = require('./lib/patsyHelpers');
