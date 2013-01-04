@@ -3,23 +3,62 @@
 "use strict";
 
 /**
- * Declare system variables from other dependencies
- **/
-var fs        = require('fs');
-var path      = require('path');
-var util      = require('util');
-var colors    = require('colors');
-
-var program   = require('commander');
-
+ * Require file system plugin from node
+ *
+ * @var     Object
+ * @source  NodeJS
+ */
+var fs            = require('fs');
+/**
+ * Require util plugin from node
+ *
+ * @var     Object
+ * @source  NodeJS
+ */
+var util          = require('util');
 
 /**
- * Declare 
+ * Require path plugin from node
+ *
+ * @var     Object
+ * @source  NodeJS
  */
+var path          = require('path');
 
-var stdin     = process.stdin;
-var stdout    = process.stdout;
+/**
+ * Require colors plugin from node
+ *
+ * @var     Object 
+ * @source	NodeJS
+ */
+var program       = require('commander');
+
+/**
+ * Require commander
+ *
+ * @var     Object 
+ */
+var program       = require('commander');
+
+/**
+ * Varholder for process.stdin
+ *
+ * @var     Object 
+ */
+var stdin         = process.stdin;
+
+/**
+ * Varholder for process.stoud
+ *
+ * @var     Object 
+ */
+var stdout        = process.stdout;
  
+/**
+ * Varholder for package.json
+ *
+ * @var 		Object
+ */
 var pjson = require('./package.json');
 
 program
