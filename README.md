@@ -24,6 +24,8 @@ Following instructions will install patsy and all dependencies:
 1. Install the required version of [node]
 2. Then in your prefered CLI, type `npm install patsy`
 
+> If you get the error "warn cannot run in wd" from npm, try to run it again with `sudo npm install patsy --unsafe-perm`
+
 ### How to use
 
 Go to the folder of where you have your web project, type `patsy` and enjoy!
