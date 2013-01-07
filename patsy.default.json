@@ -1,44 +1,42 @@
-{
-  "patsy": {
-    "project": {
-      "name": "",
-      "webroot": "/",
-      "js": "js/src/",
-      "path": "",
-      "project_folder": ""
-    },        
-    "build": {
-      "min": {
-        "dest": "js/min/",
-        "options": {}
-      },
-      "dist": "js/dist/",
-      "tmpl": {
-        "src": "js/mustache/",
-        "templatePrefix": "",
-        "templatePostfix": ""
-      },
-      "docs" : {
-        "dest" : "js/docs",
-        "options" : {}
-      },
-      "test": {
-        "harness": "jasmine",
-        "src": "js/test/"
-      },
-      "options": {
-        "verbose": true
-      }
+{  
+  "project": {
+    "name": "",
+    "webroot": "/",
+    "js": "js/src/",
+    "path": "",
+    "project_folder": ""
+  },        
+  "build": {
+    "min": {
+      "dest": "js/min/",
+      "options": {}
     },
-    "proxy": {
-      "options": {
-        "verbose": true
-      }
+    "dist": "js/dist/",
+    "tmpl": {
+      "src": "js/mustache/",
+      "templatePrefix": "",
+      "templatePostfix": ""
+    },
+    "docs" : {
+      "dest" : "js/docs",
+      "options" : {}
+    },
+    "test": {
+      "suite": "jasmine",
+      "src": "js/test/"
     },
     "options": {
-      "verbose": true,
-      "logToFile": false,
-      "scripture": true
+      "verbose": true
     }
+  },
+  "proxy": {
+    "options": {
+      "verbose": true
+    }
+  },
+  "options": {
+    "verbose": true,
+    "logToFile": false,
+    "scripture": true
   }
 }

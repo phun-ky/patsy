@@ -147,18 +147,18 @@ module.exports = function(grunt) {
       
       if(typeof config !== 'undefined'){
 
-        if( typeof config.patsy.build.tmpl.templatePrefix !== 'undefined' && 
-            typeof config.patsy.build.tmpl.templatePostfix !== 'undefined'
+        if( typeof config.build.tmpl.templatePrefix !== 'undefined' && 
+            typeof config.build.tmpl.templatePostfix !== 'undefined'
         ){
 
-          templatePostfix  = config.patsy.build.tmpl.templatePostfix;
-          templatePrefix   = config.patsy.build.tmpl.templatePrefix;
+          templatePostfix  = config.build.tmpl.templatePostfix;
+          templatePrefix   = config.build.tmpl.templatePrefix;
         }
 
         // Try to set project name, if not found, use the folder name
-        if(typeof config.patsy.project.name !== 'undefined'){
+        if(typeof config.project.name !== 'undefined'){
 
-          project           = config.patsy.project.name;
+          project           = config.project.name;
         } else {
 
           project           = path.basename(projectPath);
@@ -192,11 +192,11 @@ module.exports = function(grunt) {
   relativeProjectPath       = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
 
   // Set up varholders for better readability
-  pathToJavaScriptFiles     = relativeProjectPath + config.patsy.project.js;
-  pathToTemplateFiles       = relativeProjectPath + config.patsy.build.tmpl.src;
-  pathToMinifiedFiles       = relativeProjectPath + config.patsy.build.min.dest;
-  pathToBakedFiles          = relativeProjectPath + config.patsy.build.dist;
-  pathToDocumentationFiles  = relativeProjectPath + config.patsy.build.docs.dest;
+  pathToJavaScriptFiles     = relativeProjectPath + config.project.js;
+  pathToTemplateFiles       = relativeProjectPath + config.build.tmpl.src;
+  pathToMinifiedFiles       = relativeProjectPath + config.build.min.dest;
+  pathToBakedFiles          = relativeProjectPath + config.build.dist;
+  pathToDocumentationFiles  = relativeProjectPath + config.build.docs.dest;
 
   // GruntJS configuration.
   grunt.initConfig({

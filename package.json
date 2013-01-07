@@ -1,7 +1,7 @@
 {
   "name": "patsy",
   "version": "0.0.4",
-  "description": "A frontend build system for frontend developers",
+  "description": "A CLI based build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
   "bugs": "https://github.com/phun-ky/patsy/issues",
@@ -53,7 +53,9 @@
     "framework",
     "routing",
     "recess",
-    "uglify"
+    "uglify",
+    "dox-foundation",
+    "grunt"
   ],
   "author": {
     "name": "Alexander Vassbotn Røyne-Helgesen",
