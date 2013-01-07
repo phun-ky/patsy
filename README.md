@@ -42,6 +42,7 @@ configuration file for you.
 2. Check js files with JSHint
 3. Minify files
 4. Concatinates minified files into one single file
+5. Automagic documentation generation
 
 ### We want patsy to do this aswell in the future
 
@@ -51,7 +52,7 @@ configuration file for you.
 * Live content update when saving files
 * Automated testing via Jasmine AND/OR Qunit
 * Baking of LESS to CSS
-* Automagic documentation generation
+
 
 For a full list of planned features to come, see [features to come][features_planned].
 
