@@ -30,6 +30,7 @@
     }
   },
   "proxy": {
+    "resources" : [],
     "options": {
       "verbose": true
     }
