@@ -9,7 +9,7 @@
     },        
     "build": {
       "min": {
-        "src": "js/min/",
+        "dest": "js/min/",
         "options": {}
       },
       "dist": "js/dist/",
@@ -17,6 +17,10 @@
         "src": "js/mustache/",
         "templatePrefix": "",
         "templatePostfix": ""
+      },
+      "docs" : {
+        "dest" : "js/docs",
+        "options" : {}
       },
       "test": {
         "harness": "jasmine",

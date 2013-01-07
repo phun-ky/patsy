@@ -112,6 +112,14 @@ var pathToMinifiedFiles
 var pathToBakedFiles;
 
 /**
+ * Varholder for path to where documentation files are saved
+ *
+ * @var     String
+ * @source  patsy.json
+ */
+var pathToDocumentationFiles;
+
+/**
  * Varholder for relative project path, used to negate full window path issues
  *
  * @var     String 
@@ -172,7 +180,7 @@ module.exports = function(grunt) {
     process.exit(1);
   }
 
-  //grunt.loadNpmTasks('grunt-dox');   
+  grunt.loadNpmTasks('grunt-dox');   
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -181,13 +189,14 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-recess');  
   
   // Set relative project path 
-  relativeProjectPath   = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
+  relativeProjectPath       = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
 
   // Set up varholders for better readability
-  pathToJavaScriptFiles = relativeProjectPath + config.patsy.project.js;
-  pathToTemplateFiles   = relativeProjectPath + config.patsy.build.tmpl.src;
-  pathToMinifiedFiles   = relativeProjectPath + config.patsy.build.min.src;
-  pathToBakedFiles      = relativeProjectPath + config.patsy.build.dist;
+  pathToJavaScriptFiles     = relativeProjectPath + config.patsy.project.js;
+  pathToTemplateFiles       = relativeProjectPath + config.patsy.build.tmpl.src;
+  pathToMinifiedFiles       = relativeProjectPath + config.patsy.build.min.dest;
+  pathToBakedFiles          = relativeProjectPath + config.patsy.build.dist;
+  pathToDocumentationFiles  = relativeProjectPath + config.patsy.build.docs.dest;
 
   // GruntJS configuration.
   grunt.initConfig({
@@ -201,12 +210,12 @@ module.exports = function(grunt) {
           pathToTemplateFiles + '*.mustache'
                     
         ], 
-        tasks: ['jshint','mustache', 'minified'],
+        tasks: ['jshint','mustache', 'minified','dox'],
         options : {
           debounceDelay: 2500
         }
         
-      },      
+      },       
       concatinate : {
         files : [pathToMinifiedFiles + '*.js'],
         tasks : ['concat']
@@ -256,6 +265,12 @@ module.exports = function(grunt) {
         }
       }
     },    
+    dox: {
+      files: {
+        src: [pathToJavaScriptFiles + '*.js'],
+        dest: pathToDocumentationFiles
+      }
+    },
     /*recess: {
       dist: {
         src: [ projectPath + 'css/src/style.css' ]
