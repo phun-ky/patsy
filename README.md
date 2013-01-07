@@ -15,7 +15,8 @@ patsy requires [Nodejs >= 0.8.0][node] and is built with these plugins:
 * Commander
 * etc.. ( _Read full list in the package.json file under "dependencies"_ )
 
-All of the dependencies are installed automatically when you install patsy. 
+All of the dependencies are installed automatically when you install patsy. If you do not have `grunt-cli` and `grunt-init`
+installed already, patsy will use the local symlinks in `node_modules/.bin`.
 
 ### Installation 
 
