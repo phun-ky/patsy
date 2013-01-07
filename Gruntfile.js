@@ -259,10 +259,7 @@ module.exports = function(grunt) {
       files: {
         dest : pathToJavaScriptFiles + 'templates.js',
         src : [pathToTemplateFiles],
-        options: {
-          postfix: typeof templatePostfix !== 'undefined' ? templatePostfix : '',
-          prefix:  typeof templatePrefix !== 'undefined' ? templatePrefix : ''
-        }
+        options: config.build.tmpl.options || {}
       }
     },    
     dox: {

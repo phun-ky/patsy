@@ -13,9 +13,10 @@
     },
     "dist": "js/dist/",
     "tmpl": {
-      "src": "js/mustache/",
-      "templatePrefix": "",
-      "templatePostfix": ""
+      "src": "js/mustache/"      
+    },
+    "lint" : {
+      "options" : {}
     },
     "docs" : {
       "dest" : "js/docs",
