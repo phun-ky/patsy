@@ -10,7 +10,7 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "grunt-cli" : ">=0.1.6",
+    "grunt-cli": ">=0.1.6",
     "grunt": ">=0.4.0rc2",
     "grunt-contrib-concat": "~0.1.1",
     "grunt-contrib-jshint": "~0.1.0",
@@ -24,12 +24,10 @@
     "grunt-mustache": "~0.1.1",
     "grunt-minified": "~0.0.1",
     "commander": "~1.1.1",
-    "grunt-dox" : ">=0.2.2",
-    "xtend" : "~1.0.3"
+    "grunt-dox": ">=0.2.2",
+    "xtend": "~1.0.3"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "bin": "./patsy",
   "repository": {
     "type": "git",

@@ -72,6 +72,8 @@ module.exports = function(grunt) {
   // Populate project variables, used for better readability
   projectPath       = grunt.option('path');
 
+
+
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
@@ -102,7 +104,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
-  //grunt.loadNpmTasks('grunt-recess');
+
+
+  grunt.loadNpmTasks('grunt-recess');
 
   // GruntJS configuration
   grunt.initConfig({
@@ -123,9 +127,11 @@ module.exports = function(grunt) {
       scripts : {
         files : [
           '<%= basepath %><%= app.project.js %>**/*.js',
-          '<%= basepath %><%= app.build.tmpl.src %>*.mustache'
+          '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
+          '<%= basepath %><%= app.build.css.src %>**/*.css',
+          '<%= basepath %><%= app.build.css.src %>**/*.less'
         ],
-        tasks: ['jshint','mustache', 'minified','dox'],
+        tasks: ['jshint','mustache', 'minified','dox','recess'],
         options : {
           debounceDelay: 2500
         }
@@ -182,15 +188,20 @@ module.exports = function(grunt) {
     },
     dox: {
       files: {
-        src: ['<%= basepath %><%= app.project.js %>*.js'],
+        src: ['<%= basepath %><%= app.project.js %>**/*.js'],
         dest: '<%= basepath %><%= app.build.docs.dest %>'
       }
     },
-    /*recess: {
+    recess: {
       dist: {
-        src: [ projectPath + 'css/src/style.css' ]
+        src: [
+          '<%= basepath %><%= app.build.css.src %>**/*.css',
+          '<%= basepath %><%= app.build.css.src %>**/*.less'
+        ],
+        dest: '<%= basepath %><%= app.build.css.dist %>style.css',
+        options: config.build.css.options || { compile: true }
       }
-    },*/
+    },
     globals: {
 
     }

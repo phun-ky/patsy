@@ -24,7 +24,8 @@
 
     },
     "css" : {
-
+      "src" : "css/src/",
+      "dist" : "css/dist/"
     },
     "test": {
       "suite": "jasmine",
