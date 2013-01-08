@@ -20,7 +20,7 @@
 
     },
     "docs" : {
-      "dest" : "js/docs"
+      "dest" : "js/docs/"
 
     },
     "css" : {
