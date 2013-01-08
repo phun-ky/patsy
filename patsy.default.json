@@ -4,29 +4,35 @@
     "webroot": "/",
     "js": "js/src/",
     "path": "",
-    "project_folder": ""
+    "project_folder": "",
+    "author" : "",
+    "project_site" : ""
   },        
   "build": {
     "min": {
-      "dest": "js/min/",
-      "options": {}
+      "dest": "js/min/"
+      
     },
     "dist": "js/dist/",
     "tmpl": {
       "src": "js/mustache/"      
     },
     "lint" : {
-      "options" : {}
+      
     },
     "docs" : {
-      "dest" : "js/docs",
-      "options" : {}
+      "dest" : "js/docs"
+      
+    },
+    "css" : {
+
     },
     "test": {
       "suite": "jasmine",
       "src": "js/test/"
     },
     "options": {
+      "watch" : true,
       "verbose": true
     }
   },
