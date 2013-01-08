@@ -4,6 +4,12 @@
 
 _Note that this application is depended on some bleeding edge plugins, like the development version of [GruntJS][grunt]. YMMV._
 
+## Why use patsy?
+
+Short excerpt here with link to [why].
+
+> "Get on with it!"
+
 ## Getting started
 
 ### Requirements
@@ -65,7 +71,8 @@ if documentation is missing or incomplete, please submit an [issue][issues].
 [node]: http://nodejs.org/
 [grunt]: https://github.com/gruntjs/grunt
 [npm]: http://npmjs.org/
-[wiki]: http://github.com/phun-ky/patsy/wiki
+[wiki]: http://github.com/phun-ky/patsy/wiki/
+[why]: http://github.com/phun-ky/patsy/wiki/Why-patsy%3F
 [patsy]: http://github.com/phun-ky/patsy
 [features_planned]: https://github.com/phun-ky/patsy/issues?labels=feature+planned&page=1&state=open
 [issues]: https://github.com/phun-ky/patsy/issues
