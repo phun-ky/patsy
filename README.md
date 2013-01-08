@@ -1,6 +1,6 @@
 # patsy
 
-> A staging and build environment for web developers. 
+> A staging and build environment for web developers.
 
 _Note that this application is depended on some bleeding edge plugins, like the development version of [GruntJS][grunt]. YMMV._
 
@@ -15,9 +15,9 @@ patsy requires [Nodejs >= 0.8.0][node] and is built with these plugins:
 * Commander
 * etc.. ( _Read full list in the package.json file under "dependencies"_ )
 
-All of the dependencies are installed automatically when you install patsy. 
+All of the dependencies are installed automatically when you install patsy.
 
-### Installation 
+### Installation
 
 Following instructions will install patsy and all dependencies:
 
@@ -30,8 +30,8 @@ Following instructions will install patsy and all dependencies:
 
 Go to the folder of where you have your web project, type `patsy` and enjoy!
 
-Patsy will generate a configuration file for you if you have not specified one in your project root folder. 
-Patsy will ask you some questions to build a configuration file, or if you trust him, he will generate a default 
+Patsy will generate a configuration file for you if you have not specified one in your project root folder.
+Patsy will ask you some questions to build a configuration file, or if you trust him, he will generate a default
 configuration file for you.
 
 ## Features
@@ -56,9 +56,9 @@ configuration file for you.
 
 For a full list of planned features to come, see [features to come][features_planned].
 
-## Documentation 
+## Documentation
 
-See the [wiki] for full documentation. Documentation not found in the [wiki] can be found as inline comments in the code, 
+See the [wiki] for full documentation. Documentation not found in the [wiki] can be found as inline comments in the code,
 if documentation is missing or incomplete, please submit an [issue][issues].
 
 
@@ -73,7 +73,7 @@ if documentation is missing or incomplete, please submit an [issue][issues].
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
-07/01/2013: Added support for passing options to build plugin, removed dependency of globally installed grunt, 
+07/01/2013: Added support for passing options to build plugin, removed dependency of globally installed grunt,
 added default configuration file and support for automated documentation generation.
 
 
