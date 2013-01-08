@@ -4,9 +4,9 @@
  * If the documented code here does not fullfill your needs, check the wiki on github here: https://github.com/phun-ky/patsy/wiki
  *
  * We do a bit more tweaking that we should here, but while we wait for grunt to be omnipotent, we do it like we do.
- * 
+ *
  * grunt is copyrighted to "Cowboy" Ben Alman
- * 
+ *
  * https://github.com/gruntjs/grunt
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
@@ -58,35 +58,35 @@ var config;
 /**
  * Varholder for relative project path, used to negate full window path issues
  *
- * @var     String 
+ * @var     String
  */
 var relativeProjectPath;
 
 /**
  * Set up grunt and export it for use
  *
- * @var     Function 
+ * @var     Function
  */
-module.exports = function(grunt) {    
+module.exports = function(grunt) {
 
   // Populate project variables, used for better readability
-  projectPath       = grunt.option('path');  
-  
+  projectPath       = grunt.option('path');
+
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
     if(!patsyHelpers.doesConfigExist(projectPath + 'patsy.json')){
 
       console.log('Project configuration not found, exiting...');
-      process.exit(1);    
+      process.exit(1);
     } else {
 
-      // Set config from patsy.json        
-      // Until we can access objects from inside grunt.initConfig, 
+      // Set config from patsy.json
+      // Until we can access objects from inside grunt.initConfig with templating,
       // we've to load the file into another variable
-      config = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);     
+      config = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
 
-      // Set relative project path 
+      // Set relative project path
       relativeProjectPath       = path.relative(patsyHelpers.appPath, projectPath) + path.sep;
     }
 
@@ -96,15 +96,15 @@ module.exports = function(grunt) {
     process.exit(1);
   }
 
-  grunt.loadNpmTasks('grunt-dox');   
+  grunt.loadNpmTasks('grunt-dox');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
-  //grunt.loadNpmTasks('grunt-recess');  
+  //grunt.loadNpmTasks('grunt-recess');
 
-  // GruntJS configuration.
+  // GruntJS configuration
   grunt.initConfig({
     // Read patsys configuration file into pkg
     pkg: grunt.file.readJSON('package.json'),
@@ -120,18 +120,16 @@ module.exports = function(grunt) {
       '<%= pkg.homepage ? " * @link " + pkg.homepage + "\\n" : "" %> */\n',
     // Watch tasks
     watch: {
-            
       scripts : {
-        files : [ 
-          '<%= basepath %><%= app.project.js %>**/*.js',          
+        files : [
+          '<%= basepath %><%= app.project.js %>**/*.js',
           '<%= basepath %><%= app.build.tmpl.src %>*.mustache'
-        ], 
+        ],
         tasks: ['jshint','mustache', 'minified','dox'],
         options : {
           debounceDelay: 2500
         }
-        
-      },       
+      },
       concatinate : {
         files : ['<%= basepath %><%= app.build.min.dest %>*.js'],
         tasks : ['concat']
@@ -147,7 +145,7 @@ module.exports = function(grunt) {
     minified : {
       files: {
         src: [
-          '<%= basepath %><%= app.project.js %>**/*.js',                
+          '<%= basepath %><%= app.project.js %>**/*.js',
           '<%= basepath %><%= app.project.js %>*.js'
         ],
         dest: '<%= basepath %><%= app.build.min.dest %>'
@@ -159,7 +157,7 @@ module.exports = function(grunt) {
         white : false,
         passfail: true
       },
-      src: [ 
+      src: [
         '<%= basepath %><%= app.project.js %>**/*.js',
         '!<%= basepath %><%= app.project.js %>templates.js'
       ]
@@ -174,14 +172,14 @@ module.exports = function(grunt) {
               ],
         dest: '<%= basepath %><%= app.build.dist %><%= app.project.name %>.core.js'
       }
-    },        
+    },
     mustache:{
       files: {
         dest : '<%= basepath %><%= app.project.js %>templates.js',
         src : ['<%= basepath %><%= app.build.tmpl.src %>'],
         options: config.build.tmpl.options || {}
       }
-    },    
+    },
     dox: {
       files: {
         src: ['<%= basepath %><%= app.project.js %>*.js'],
@@ -195,7 +193,7 @@ module.exports = function(grunt) {
     },*/
     globals: {
 
-    }      
+    }
   });
 
   grunt.registerTask('default', 'watch');

@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 "use strict";
 
@@ -28,34 +28,34 @@ var path          = require('path');
 /**
  * Require colors plugin from node
  *
- * @var     Object 
- * @source	NodeJS
+ * @var     Object
+ * @source  NodeJS
  */
 var program       = require('commander');
 
 /**
  * Require commander
  *
- * @var     Object 
+ * @var     Object
  */
 var program       = require('commander');
- 
+
 /**
  * Varholder for package.json
  *
- * @var 		Object
+ * @var     Object
  */
 var pjson = require('./package.json');
 
 program
   .version(pjson.version)
-  .option('-v, --verbose', 				'output every log and debug statement from patsy. this will override the configuration setting!')
+  .option('-v, --verbose',        'output every log and debug statement from patsy. this will override the configuration setting!')
   .option('-d, --default-config', 'set patsy to just use the default configuration file')
-  .option('-s, --scripture', 			'no output from King Arthur, Patsy or God')
-  .option('-D, --debug', 					'set debug to true')
-  .option('-nb, --no-build', 			'start patsy without build system')
-  .option('-np, --no-proxy', 			'start patsy without proxy setup')
-  .option('-nt, --no-test', 			'start patsy without tests')
+  .option('-s, --scripture',      'no output from King Arthur, Patsy or God')
+  .option('-D, --debug',          'set debug to true')
+  .option('-nb, --no-build',      'start patsy without build system')
+  .option('-np, --no-proxy',      'start patsy without proxy setup')
+  .option('-nt, --no-test',       'start patsy without tests')
   .parse(process.argv);
 
 

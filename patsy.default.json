@@ -1,4 +1,4 @@
-{  
+{
   "project": {
     "name": "",
     "webroot": "/",
@@ -7,22 +7,21 @@
     "project_folder": "",
     "author" : "",
     "project_site" : ""
-  },        
+  },
   "build": {
     "min": {
       "dest": "js/min/"
-      
     },
     "dist": "js/dist/",
     "tmpl": {
-      "src": "js/mustache/"      
+      "src": "js/mustache/"
     },
     "lint" : {
-      
+
     },
     "docs" : {
       "dest" : "js/docs"
-      
+
     },
     "css" : {
 
