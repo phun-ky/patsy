@@ -31,7 +31,7 @@
     "grunt-contrib-jasmine": "~0.2.0"
   },
   "devDependencies": {},
-  "bin": "./patsy",
+  "bin": "./bin/patsy",
   "repository": {
     "type": "git",
     "url": "git://github.com/phun-ky/patsy.git"
