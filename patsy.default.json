@@ -28,12 +28,16 @@
       "dist" : "css/dist/"
     },
     "test": {
-      "suite": "jasmine",
-      "src": "js/test/"
+      "suites": {
+        "nodeunit" : {
+          "src": "js/test/**/*.js"
+        }
+      }
     },
     "options": {
       "watch" : true,
-      "verbose": true
+      "verbose": true,
+      "testsOnWatch" : false
     }
   },
   "proxy": {

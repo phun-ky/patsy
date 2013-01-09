@@ -2,13 +2,13 @@
   "project": {
     "name": "ProjectFoo",
     "webroot": "/",
-    "js": "js/src/",
     "path": "C:\\Users\\JohnDoe\\Workspace\\ProjectFoo\\",
     "project_folder": "ProjectFoo",
     "author" : "John Doe",
     "project_site" : "http://projectfoo.com"
   },
   "build": {
+    "js": "js/src/",
     "min": {
       "dest": "js/min/",
       "options": {}
@@ -37,9 +37,19 @@
       }
     },
     "test": {
-      "suite": "jasmine",
-      "src": "js/test/",
-      "options" : {}
+      "suites": {
+        "jasmine" : {
+          "src": "js/test/**/*.js"
+        },"qunit" : {
+          "src": "js/test/**/*.js",
+          "options": {
+            "timeout": 10000,
+            "--cookies-file": "misc/cookies.txt"
+          }
+        },"nodeunit" : {
+          "src": "js/test/**/*.js"
+        }
+      }
     },
     "options": {
       "verbose": true
