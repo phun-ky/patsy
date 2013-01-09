@@ -1,0 +1,59 @@
+{
+  "project": {
+    "name": "ProjectFoo",
+    "webroot": "/",
+    "js": "js/src/",
+    "path": "C:\\Users\\JohnDoe\\Workspace\\ProjectFoo\\",
+    "project_folder": "ProjectFoo",
+    "author" : "John Doe",
+    "project_site" : "http://projectfoo.com"
+  },
+  "build": {
+    "min": {
+      "dest": "js/min/",
+      "options": {}
+    },
+    "dist": "js/dist/",
+    "tmpl": {
+      "src": "js/mustache/",
+      "options" : {
+        "prefix" : "$B.extend({ templates: ",
+        "postfix" : "});"
+      }
+    },
+    "lint": {
+      "options": {}
+    },
+    "docs": {
+      "dest": "js/docs/",
+      "options": {}
+    },
+    "css" : {
+      "src" : "css/src/",
+      "dist" : "css/dist/",
+      "options" : {
+        "compile" : true,
+        "compress" : true
+      }
+    },
+    "test": {
+      "suite": "jasmine",
+      "src": "js/test/",
+      "options" : {}
+    },
+    "options": {
+      "verbose": true
+    }
+  },
+  "proxy": {
+    "resources": [],
+    "options": {
+      "verbose": true
+    }
+  },
+  "options": {
+    "verbose": true,
+    "logToFile": false,
+    "scripture": true
+  }
+}
