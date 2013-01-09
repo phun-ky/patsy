@@ -25,7 +25,10 @@
     "grunt-minified": "~0.0.1",
     "commander": "~1.1.1",
     "grunt-dox": ">=0.2.2",
-    "xtend": "~1.0.3"
+    "xtend": "~1.0.3",
+    "grunt-contrib-nodeunit": "~0.1.1",
+    "grunt-contrib-qunit": "~0.1.0",
+    "grunt-contrib-jasmine": "~0.2.0"
   },
   "devDependencies": {},
   "bin": "./patsy",
