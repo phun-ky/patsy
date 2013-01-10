@@ -45,7 +45,7 @@ var program       = require('commander');
  *
  * @var     Object
  */
-var pjson = require('./package.json');
+var pjson = require('../package.json');
 
 program
   .version(pjson.version)
@@ -59,7 +59,7 @@ program
   .parse(process.argv);
 
 
-var patsyHelpers = require('./lib/patsyHelpers');
+var patsyHelpers = require('../lib/patsyHelpers');
 
 
 patsyHelpers.start();
