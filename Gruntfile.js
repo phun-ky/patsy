@@ -189,8 +189,12 @@ module.exports = function(grunt) {
         passfail: true
       },
       src: [
-        '<%= basepath %><%= app.build.js %>**/*.js',
-        '!<%= basepath %><%= app.build.js %>templates.js'
+        
+        '<%= basepath %><%= app.build.js %>**/*.js',    
+        '!<%= basepath %><%= app.build.js %>templates.js',    
+        '!<%= basepath %><%= app.build.min.dest %>*.js',
+        '!<%= basepath %><%= app.build.dist %>*.js'
+        
       ]
     },
     concat: {
@@ -234,6 +238,8 @@ module.exports = function(grunt) {
 
   // GruntJS configuration
   grunt.initConfig(patsyHelpers.gruntConfig);
+
+//  console.log(grunt.config.get());
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('test', testTasks);

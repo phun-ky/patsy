@@ -1,14 +1,14 @@
 {
   "project": {
     "name": "",
-    "webroot": "/",
-    "js": "js/src/",
+    "webroot": "/",    
     "path": "",
     "project_folder": "",
     "author" : "",
     "project_site" : ""
   },
   "build": {
+    "js": "js/src/",
     "min": {
       "dest": "js/min/"
     },
