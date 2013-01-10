@@ -239,7 +239,6 @@ module.exports = function(grunt) {
   // GruntJS configuration
   grunt.initConfig(patsyHelpers.gruntConfig);
 
-//  console.log(grunt.config.get());
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('test', testTasks);
