@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "",
-    "webroot": "/",    
+    "webroot": "/",
     "path": "",
     "project_folder": "",
     "author" : "",
@@ -30,7 +30,7 @@
     "test": {
       "suites": {
         "nodeunit" : {
-          "src": "js/test/**/*.js"
+          "src": "js/test/nodeunit/**/*.js"
         }
       }
     },

@@ -39,15 +39,15 @@
     "test": {
       "suites": {
         "jasmine" : {
-          "src": "js/test/**/*.js"
+          "src": "js/test/jasmine/**/*.js"
         },"qunit" : {
-          "src": "js/test/**/*.js",
+          "src": "js/test/qunit/**/*.js",
           "options": {
             "timeout": 10000,
             "--cookies-file": "misc/cookies.txt"
           }
         },"nodeunit" : {
-          "src": "js/test/**/*.js"
+          "src": "js/test/nodeunit/**/*.js"
         }
       }
     },

@@ -9,6 +9,9 @@
   "engines": {
     "node": ">= 0.8.0"
   },
+  "scripts" : {
+    "test" : "patsy test"
+  },
   "dependencies": {
     "grunt-cli": ">=0.1.6",
     "grunt": "master",

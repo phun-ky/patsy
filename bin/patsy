@@ -47,6 +47,8 @@ var program       = require('commander');
  */
 var pjson = require('../package.json');
 
+var patsyHelpers = require('../lib/patsyHelpers');
+
 program
   .version(pjson.version)
   .option('-v, --verbose',        'output every log and debug statement from patsy. this will override the configuration setting!')
@@ -56,10 +58,16 @@ program
   .option('-nb, --no-build',      'start patsy without build system')
   .option('-np, --no-proxy',      'start patsy without proxy setup')
   .option('-nt, --no-test',       'start patsy without tests')
-  .parse(process.argv);
 
 
-var patsyHelpers = require('../lib/patsyHelpers');
+program
+  .command('test')
+  .description('run a test of patsy')
+  .action(patsyHelpers.runPatsyTest);
+
+program.parse(process.argv);
+
+
 
 
 patsyHelpers.start();

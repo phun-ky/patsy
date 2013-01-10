@@ -101,6 +101,9 @@ module.exports = function(grunt) {
       if(config.build.test.suites.jasmine){
         testTasks.push('jasmine');
         grunt.loadNpmTasks('grunt-contrib-jasmine');
+
+
+        config.build.test.suites.jasmine.src = config.project.relativeProjectPath + config.build.test.suites.jasmine.src;
       }
 
       if(config.build.test.suites.nodeunit){
@@ -115,6 +118,7 @@ module.exports = function(grunt) {
 
       if(config.build.test.suites.qunit){
         testTasks.push('qunit');
+        config.build.test.suites.qunit.src = config.project.relativeProjectPath + config.build.test.suites.qunit.src;
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
     }
@@ -189,12 +193,12 @@ module.exports = function(grunt) {
         passfail: true
       },
       src: [
-        
-        '<%= basepath %><%= app.build.js %>**/*.js',    
-        '!<%= basepath %><%= app.build.js %>templates.js',    
+
+        '<%= basepath %><%= app.build.js %>**/*.js',
+        '!<%= basepath %><%= app.build.js %>templates.js',
         '!<%= basepath %><%= app.build.min.dest %>*.js',
         '!<%= basepath %><%= app.build.dist %>*.js'
-        
+
       ]
     },
     concat: {
