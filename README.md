@@ -58,7 +58,7 @@ configuration file for you.
 * Static file server support
 * Live content update when saving files
 * Automated testing via Nodeunit ( support for Jasmine and Qunit aswell )
-* Image concatination with automatated css generation
+* Image concatination with automated css generation
 
 
 For a full list of planned features to come, see [features to come][features_planned].
