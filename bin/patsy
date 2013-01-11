@@ -65,6 +65,15 @@ program
   .description('run a test of patsy')
   .action(patsyHelpers.runPatsyTest);
 
+program
+  .command('tasks [how]')
+  .description('run patsy tasks. [all/<task>]')
+  .action(patsyHelpers.runGruntTasks);
+
+program.parse(process.argv);
+
+
+
 program.parse(process.argv);
 
 
