@@ -5,20 +5,28 @@
     "path": "C:\\Users\\JohnDoe\\Workspace\\ProjectFoo\\",
     "project_folder": "ProjectFoo",
     "author" : "John Doe",
-    "project_site" : "http://projectfoo.com"
+    "project_site" : "http://projectfoo.com",
+    "options" : {
+      "watch_config": true
+    }
   },
   "build": {
     "js": "js/src/",
     "min": {
       "dest": "js/min/",
-      "options": {}
+      "options": {
+        "sourcemap": true,
+        "allinone": false,
+        "verbose": true
+      }
     },
     "dist": "js/dist/",
     "tmpl": {
       "src": "js/mustache/",
       "options" : {
         "prefix" : "$B.extend({ templates: ",
-        "postfix" : "});"
+        "postfix" : "});",
+        "verbose": false
       }
     },
     "lint": {

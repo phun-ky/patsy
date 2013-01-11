@@ -49,6 +49,10 @@ var pjson = require('../package.json');
 
 var patsyHelpers = require('../lib/patsyHelpers');
 
+var command = '';
+
+var option  = '';
+
 program
   .version(pjson.version)
   .option('-v, --verbose',        'output every log and debug statement from patsy. this will override the configuration setting!')
@@ -63,22 +67,25 @@ program
 program
   .command('test')
   .description('run a test of patsy')
-  .action(patsyHelpers.runPatsyTest);
+  .action(function(){
+    command = 'test';
+    patsyHelpers.runPatsyTest();
+  });
 
 program
-  .command('tasks [how]')
-  .description('run patsy tasks. [all/<task>]')
-  .action(patsyHelpers.runGruntTasks);
+  .command('task [how]')
+  .description('run patsy task(s). [all/<task>]')
+  .action(function(how){
+
+    command = 'task';
+    patsyHelpers.runGruntTasks(how);
+  });
 
 program.parse(process.argv);
 
 
 
-program.parse(process.argv);
-
-
-
-
-patsyHelpers.start();
-
-
+// If no commands are given, start patsy
+if(command === ''){
+  patsyHelpers.start();
+}

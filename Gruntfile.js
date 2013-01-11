@@ -183,7 +183,8 @@ module.exports = function(grunt) {
           '<%= basepath %><%= app.build.js %>**/*.js',
           '<%= basepath %><%= app.build.js %>*.js'
         ],
-        dest: '<%= basepath %><%= app.build.min.dest %>'
+        dest: '<%= basepath %><%= app.build.min.dest %>',
+        options: config.build.min.options || {}
       }
     },
     jshint : {
@@ -215,15 +216,16 @@ module.exports = function(grunt) {
     mustache:{
       files: {
         dest : '<%= basepath %><%= app.build.js %>templates.js',
-        src : ['<%= basepath %><%= app.build.tmpl.src %>'],
-        options: config.build.tmpl.options || {}
-      }
+        src : ['<%= basepath %><%= app.build.tmpl.src %>']
+      },
+      options: config.build.tmpl.options || {}
     },
     dox: {
       files: {
         src: ['<%= basepath %><%= app.build.js %>**/*.js'],
         dest: '<%= basepath %><%= app.build.docs.dest %>'
-      }
+      },
+      options: config.build.docs.options || {}
     },
     recess: {
       dist: {
@@ -246,6 +248,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('test', testTasks);
+  grunt.registerTask('all', ['jshint','mustache', 'minified','dox','recess','concat'].concat(testTasks));
 
 
 };
