@@ -36,9 +36,7 @@ Following instructions will install patsy and all dependencies:
 
 Go to the folder of where you have your web project, type `patsy` and enjoy!
 
-Patsy will generate a configuration file for you if you have not specified one in your project root folder.
-Patsy will ask you some questions to build a configuration file, or if you trust him, he will generate a default
-configuration file for you.
+For more advance usage and documentation, go to the [wiki].
 
 ## Features
 
@@ -50,6 +48,7 @@ configuration file for you.
 4. Concatinates minified files into one single file
 5. Automagic documentation generation
 6. Baking of LESS to CSS
+7. Automated testing via Nodeunit ( support for Jasmine and Qunit aswell )
 
 ### We want patsy to do this aswell in the future
 
@@ -57,7 +56,6 @@ configuration file for you.
 * Proxy support
 * Static file server support
 * Live content update when saving files
-* Automated testing via Nodeunit ( support for Jasmine and Qunit aswell )
 * Image concatination with automated css generation
 
 
