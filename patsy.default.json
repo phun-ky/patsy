@@ -1,11 +1,18 @@
 {
   "project": {
-    "name": "",
-    "webroot": "/",
-    "path": "",
-    "project_folder": "",
-    "author" : "",
-    "project_site" : ""
+    "details": {
+      "name": "",
+      "homepage": "",
+      "author": ""
+    },
+    "environment": {
+      "root" : "",
+      "abs_path": "",
+      "web_root": "",
+      "port": 8000,
+      "host": "localhost",
+      "home_file": "index.*"
+    }
   },
   "build": {
     "js": "js/src/",
@@ -16,12 +23,9 @@
     "tmpl": {
       "src": "js/mustache/"
     },
-    "lint" : {
-
-    },
+    "lint" : {},
     "docs" : {
       "dest" : "js/docs/"
-
     },
     "css" : {
       "src" : "css/src/",

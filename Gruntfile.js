@@ -137,6 +137,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
   grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-reload');
 
   patsyHelpers.gruntConfig = {
     // Read patsys configuration file into pkg

@@ -1,11 +1,18 @@
 {
   "project": {
-    "name": "ProjectFoo",
-    "webroot": "/",
-    "path": "C:\\Users\\JohnDoe\\Workspace\\ProjectFoo\\",
-    "project_folder": "ProjectFoo",
-    "author" : "John Doe",
-    "project_site" : "http://projectfoo.com",
+    "details": {
+      "name": "ProjectFoo",
+      "homepage": "http://projectfoo.com",
+      "author": "Foo Bar"
+    },
+    "environment": {
+      "root" : "ProjectFoo",
+      "abs_path": "C:\\Users\\JohnDoe\\Workspace\\ProjectFoo\\",
+      "web_root": "\\src\\main\\webapp\\",
+      "port": 8094,
+      "host": "localhost",
+      "home_file": "/ProjectFoo/start.html"
+    },
     "options" : {
       "watch_config": true
     }
