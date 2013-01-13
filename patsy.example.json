@@ -68,7 +68,8 @@
       }
     },
     "options": {
-      "verbose": true
+      "verbose": true,
+      "linting": false
     }
   },
   "proxy": {

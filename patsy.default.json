@@ -41,7 +41,8 @@
     "options": {
       "watch" : true,
       "verbose": true,
-      "testsOnWatch" : false
+      "testsOnWatch" : false,
+      "linting": true
     }
   },
   "proxy": {

@@ -112,7 +112,7 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-jasmine');
 
 
-        config.build.test.suites.jasmine.src = config.project.relativeProjectPath + config.build.test.suites.jasmine.src;
+        config.build.test.suites.jasmine.src = patsyHelpers.updateRelativePaths(config.project.relativeProjectPath, config.build.test.suites.jasmine.src);
       }
 
       if(config.build.test.suites.nodeunit){
@@ -120,59 +120,19 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
 
-        config.build.test.suites.nodeunit.src = config.project.relativeProjectPath + config.build.test.suites.nodeunit.src;
+        config.build.test.suites.nodeunit.src = patsyHelpers.updateRelativePaths(config.project.relativeProjectPath, config.build.test.suites.nodeunit.src);
 
 
       }
 
       if(config.build.test.suites.qunit){
         testTasks.push('qunit');
-        config.build.test.suites.qunit.src = config.project.relativeProjectPath + config.build.test.suites.qunit.src;
+        config.build.test.suites.qunit.src = patsyHelpers.updateRelativePaths(config.project.relativeProjectPath, config.build.test.suites.qunit.src);
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
       if(config.build.lint.src){
-
-        var _isNegated = function(path){
-          // if path is negated remove negate
-          if(path.indexOf('!') === 0){
-            return true;
-          } else {
-            return false;
-          }
-        };
-
-        var _fixSrcPath = function(relative){
-          var src = [];
-          var complete_path;
-          // For each path, check if path is negated, if it is, remove negation
-          relative.forEach(function(path){
-
-            if(_isNegated(path)){
-              path = path.slice(1);
-              complete_path = '!' + config.project.relativeProjectPath + path;
-            } else {
-              complete_path = config.project.relativeProjectPath + path;
-            }
-
-            src.push(complete_path);
-
-          });
-
-          return src;
-
-        };
-
-
-
-        if(patsyHelpers.isArray(config.build.lint.src)){
-          config.build.lint.src = _fixSrcPath(config.build.lint.src);
-        } else {
-          config.build.lint.src = config.project.relativeProjectPath + config.build.lint.src;
-        }
-
-
-
+          config.build.lint.src = patsyHelpers.updateRelativePaths(config.project.relativeProjectPath, config.build.lint.src);
       }
 
       patsyHelpers.gruntConfig = {
@@ -230,7 +190,7 @@ module.exports = function(grunt) {
             white : false,
             passfail: true
           },
-          src: [
+          src: config.build.lint.src || [
             '<%= basepath %><%= app.build.js %>**/*.js',
             '!<%= basepath %><%= app.build.js %>templates.js',
             '!<%= basepath %><%= app.build.min.dest %>*.js',

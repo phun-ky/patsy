@@ -62,6 +62,7 @@ program
   .option('-nb, --no-build',      'start patsy without build system')
   .option('-np, --no-proxy',      'start patsy without proxy setup')
   .option('-nt, --no-test',       'start patsy without tests')
+  .option('-nl, --no-linting',    'start patsy without linting')
 
 
 program
