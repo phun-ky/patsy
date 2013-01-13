@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "grunt-cli": ">=0.1.6",
-    "grunt": "master",    
+    "grunt": "master",
     "grunt-contrib-jshint": ">=0.1.1rc5",
     "grunt-contrib-watch": ">=0.2.0rc5",
     "grunt-contrib-nodeunit": "~0.1.2rc5"

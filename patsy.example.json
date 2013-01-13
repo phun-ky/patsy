@@ -37,7 +37,8 @@
       }
     },
     "lint": {
-      "options": {}
+      "options": {},
+      "src": ["js/src/**/*.js","!js/src/lib/*.js"]
     },
     "docs": {
       "dest": "js/docs/",

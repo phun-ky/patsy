@@ -131,6 +131,50 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
+      if(config.build.lint.src){
+
+        var _isNegated = function(path){
+          // if path is negated remove negate
+          if(path.indexOf('!') === 0){
+            return true;
+          } else {
+            return false;
+          }
+        };
+
+        var _fixSrcPath = function(relative){
+          var src = [];
+          var complete_path;
+          // For each path, check if path is negated, if it is, remove negation
+          relative.forEach(function(path){
+
+            if(_isNegated(path)){
+              path = path.slice(1);
+              complete_path = '!' + config.project.relativeProjectPath + path;
+            } else {
+              complete_path = config.project.relativeProjectPath + path;
+            }
+
+            src.push(complete_path);
+
+          });
+
+          return src;
+
+        };
+
+
+
+        if(patsyHelpers.isArray(config.build.lint.src)){
+          config.build.lint.src = _fixSrcPath(config.build.lint.src);
+        } else {
+          config.build.lint.src = config.project.relativeProjectPath + config.build.lint.src;
+        }
+
+
+
+      }
+
       patsyHelpers.gruntConfig = {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
@@ -181,18 +225,16 @@ module.exports = function(grunt) {
           }
         },
         jshint : {
-          options : {
+          options : config.build.lint.options || {
             indent : 2,
             white : false,
             passfail: true
           },
           src: [
-
             '<%= basepath %><%= app.build.js %>**/*.js',
             '!<%= basepath %><%= app.build.js %>templates.js',
             '!<%= basepath %><%= app.build.min.dest %>*.js',
             '!<%= basepath %><%= app.build.dist %>*.js'
-
           ]
         },
         concat: {
@@ -238,7 +280,7 @@ module.exports = function(grunt) {
 
   } else {
 
-    
+
 
     if(path.basename(path.resolve(__dirname)) == 'patsy'){
 
@@ -246,13 +288,13 @@ module.exports = function(grunt) {
       grunt.loadNpmTasks('grunt-contrib-nodeunit');
       patsyHelpers.gruntConfig = {
         // Read patsys configuration file into pkg
-        pkg: grunt.file.readJSON('package.json'),        
+        pkg: grunt.file.readJSON('package.json'),
         // Set basepath
         basepath : path.resolve(__dirname),
         watch: {
           scripts : {
             files : [
-              '**/*.js'           
+              '**/*.js'
             ],
             tasks: ['jshint', 'nodeunit']
           }
@@ -276,9 +318,9 @@ module.exports = function(grunt) {
     } else {
       grunt.log.warn('FAILURE: Project path not set, exiting...');
       process.exit(1);
-      
+
     }
-    
+
   }
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -289,7 +331,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
   grunt.loadNpmTasks('grunt-recess');
-  grunt.loadNpmTasks('grunt-reload');  
+  grunt.loadNpmTasks('grunt-reload');
 
   // GruntJS configuration
   grunt.initConfig(patsyHelpers.gruntConfig);
