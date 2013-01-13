@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-"use strict";
+/*jslint node: true */
+'use strict';
 
 /**
  * Require file system plugin from node
@@ -33,12 +34,7 @@ var path          = require('path');
  */
 var program       = require('commander');
 
-/**
- * Require commander
- *
- * @var     Object
- */
-var program       = require('commander');
+
 
 /**
  * Varholder for package.json
@@ -62,7 +58,7 @@ program
   .option('-nb, --no-build',      'start patsy without build system')
   .option('-np, --no-proxy',      'start patsy without proxy setup')
   .option('-nt, --no-test',       'start patsy without tests')
-  .option('-nl, --no-linting',    'start patsy without linting')
+  .option('-nl, --no-lint',       'start patsy without linting');
 
 
 program

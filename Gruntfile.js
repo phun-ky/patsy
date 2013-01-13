@@ -14,7 +14,7 @@
  * http://benalman.com/about/license/
  */
  /*jslint node: true */
- "use strict";
+ 'use strict';
 
 /**
  * Require util plugin from node
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.css.src %>**/*.css',
               '<%= basepath %><%= app.build.css.src %>**/*.less'
             ],
-            tasks: ['jshint','mustache', 'minified','dox','recess'],
+            tasks: ['jshint','mustache', 'minified','dox','recess'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
               debounceDelay: 2500
             }
@@ -254,7 +254,8 @@ module.exports = function(grunt) {
         watch: {
           scripts : {
             files : [
-              '**/*.js'
+              '**/*.js',
+              'bin/patsy'
             ],
             tasks: ['jshint', 'nodeunit']
           }
