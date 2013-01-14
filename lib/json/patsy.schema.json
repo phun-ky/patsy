@@ -1,0 +1,177 @@
+{  
+  "id": "patsy.schema.json",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type" : "object",
+      "properties" : {
+        "details": {
+          "type" : "object",
+          "properties" : {
+            "name": {
+              "type" : "string"
+            },
+            "homepage": {
+              "type" : "string"
+            },
+            "author": {
+              "type" : "string"
+            }
+          }
+        },
+        "environment": {
+          "type" : "object",
+          "properties" : {
+            "root" : {
+              "type" : "string"
+            },
+            "abs_path": {
+              "type" : "string"
+            },
+            "web_root": {
+              "type" : "string"
+            },
+            "port": {
+              "type" : "integer"
+            },
+            "host": {
+              "type" : "string"
+            },
+            "home_file": {
+              "type": "string"
+            }
+          }
+        },
+        "options" : {
+          "type" : "object"
+        }
+      }
+    },
+    "build": {
+      "type" : "object",
+      "properties" : {
+        "js": {
+          "type" : "string"
+        },
+        "min": {
+          "type" : "object"
+        },
+        "dist": {
+          "type" : "string"
+        },
+        "tmpl": {
+          "type" : "object"
+        },
+        "lint" : {
+          "type" : "object"
+        },
+        "docs" : {
+          "type" : "object"
+        },
+        "css" : {
+          "type" : "object"
+        },
+        "test": {
+          "type" : "object",
+          "properties" : {
+            "suites" : {
+              "type": "object",
+              "properties" : {
+                "jasmine" : {
+                  "type": "object",
+                  "properties": {
+                    "src" : {
+                      "type": ["string", "array"]
+                    },
+                    "options" : {
+                      "type": "object"
+                    }
+                  }
+                },
+                "qunit" : {
+                  "type": "object",
+                  "properties": {
+                    "src" : {
+                      "type": ["string", "array"]
+                    },
+                    "options" : {
+                      "type": "object"
+                    }
+                  }
+                },
+                "nodeunit" : {
+                  "type": "object",
+                  "properties": {
+                    "src" : {
+                      "type": ["string", "array"]
+                    },
+                    "options" : {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "options": {
+          "type" : "object"
+        }
+      }
+    },
+    "proxy": {
+      "type" : "object",
+      "properties" : {
+        "resources" : {
+          "type": "array",
+          "items" : {
+            "type": "object",
+            "properties" :{
+              "path" : {
+                "type" : "string"
+              },
+              "hostname" : {
+                "type" : ["array","string"],
+                "items": {
+                  "type" : "object",
+                  "properties": {
+                    "dev" : {
+                      "type" : "string"
+                    },
+                    "test" : {
+                      "type" : "string"
+                    },
+                    "prod" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              },
+              "port": {
+                "type" : "integer"
+              },
+              "method": {
+                "type": "string"
+              },
+              "contentType": {
+                "type": "string"
+              },
+              "protocol": {
+                "type" : "string"
+              },
+              "headers" : {
+                "type": ["boolean","object"]
+              }
+            }
+          }
+        },
+        "options": {
+          "type" : "object"
+        }
+      }
+    },
+    "options": {
+      "type" : "object"
+    }
+  }
+}
