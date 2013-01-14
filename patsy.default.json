@@ -12,6 +12,9 @@
       "port": 8000,
       "host": "localhost",
       "home_file": "index.*"
+    },
+    "options" : {
+      "watch_config": false
     }
   },
   "build": {
