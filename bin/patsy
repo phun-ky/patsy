@@ -33,7 +33,9 @@ var path          = require('path');
  * @source  NodeJS
  */
 var program       = require('commander');
-
+process.on('uncaughtException', function (error) {
+   console.log(error.stack);
+});
 
 
 /**

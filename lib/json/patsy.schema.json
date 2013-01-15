@@ -1,5 +1,5 @@
-{  
-  "id": "patsy.schema.json",
+{
+  "id": "/PatsyConfig",
   "type": "object",
   "properties": {
     "project": {
