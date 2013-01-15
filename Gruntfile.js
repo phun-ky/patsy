@@ -150,11 +150,15 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.js %>**/*.js',
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '<%= basepath %><%= app.build.css.src %>**/*.css',
-              '<%= basepath %><%= app.build.css.src %>**/*.less'
+              '<%= basepath %><%= app.build.css.src %>**/*.less',
+              // DO NOT REMOVE
+              '!node_modules/**/*.js'
             ],
             tasks: ['jshint','mustache', 'minified','dox','recess'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
-              debounceDelay: 2500
+              debounceDelay: 2500,
+              // This is required to prevent memory allocation errors in windows
+              interrupt: true
             }
           },
           concatinate : {
@@ -189,7 +193,9 @@ module.exports = function(grunt) {
             '<%= basepath %><%= app.build.js %>**/*.js',
             '!<%= basepath %><%= app.build.js %>templates.js',
             '!<%= basepath %><%= app.build.min.dest %>*.js',
-            '!<%= basepath %><%= app.build.dist %>*.js'
+            '!<%= basepath %><%= app.build.dist %>*.js',
+            // DO NOT REMOVE
+            '!node_modules/**/*.js'
           ]
         },
         concat: {
@@ -250,9 +256,14 @@ module.exports = function(grunt) {
           scripts : {
             files : [
               '**/*.js',
-              'bin/patsy'
+              'bin/patsy',
+              '!node_modules/**/*.js'
             ],
-            tasks: ['jshint', 'nodeunit']
+            tasks: ['jshint', 'nodeunit'],
+            options: {
+              // This is required to prevent memory allocation errors in windows
+              interrupt: true
+            }
           }
         },
         nodeunit: {
