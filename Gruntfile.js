@@ -257,7 +257,8 @@ module.exports = function(grunt) {
             files : [
               '**/*.js',
               'bin/patsy',
-              '!node_modules/**/*.js'
+              '!node_modules/**/*.js',
+              '!lib/proxy/middleware.js'
             ],
             tasks: ['jshint', 'nodeunit'],
             options: {

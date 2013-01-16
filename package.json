@@ -33,7 +33,9 @@
     "grunt-contrib-qunit": "~0.1.1rc5",
     "grunt-contrib-jasmine": "~0.3.0rc5",
     "grunt-reload": "~0.2.0",
-    "jsonschema": "~0.3.2"
+    "jsonschema": "~0.3.2",
+    "proxy-by-url": "0.0.2",
+    "http-proxy": "~0.8.7"
   },
   "devDependencies": {
     "grunt-cli": ">=0.1.6",
