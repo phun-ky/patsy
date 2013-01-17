@@ -7,7 +7,7 @@
  * @var     Object
  * @source  patsy
  */
-var patsyHelpers      = require('../lib/patsyHelpers');
+var patsyHelpers      = require('../lib/patsy.js');
 
 var pjson = require('../package.json');
 

@@ -34,7 +34,7 @@ var path          = require('path');
  */
 var program       = require('commander');
 process.on('uncaughtException', function (error) {
-   console.log(error.stack);
+   console.log(error);
 });
 
 
@@ -45,9 +45,8 @@ process.on('uncaughtException', function (error) {
  */
 var pjson = require('../package.json');
 
-var patsyHelpers = require('../lib/patsyHelpers');
-
 var command = '';
+var action  = '';
 
 var option  = '';
 
@@ -68,7 +67,7 @@ program
   .description('run a test of patsy')
   .action(function(){
     command = 'test';
-    patsyHelpers.runPatsyTest();
+
   });
 
 program
@@ -77,14 +76,28 @@ program
   .action(function(how){
 
     command = 'task';
-    patsyHelpers.runGruntTasks(how);
+    action  = how;
+
   });
 
 program.parse(process.argv);
 
-
+var patsy = require('../lib/patsy')({
+  verbose : program.verbose,
+  scripture : program.scripture,
+  app_path : path.resolve(__dirname, '..') + path.sep
+});
 
 // If no commands are given, start patsy
 if(command === ''){
-  patsyHelpers.start();
+  try{
+    patsy.start();
+  } catch(e){
+    console.log(e);
+  }
+
+} else if(command == 'task'){
+  patsy.runGruntTasks(action);
+} else if(command == 'test'){
+  patsy.runPatsyTest();
 }

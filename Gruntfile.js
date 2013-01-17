@@ -41,12 +41,12 @@ var path              = require('path');
 var colors              = require('colors');
 
 /**
- * Require patsyHelpers from the library
+ * Require patsy from the library
  *
  * @var     Object
  * @source  patsy
  */
-var patsyHelpers      = require('./lib/patsyHelpers');
+var patsy      = require('./lib/patsy')();
 
 /**
  * Varholder for the [full] project path
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
-    if(!patsyHelpers.doesConfigExist(projectPath + 'patsy.json')){
+    if(!patsy.utils.doesPathExist(projectPath + 'patsy.json')){
 
       console.log('Project configuration not found, exiting...');
       process.exit(1);
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
       // Set config from patsy.json
       // Until we can access objects from inside grunt.initConfig with templating,
       // we've to load the file into another variable
-      config = patsyHelpers.loadPatsyConfigInCurrentProject(projectPath);
+      config = patsy.config.load(projectPath);
 
       // A crude way to do this, but bare with us, this will improve
       if(config.build.test.suites.jasmine){
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-jasmine');
 
 
-        config.build.test.suites.jasmine.src = patsyHelpers.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
+        config.build.test.suites.jasmine.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
       }
 
       if(config.build.test.suites.nodeunit){
@@ -115,22 +115,22 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
 
-        config.build.test.suites.nodeunit.src = patsyHelpers.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.nodeunit.src);
+        config.build.test.suites.nodeunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.nodeunit.src);
 
 
       }
 
       if(config.build.test.suites.qunit){
         testTasks.push('qunit');
-        config.build.test.suites.qunit.src = patsyHelpers.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
       if(config.build.lint.src){
-          config.build.lint.src = patsyHelpers.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
+          config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
 
-      patsyHelpers.gruntConfig = {
+      patsy.gruntConfig = {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
         // Read the projects configuration file into app
@@ -247,7 +247,7 @@ module.exports = function(grunt) {
 
       grunt.log.writeln('Running grunt on patsy...');
       grunt.loadNpmTasks('grunt-contrib-nodeunit');
-      patsyHelpers.gruntConfig = {
+      patsy.gruntConfig = {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
         // Set basepath
@@ -277,8 +277,7 @@ module.exports = function(grunt) {
             passfail: false
           },
           src: [
-            '<%= watch.scripts.files %>',
-            '!node_modules/**/*.js'
+            '<%= watch.scripts.files %>'
           ]
         }
       };
@@ -302,7 +301,7 @@ module.exports = function(grunt) {
 
 
   // GruntJS configuration
-  grunt.initConfig(patsyHelpers.gruntConfig);
+  grunt.initConfig(patsy.gruntConfig);
 
 
   grunt.registerTask('default', ['watch']);
