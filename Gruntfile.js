@@ -216,6 +216,15 @@ module.exports = function(grunt) {
           },
           options: config.build.tmpl.options || {}
         },
+        reloadr: {
+          main: [
+            '<%= basepath %>**/*.html',
+            '<%= basepath %>**/*.css',
+            '<%= basepath %>**/*.js',
+            // DO NOT REMOVE
+            '!node_modules/**/*.js'
+          ]
+        },
         dox: {
           files: {
             src: ['<%= basepath %><%= app.build.js %>**/*.js'],
@@ -298,6 +307,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
   grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-reloadr');
 
 
   // GruntJS configuration
