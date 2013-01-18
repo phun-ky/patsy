@@ -73,6 +73,7 @@ var testTasks = [];
 
 
 
+
 /**
  * Set up grunt and export it for use
  *
@@ -83,8 +84,8 @@ module.exports = function(grunt) {
   // Populate project variables, used for better readability
   projectPath       = grunt.option('path');
 
-
-
+  var defaultTasks = [];
+  defaultTasks.push('watch');
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
@@ -129,6 +130,7 @@ module.exports = function(grunt) {
       if(config.build.lint.src){
           config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
+      defaultTasks.push('reloadr');
 
       patsy.gruntConfig = {
         // Read patsys configuration file into pkg
@@ -155,9 +157,7 @@ module.exports = function(grunt) {
             ],
             tasks: ['jshint','mustache', 'minified','dox','recess'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
-              debounceDelay: 2500,
-              // This is required to prevent memory allocation errors in windows
-              interrupt: true
+              debounceDelay: 2500
             }
           },
           concatinate : {
@@ -266,11 +266,7 @@ module.exports = function(grunt) {
               '!node_modules/**/*.js',
               '!lib/proxy/middleware.js'
             ],
-            tasks: ['jshint', 'nodeunit'],
-            options: {
-              // This is required to prevent memory allocation errors in windows
-              interrupt: true
-            }
+            tasks: ['jshint', 'nodeunit']
           }
         },
         nodeunit: {
@@ -310,9 +306,9 @@ module.exports = function(grunt) {
   // GruntJS configuration
   grunt.initConfig(patsy.gruntConfig);
 
-
-  //grunt.registerTask('default', ['reloadr', 'watch']);
-  grunt.registerTask('default', ['reloadr','watch']);
+console.log(defaultTasks);
+  grunt.registerTask('default', ['watch']);
+  //grunt.registerTask('default', defaultTasks);
   grunt.registerTask('test', testTasks);
   grunt.registerTask('all', ['jshint','mustache', 'minified','dox','recess','concat'].concat(testTasks));
 
