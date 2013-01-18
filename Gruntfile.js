@@ -151,7 +151,6 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '<%= basepath %><%= app.build.css.src %>**/*.css',
               '<%= basepath %><%= app.build.css.src %>**/*.less',
-              // DO NOT REMOVE
               '!node_modules/**/*.js'
             ],
             tasks: ['jshint','mustache', 'minified','dox','recess'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
@@ -194,7 +193,6 @@ module.exports = function(grunt) {
             '!<%= basepath %><%= app.build.js %>templates.js',
             '!<%= basepath %><%= app.build.min.dest %>*.js',
             '!<%= basepath %><%= app.build.dist %>*.js',
-            // DO NOT REMOVE
             '!node_modules/**/*.js'
           ]
         },
@@ -217,13 +215,12 @@ module.exports = function(grunt) {
           options: config.build.tmpl.options || {}
         },
         reloadr: {
-          main: [
-            '<%= basepath %>**/*.html',
-            '<%= basepath %>**/*.css',
-            '<%= basepath %>**/*.js',
-            // DO NOT REMOVE
-            '!node_modules/**/*.js'
-          ]
+          src: [
+              '!<%= basepath %><%= app.build.min.dest %>*.js',
+              '<%= basepath %>css/dist/style.css',
+              '<%= basepath %>**/*.html',
+              '!node_modules/**/*.js'
+            ]
         },
         dox: {
           files: {
@@ -314,7 +311,8 @@ module.exports = function(grunt) {
   grunt.initConfig(patsy.gruntConfig);
 
 
-  grunt.registerTask('default', ['watch']);
+  //grunt.registerTask('default', ['reloadr', 'watch']);
+  grunt.registerTask('default', ['reloadr','watch']);
   grunt.registerTask('test', testTasks);
   grunt.registerTask('all', ['jshint','mustache', 'minified','dox','recess','concat'].concat(testTasks));
 
