@@ -49,13 +49,13 @@ For more advance usage and documentation, go to the [wiki].
 5. Automagic documentation generation
 6. Baking of LESS to CSS
 7. Automated testing via Nodeunit ( support for Jasmine and Qunit aswell )
+8. Proxy support
+9. Static file server support
+10. Live content update when saving files
 
 ### We want patsy to do this aswell in the future
 
 * Staging environment ( to pick sets of routes (read: proxy/reverse proxy) to use in given environment )
-* Proxy support
-* Static file server support
-* Live content update when saving files
 * Image concatination with automated css generation
 
 
