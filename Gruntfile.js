@@ -130,7 +130,16 @@ module.exports = function(grunt) {
       }
 
       if(config.build.lint.src){
-          config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
+        config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
+      }
+
+      if(config.build.css.src){
+        if(typeof config.build.css.src === 'object'){
+
+          config.build.css.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.css.src);
+
+
+        }
       }
 
       //defaultTasks.push('reloadr');
@@ -234,11 +243,11 @@ module.exports = function(grunt) {
         },
         recess: {
           dist: {
-            src: [
+            src: config.build.css.src || [
               '<%= basepath %><%= app.build.css.src %>**/*.css',
               '<%= basepath %><%= app.build.css.src %>**/*.less'
             ],
-            dest: '<%= basepath %><%= app.build.css.dist %>style.css',
+            dest: '<%= basepath %><%= app.build.css.dest %>',
             options: config.build.css.options || { compile: true }
           }
         },
@@ -309,6 +318,7 @@ module.exports = function(grunt) {
   // GruntJS configuration
   grunt.initConfig(patsy.gruntConfig);
 
+  //console.log(grunt.config.get());
 
   grunt.registerTask('default', defaultTasks);
   grunt.registerTask('test', testTasks);

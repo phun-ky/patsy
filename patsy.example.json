@@ -45,8 +45,8 @@
       "options": {}
     },
     "css" : {
-      "src" : "css/src/",
-      "dist" : "css/dist/",
+      "src" : "css/src/less/main.less",
+      "dest" : "css/dist/main.css",
       "options" : {
         "compile" : true,
         "compress" : true
