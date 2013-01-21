@@ -20,11 +20,10 @@
   "build": {
     "js": "js/src/",
     "min": {
-      "dest": "js/min/",
-      "options": {
-        "sourcemap": true,
-        "allinone": false,
-        "verbose": true
+      "dest": "js/min/projectfoo.core.js",
+      "options" : {
+        "sourceMap" : "js/dist/maps/sourcemap.js",
+        "mangle" : false
       }
     },
     "dist": "js/dist/",

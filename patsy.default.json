@@ -20,7 +20,7 @@
   "build": {
     "js": "js/src/",
     "min": {
-      "dest": "js/min/"
+      "dest": "js/min/output.min.js"
     },
     "dist": "js/dist/",
     "tmpl": {
