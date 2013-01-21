@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
   var defaultTasks = [];
 
-  defaultTasks.push('watch');
+
 
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
@@ -97,7 +97,7 @@ module.exports = function(grunt) {
       process.exit(1);
     } else {
 
-      //grunt.loadNpmTasks('grunt-reload');
+
 
       // Set config from patsy.json
       // Until we can access objects from inside grunt.initConfig with templating,
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
         }
       }
 
-      //defaultTasks.push('reloadr');
+      defaultTasks.push('reload');
 
       patsy.gruntConfig = {
         // Read patsys configuration file into pkg
@@ -165,9 +165,10 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '<%= basepath %><%= app.build.css.src %>**/*.css',
               '<%= basepath %><%= app.build.css.src %>**/*.less',
+              '<%= basepath %>tester.html',
               '!node_modules/**/*.js'
             ],
-            tasks: ['jshint','mustache', 'minified','dox','recess'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
+            tasks: ['jshint','mustache', 'minified','dox','recess', 'reload'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
               debounceDelay: 2500
             }
@@ -226,13 +227,12 @@ module.exports = function(grunt) {
           },
           options: config.build.tmpl.options || {}
         },
-        reloadr: {
-          src: [
-              '!<%= basepath %><%= app.build.min.dest %>*.js',
-              '<%= basepath %>css/dist/style.css',
-              '<%= basepath %>**/*.html',
-              '!node_modules/**/*.js'
-            ]
+        reload: {
+          port: 8001,
+          proxy: {
+            host: config.project.environment.host || "localhost",
+            port: config.project.environment.port || 8090
+          }
         },
         dox: {
           files: {
@@ -312,14 +312,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mustache');
   grunt.loadNpmTasks('grunt-minified');
   grunt.loadNpmTasks('grunt-recess');
-  grunt.loadNpmTasks('grunt-reloadr');
+  grunt.loadNpmTasks('grunt-reload');
 
 
   // GruntJS configuration
   grunt.initConfig(patsy.gruntConfig);
 
   //console.log(grunt.config.get());
-
+  defaultTasks.push('watch');
   grunt.registerTask('default', defaultTasks);
   grunt.registerTask('test', testTasks);
   grunt.registerTask('all', ['jshint','mustache', 'minified','dox','recess','concat'].concat(testTasks));

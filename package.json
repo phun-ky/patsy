@@ -28,13 +28,13 @@
     "grunt-minified": "~0.0.5",
     "commander": "~1.1.1",
     "grunt-dox": "git://github.com/phun-ky/grunt-dox.git",
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "xtend": "~1.0.3",
     "grunt-contrib-nodeunit": "~0.1.2rc5",
     "grunt-contrib-qunit": "~0.1.1rc5",
     "grunt-contrib-jasmine": "~0.3.0rc5",
     "jsonschema": "~0.3.2",
-    "http-proxy": "~0.8.7",
-    "grunt-reloadr": "~0.1.2"
+    "http-proxy": "~0.8.7"
   },
   "devDependencies": {
     "grunt-cli": ">=0.1.6",
