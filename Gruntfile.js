@@ -161,7 +161,7 @@ module.exports = function(grunt) {
 
         }
       }
-
+      grunt.loadNpmTasks('grunt-reload');
       defaultTasks.push('reload');
 
       patsy.gruntConfig = {
@@ -317,7 +317,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mustache');
 
   grunt.loadNpmTasks('grunt-recess');
-  grunt.loadNpmTasks('grunt-reload');
+
 
 
   // GruntJS configuration

@@ -23,7 +23,12 @@
       "dest": "js/min/projectfoo.core.js",
       "options" : {
         "sourceMap" : "js/dist/maps/sourcemap.js",
-        "mangle" : false
+        "mangle" : false,
+        "beautify" : {
+          "beautify" : true,
+          "indent_level": 2,
+          "ie_proof": true
+        }
       }
     },
     "dist": "js/dist/",
@@ -74,8 +79,13 @@
   "proxy": {
     "resources": [],
     "options": {
-      "verbose": true
+      "verbose": true,
+      "port" : 80
     }
+  },
+  "fileserver" : {
+    "host" : "localhost",
+    "port" : 8080
   },
   "options": {
     "verbose": true,

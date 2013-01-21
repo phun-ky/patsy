@@ -51,8 +51,13 @@
   "proxy": {
     "resources" : [],
     "options": {
-      "verbose": true
+      "verbose": true,
+      "port" : 80
     }
+  },
+  "fileserver" : {
+    "host" : "localhost",
+    "port" : 8080
   },
   "options": {
     "verbose": true,
