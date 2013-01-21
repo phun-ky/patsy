@@ -85,7 +85,9 @@ module.exports = function(grunt) {
   projectPath       = grunt.option('path');
 
   var defaultTasks = [];
+
   defaultTasks.push('watch');
+
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
@@ -130,7 +132,8 @@ module.exports = function(grunt) {
       if(config.build.lint.src){
           config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
-      defaultTasks.push('reloadr');
+
+      //defaultTasks.push('reloadr');
 
       patsy.gruntConfig = {
         // Read patsys configuration file into pkg
@@ -204,7 +207,7 @@ module.exports = function(grunt) {
             src:  [
                     '<%= basepath %><%= app.build.min.dest %>*.js'
                   ],
-            dest: '<%= basepath %><%= app.build.dist %><%= app.project.name %>.core.js'
+            dest: '<%= basepath %><%= app.build.dist %><%= app.project.details.name ? app.project.details.name : "project" %>.core.js'
           }
         },
         mustache:{
@@ -306,9 +309,8 @@ module.exports = function(grunt) {
   // GruntJS configuration
   grunt.initConfig(patsy.gruntConfig);
 
-console.log(defaultTasks);
-  grunt.registerTask('default', ['watch']);
-  //grunt.registerTask('default', defaultTasks);
+
+  grunt.registerTask('default', defaultTasks);
   grunt.registerTask('test', testTasks);
   grunt.registerTask('all', ['jshint','mustache', 'minified','dox','recess','concat'].concat(testTasks));
 
