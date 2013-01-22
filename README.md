@@ -6,37 +6,13 @@ _Note that this application is depended on some bleeding edge plugins, like the 
 
 ## Why use patsy?
 
-Short excerpt here with link to [why].
+Short excerpt here with link to \[why\].
 
 > "Get on with it!"
 
-## Getting started
+## Introduction
 
-### Requirements
-
-patsy requires [Nodejs >= 0.8.0][node] and is built with these plugins:
-
-* Gruntjs
-* UglifyJS
-* Commander
-* etc.. ( _Read full list in the package.json file under "dependencies"_ )
-
-All of the dependencies are installed automatically when you install patsy.
-
-### Installation
-
-Following instructions will install patsy and all dependencies:
-
-1. Install the required version of [node]
-2. Then in your prefered CLI, type `npm install patsy`
-
-> If you get the error "warn cannot run in wd" from npm, try to run it again with `sudo npm install patsy --unsafe-perm`
-
-### How to use
-
-Go to the folder of where you have your web project, type `patsy` and enjoy!
-
-For more advance usage and documentation, go to the [wiki].
+To install and use patsy, take a look in our [getting started guide](https://github.com/phun-ky/patsy/wiki/Getting-started).
 
 ## Features
 
@@ -57,7 +33,6 @@ For more advance usage and documentation, go to the [wiki].
 
 * Staging environment ( to pick sets of routes (read: proxy/reverse proxy) to use in given environment )
 * Image concatination with automated css generation
-
 
 For a full list of planned features to come, see [features to come][features_planned].
 
