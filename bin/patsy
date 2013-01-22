@@ -34,7 +34,10 @@ var path          = require('path');
  */
 var program       = require('commander');
 process.on('uncaughtException', function (error) {
-   console.log(error);
+
+  console.log('>> EXCEPTION'.red + ':' + error.code);
+
+  process.exit(1);
 });
 
 
