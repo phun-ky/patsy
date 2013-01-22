@@ -93,7 +93,7 @@ if(command === ''){
   try{
     patsy.start();
   } catch(e){
-    console.log(e);
+    console.log('>> EXCEPTION'.red + ':' + e.code);
   }
 
 } else if(command == 'task'){
