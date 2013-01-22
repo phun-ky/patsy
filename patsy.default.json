@@ -14,7 +14,8 @@
       "home_file": "index.*"
     },
     "options" : {
-      "watch_config": false
+      "watch_config": false,
+      "reload" : false
     }
   },
   "build": {
