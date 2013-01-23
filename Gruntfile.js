@@ -141,12 +141,11 @@ module.exports = function(grunt) {
       }
 
       if(config.build.css.src){
-        if(typeof config.build.css.src === 'object'){
+
 
           config.build.css.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.css.src);
 
 
-        }
       }
 
       if(config.build.min.options){
