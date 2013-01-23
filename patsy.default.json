@@ -46,7 +46,8 @@
       "watch" : true,
       "verbose": true,
       "testsOnWatch" : false,
-      "linting": true
+      "linting": true,
+      "force" : true
     }
   },
   "proxy": {
