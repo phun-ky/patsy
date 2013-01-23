@@ -1,5 +1,5 @@
 /**
- * This file holds the grunt configuration for patsy
+ * This file holds the grunt configuration for patsy and your project
  *
  * If the documented code here does not fullfill your needs, check the wiki on github here: https://github.com/phun-ky/patsy/wiki
  *
