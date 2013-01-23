@@ -99,8 +99,9 @@ module.exports = function(grunt) {
 
     if(!patsy.utils.doesPathExist(projectPath + 'patsy.json')){
 
-      console.log('Project configuration not found, exiting...');
-      process.exit(1);
+
+      grunt.verbose.or.write(projectPath + 'patsy.json...').error().error('Project configuration not found, exiting...');
+      grunt.fatal('Something bad happened!');
     } else {
 
 
@@ -301,9 +302,9 @@ module.exports = function(grunt) {
       };
 
     } else {
-      grunt.log.warn('FAILURE: Project path not set, exiting...');
-      process.exit(1);
 
+      grunt.verbose.or.write('Running grunt on patsy...').error().error('Project path not set!');
+      grunt.fatal('Something bad happened!');
     }
 
   }

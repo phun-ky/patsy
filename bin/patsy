@@ -33,9 +33,10 @@ var path          = require('path');
  * @source  NodeJS
  */
 var program       = require('commander');
+
 process.on('uncaughtException', function (error) {
 
-  console.log('>> EXCEPTION'.red + ':' + error.code);
+  console.log('>> EXCEPTION'.red + ':', error);
 
   process.exit(1);
 });
@@ -59,6 +60,7 @@ program
   .option('-d, --default-config', 'set patsy to just use the default configuration file')
   .option('-s, --scripture',      'no output from King Arthur, Patsy or God')
   .option('-D, --debug',          'set debug to true')
+  .option('-f, --force',          'force through the flow even when warnings are thrown')
   .option('-nb, --no-build',      'start patsy without build system')
   .option('-np, --no-proxy',      'start patsy without proxy setup')
   .option('-nt, --no-test',       'start patsy without tests')
@@ -96,7 +98,7 @@ if(command === ''){
   try{
     patsy.start();
   } catch(e){
-    console.log('>> EXCEPTION'.red + ':' + e.code);
+    console.log('>> EXCEPTION'.red + ':', e.code ? e.code : e);
   }
 
 } else if(command == 'task'){
