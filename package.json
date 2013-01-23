@@ -13,8 +13,8 @@
     "test": "patsy test"
   },
   "dependencies": {
-    "grunt-cli": ">=0.1.6",
-    "grunt": "master",
+    "grunt-cli": "latest",
+    "grunt": "0.4.0rc7",
     "grunt-contrib-jshint": "~0.1.1rc6",
     "grunt-contrib-watch": ">=0.2.0rc5",
     "grunt-recess": "~0.2.0",
