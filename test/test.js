@@ -2,14 +2,16 @@
 'use strict';
 
 /**
- * Require patsyHelpers from the library
+ * Require patsy from the library
  *
  * @var     Object
  * @source  patsy
  */
-var patsyHelpers      = require('../lib/patsy.js');
+var patsy      = require('../lib/patsy.js');
 
-var pjson = require('../package.json');
+var pjson         = require('../package.json');
+var defaultConfig = require('../patsy.default.json');
+var exampelConfig = require('../patsy.example.json');
 
 var colors = require('colors');
 
@@ -19,14 +21,28 @@ exports.nodeunit = {
     test.ok(true, 'this had better work.');
     test.done();
   },
-  check_package_json: function(test){
+  check_son: function(test){
+
+    /**
+     * Require json from the library
+     *
+     * @var     Object
+     * @source  patsy
+     */
+    var json          = require('../lib/json/');
+
+    test.expect(4);
 
     test.equal('object', typeof pjson);
+    test.ok(json.validate(pjson,'patsy.schema.json'), 'package.json should be valid');
+    test.ok(json.validate(defaultConfig,'patsy.schema.json'), 'patsy.default.json should be valid');
+    test.ok(json.validate(exampelConfig,'patsy.schema.json'), 'patsy.example.json should be valid');
+
     test.done();
   },
   check_dependencies: function(test){
 
-    console.log('\n');
+
 
     var fs = require('fs'),
       path = require('path'),
@@ -41,7 +57,7 @@ exports.nodeunit = {
 
       if(fs.existsSync(module_pjson_abs_path) && typeof require(module_pjson_abs_path) === 'object'){
 
-        console.log(String('✓ Module ' + module + ' found!').green);
+        //console.log(String('✓ Module ' + module + ' found!').green);
       } else {
 
         throw new Error('Module ' + module + ' not found!');
@@ -51,6 +67,8 @@ exports.nodeunit = {
     var testModules = function(module){
       check_modules(module);
     };
+
+    test.expect(pjson.dependencies.length);
 
     for(var module in pjson.dependencies){
       if(pjson.dependencies.hasOwnProperty(module)){
@@ -63,6 +81,11 @@ exports.nodeunit = {
 
       }
     }
+
+    test.done();
+  },
+  check_grunt_run: function(test){
+
 
     test.done();
   }
