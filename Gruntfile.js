@@ -185,7 +185,6 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '<%= basepath %><%= app.build.css.src %>**/*.css',
               '<%= basepath %><%= app.build.css.src %>**/*.less',
-              '<%= basepath %>tester.html',
               '!node_modules/**/*.js'
             ],
             tasks: ['jshint','mustache', 'uglify','dox','recess', 'reload'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
