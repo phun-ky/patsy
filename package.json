@@ -10,7 +10,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "patsy test"
+    "test": "grunt test"
   },
   "dependencies": {
     "grunt-cli": ">=0.1.6",

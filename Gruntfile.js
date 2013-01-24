@@ -263,7 +263,7 @@ module.exports = function(grunt) {
 
   } else {
 
-
+    testTasks.push('nodeunit');
 
     if(path.basename(path.resolve(__dirname)) == 'patsy'){
 
