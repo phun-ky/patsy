@@ -41,7 +41,7 @@ exports.nodeunit = {
 
       if(fs.existsSync(module_pjson_abs_path) && typeof require(module_pjson_abs_path) === 'object'){
 
-        console.log('>> '.green + 'Module ' + module + ' found!');
+        console.log(String('✓ Module ' + module + ' found!').green);
       } else {
 
         throw new Error('Module ' + module + ' not found!');
