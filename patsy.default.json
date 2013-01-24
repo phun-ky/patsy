@@ -33,7 +33,7 @@
     },
     "css" : {
       "src" : "css/src/",
-      "dist" : "css/dist/style.css"
+      "dest" : "css/dist/style.css"
     },
     "test": {
       "suites": {
