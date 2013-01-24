@@ -6,7 +6,7 @@ _Note that this application is depended on some bleeding edge plugins, like the 
 
 ## Why use patsy?
 
-Short excerpt here with link to \[why\].
+Short excerpt here with link to  [Why Patsy?](https://github.com/phun-ky/patsy/wiki/Why-patsy).
 
 > "Get on with it!"
 
@@ -32,7 +32,7 @@ To install and use patsy, take a look in our [getting started guide](https://git
 ### We want patsy to do this aswell in the future
 
 * Staging environment ( to pick sets of routes (read: proxy/reverse proxy) to use in given environment )
-* Image concatination with automated css generation
+* Image sprite generation with automated css generation
 
 For a full list of planned features to come, see [features to come][features_planned].
 
