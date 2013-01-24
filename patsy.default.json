@@ -32,7 +32,7 @@
       "dest" : "js/docs/"
     },
     "css" : {
-      "src" : "css/src/",
+      "src" : ["css/src/**/*.css"],
       "dest" : "css/dist/style.css"
     },
     "test": {

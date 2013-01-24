@@ -49,7 +49,7 @@
       "options": {}
     },
     "css" : {
-      "src" : "css/src/less/main.less",
+      "src" : ["css/src/less/main.less"],
       "dest" : "css/dist/main.css",
       "options" : {
         "compile" : true,

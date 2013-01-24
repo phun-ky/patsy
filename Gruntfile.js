@@ -78,8 +78,6 @@ var testTasks = [];
  */
 var xtend         = require('xtend');
 
-
-
 /**
  * Set up grunt and export it for use
  *
@@ -183,10 +181,8 @@ module.exports = function(grunt) {
             files : [
               '<%= basepath %><%= app.build.js %>**/*.js',
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
-              '<%= basepath %><%= app.build.css.src %>**/*.css',
-              '<%= basepath %><%= app.build.css.src %>**/*.less',
               '!node_modules/**/*.js'
-            ],
+            ].concat(config.build.css.src),
             tasks: ['jshint','mustache', 'uglify','dox','recess', 'reload'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
               debounceDelay: 2500
@@ -258,6 +254,8 @@ module.exports = function(grunt) {
 
         }
       };
+
+
     }
 
   } else {
@@ -306,6 +304,9 @@ module.exports = function(grunt) {
     }
 
   }
+
+
+
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
