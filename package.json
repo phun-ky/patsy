@@ -74,7 +74,9 @@
     "reload",
     "reloadr",
     "reloading",
-    "bake"
+    "bake",
+    "test",
+    "testing"
   ],
   "author": {
     "name": "Alexander Vassbotn Røyne-Helgesen",
