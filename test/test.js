@@ -21,7 +21,7 @@ exports.nodeunit = {
     test.ok(true, 'this had better work.');
     test.done();
   },
-  check_son: function(test){
+  check_json: function(test){
 
     /**
      * Require json from the library
