@@ -1,0 +1,72 @@
+{
+  "project": {
+    "details": {
+      "name": "project_folder",
+      "homepage": "",
+      "author": ""
+    },
+    "environment": {
+      "root" : "project_folder",
+      "abs_path": "",
+      "web_root": "",
+      "port": 8000,
+      "host": "localhost",
+      "home_file": "index.*"
+    },
+    "options" : {
+      "watch_config": false,
+      "reload" : false
+    }
+  },
+  "build": {
+    "js": "js/src/",
+    "min": {
+      "dest": "js/min/output.min.js"
+    },
+    "dist": "js/dist/",
+    "tmpl": {
+      "src": "js/mustache/"
+    },
+    "lint" : {},
+    "docs" : {
+      "dest" : "js/docs/"
+    },
+    "css" : {
+      "src" : ["css/src/**/*.css"],
+      "dest" : "css/dist/style.css"
+    },
+    "test": {
+      "suites": {
+        "nodeunit" : {
+          "src": "js/test/nodeunit/**/*.js"
+        }
+      }
+    },
+    "options": {
+      "watch" : true,
+      "verbose": true,
+      "testsOnWatch" : false,
+      "linting": true,
+      "force" : true
+    }
+  },
+  "proxy": {
+    "resources" : [],
+    "options": {
+      "verbose": true,
+      "port" : 80
+    }
+  },
+  "fileserver" : {
+    "host" : "localhost",
+    "port" : 8080,
+    "options" :{
+      "verbose" : false
+    }
+  },
+  "options": {
+    "verbose": true,
+    "logToFile": false,
+    "scripture": true
+  }
+}

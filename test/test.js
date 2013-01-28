@@ -13,7 +13,8 @@ var pjson         = require('../package.json');
 var defaultConfig = require('../patsy.default.json');
 var exampelConfig = require('../patsy.example.json');
 
-var colors = require('colors');
+var colors  = require('colors');
+var path    = require('path');
 
 exports.nodeunit = {
   will_always_pass: function(test) {
@@ -115,5 +116,27 @@ exports.nodeunit = {
 
     test.done();
 
+  },
+  test_project_load_config: function(test){
+    // We've created a "test" project within this test folder to make sure patsy would operate as normal on a new project
+
+    var _cfg;
+
+
+    /**
+     * Require config from the library
+     *
+     * @var     Object
+     * @source  patsy
+     */
+    var config      = require('../lib/config')({
+      verbose: false
+    });
+
+    _cfg = config.load(path.normalize(process.cwd() + '/test/inc/project_folder/'));
+
+    test.ok(typeof _cfg !== 'undefined', 'Configuration file should be loaded!');
+
+    test.done();
   }
 };
