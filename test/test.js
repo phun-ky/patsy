@@ -42,8 +42,6 @@ exports.nodeunit = {
   },
   check_dependencies: function(test){
 
-
-
     var fs = require('fs'),
       path = require('path'),
       module_pjson = '',
@@ -88,5 +86,34 @@ exports.nodeunit = {
 
 
     test.done();
+  },
+  check_load_config_fails: function(test){
+
+    test.expect(1);
+
+    var _cfg;
+
+
+    /**
+     * Require config from the library
+     *
+     * @var     Object
+     * @source  patsy
+     */
+    var config      = require('../lib/config')({
+      verbose: false
+    });
+
+    _cfg = config.load();
+
+
+
+
+    test.ok(typeof _cfg === 'undefined', 'Configuration file should not be found here, remove config file from patsy directory!');
+
+
+
+    test.done();
+
   }
 };

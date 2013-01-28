@@ -54,6 +54,7 @@ var action  = '';
 
 var option  = '';
 
+// All options are not fully implemented or implemented at all, YMMV!
 program
   .version(pjson.version)
   .option('-v, --verbose',        'output every log and debug statement from patsy. this will override the configuration setting!')
