@@ -235,7 +235,7 @@ module.exports = function(grunt) {
         },
         dox: {
           files: {
-            src: ['<%= basepath %><%= app.build.js %>**/*.js'],
+            src: ['<%= basepath %><%= app.build.js %>'],
             dest: '<%= basepath %><%= app.build.docs.dest %>'
           },
           options: config.build.docs.options || {}
