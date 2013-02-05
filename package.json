@@ -1,6 +1,6 @@
 {
   "name": "patsy",
-  "version": "0.2.0",
+  "version": "0.1.0-alpha",
   "description": "A CLI based build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
