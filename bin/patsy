@@ -86,6 +86,14 @@ program
 
   });
 
+program
+  .command('init')
+  .description('initialize patsy with default configuration')
+  .action(function(){
+    command = 'init';
+
+  });
+
 program.parse(process.argv);
 
 var patsy = require('../lib/patsy')({
@@ -106,4 +114,17 @@ if(command === ''){
   patsy.runGruntTasks(action);
 } else if(command == 'test'){
   patsy.runPatsyTest();
+} else if(command === 'init'){
+
+  patsy.init();
+
+  var preScripture = [];
+  preScripture.push('[God]: @phun-ky, please insert scripture here - I still lack imagination! - Magnus');
+
+  try{
+    patsy.start(preScripture);
+  } catch(e){
+    console.log('>> EXCEPTION'.red + ':', e.code ? e.code : e);
+  }
+
 }
