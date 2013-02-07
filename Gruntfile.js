@@ -130,7 +130,10 @@ module.exports = function(grunt) {
 
       if(config.build.test.suites.qunit){
         testTasks.push('qunit');
-        config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        if(config.build.test.suites.qunit.src){
+          config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        }
+
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
@@ -183,7 +186,7 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '!node_modules/**/*.js'
             ].concat(config.build.css.src),
-            tasks: ['jshint','mustache', 'uglify','dox','recess', 'reload'],//.concat(config.build.options.testsOnWatch ? testTasks : ''),
+            tasks: ['jshint','mustache', 'uglify','dox','recess', 'reload'].concat(config.build.options.testsOnWatch ? testTasks : ''),
             options : {
               debounceDelay: 2500
             }
