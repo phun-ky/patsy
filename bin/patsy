@@ -67,6 +67,13 @@ program
   .option('-nt, --no-test',       'start patsy without tests')
   .option('-nl, --no-lint',       'start patsy without linting');
 
+program
+  .command('init')
+  .description('initialize patsy with default configuration')
+  .action(function(){
+    command = 'init';
+
+  });
 
 program
   .command('test')
@@ -86,13 +93,7 @@ program
 
   });
 
-program
-  .command('init')
-  .description('initialize patsy with default configuration')
-  .action(function(){
-    command = 'init';
 
-  });
 
 program.parse(process.argv);
 
@@ -119,7 +120,7 @@ if(command === ''){
   patsy.init();
 
   var preScripture = [];
-  preScripture.push('[God]: @phun-ky, please insert scripture here - I still lack imagination! - Magnus');
+  preScripture.push('[Patsy]'.yellow + ": What's this parchment lying on the ground? <picks up parchment>");
 
   try{
     patsy.start(preScripture);

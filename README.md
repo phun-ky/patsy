@@ -1,4 +1,4 @@
-# patsy
+# patsy [![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
 
 > A staging and build environment for web developers.
 
