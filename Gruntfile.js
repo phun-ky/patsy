@@ -116,6 +116,17 @@ module.exports = function(grunt) {
 
 
         config.build.test.suites.jasmine.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
+
+        if(typeof config.build.test.suites.jasmine.options !== 'undefined'){
+
+          if(typeof config.build.test.suites.jasmine.options.template !== 'undefined'){
+            config.build.test.suites.jasmine.options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.template);
+          }
+
+          if(typeof config.build.test.suites.jasmine.options.spec !== 'undefined'){
+            config.build.test.suites.jasmine.options.spec = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.spec);
+          }
+        }
       }
 
       if(config.build.test.suites.nodeunit){
