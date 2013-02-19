@@ -32,7 +32,8 @@ To install and use patsy, take a look in our [getting started guide](https://git
 ### We want patsy to do this aswell in the future
 
 * Staging environment ( to pick sets of routes (read: proxy/reverse proxy) to use in given environment )
-* Image sprite generation with automated css generation
+* Image sprite generation with automated css generation **to be discussed**
+* Proxy data mocking ( option to save/cache data results when resources are offline )
 
 For a full list of planned features to come, see [features to come][features_planned].
 
