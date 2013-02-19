@@ -55,6 +55,8 @@ if documentation is missing or incomplete, please submit an [issue][issues].
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+09/02/2013: Beate released!
+
 21/01/2013: Made patsy ready for beta-release. Added support for proxy, static file server and live reload.
 
 07/01/2013: Added support for passing options to build plugin, removed dependency of globally installed grunt,
