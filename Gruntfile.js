@@ -89,6 +89,7 @@ module.exports = function(grunt) {
   projectPath       = grunt.option('path');
 
   var defaultTasks = [];
+  var watchTasks = [];
 
 
 
@@ -212,6 +213,11 @@ module.exports = function(grunt) {
       grunt.loadNpmTasks('grunt-reload');
       defaultTasks.push('reload');
 
+      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','dox','recess', 'reload']);
+      if(testTasks.length !== 0 && config.build.options.testsOnWatch){
+        watchTasks = watchTasks.concat(testTasks);
+      }
+
       patsy.gruntConfig = {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
@@ -233,7 +239,7 @@ module.exports = function(grunt) {
               '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '!node_modules/**/*.js'
             ].concat(config.build.css.src),
-            tasks: ['jshint','mustache', 'uglify','dox','recess', 'reload'].concat(config.build.options.testsOnWatch ? testTasks : ''),
+            tasks: watchTasks,
             options : {
               debounceDelay: 2500
             }
@@ -375,8 +381,15 @@ module.exports = function(grunt) {
   //console.log(grunt.config.get());
   defaultTasks.push('watch');
   grunt.registerTask('default', defaultTasks);
-  grunt.registerTask('test', testTasks);
-  grunt.registerTask('all', ['jshint','mustache', 'uglify','dox','recess'].concat(testTasks));
+
+  if(testTasks.length !== 0){
+    grunt.registerTask('test', testTasks);
+    grunt.registerTask('all', ['jshint','mustache', 'uglify','dox','recess'].concat(testTasks));
+  } else {
+    grunt.registerTask('all', ['jshint','mustache', 'uglify','dox','recess']);
+  }
+
+
 
 
 };
