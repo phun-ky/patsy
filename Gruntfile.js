@@ -109,22 +109,55 @@ module.exports = function(grunt) {
       // we've to load the file into another variable
       config = patsy.config.load(projectPath);
 
+
+
       // A crude way to do this, but bare with us, this will improve
       if(config.build.test.suites.jasmine){
-        testTasks.push('jasmine');
+
         grunt.loadNpmTasks('grunt-contrib-jasmine');
 
+        if(config.build.test.suites.jasmine[config.project.details.name]){
 
-        config.build.test.suites.jasmine.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
+          testTasks.push('jasmine');
 
-        if(typeof config.build.test.suites.jasmine.options !== 'undefined'){
+          config.build.test.suites.jasmine[config.project.details.name].src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].src);
 
-          if(typeof config.build.test.suites.jasmine.options.template !== 'undefined'){
-            config.build.test.suites.jasmine.options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.template);
+          if(typeof config.build.test.suites.jasmine[config.project.details.name].options !== 'undefined'){
+
+            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.template !== 'undefined'){
+              config.build.test.suites.jasmine[config.project.details.name].options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.template);
+            }
+
+            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.outfile !== 'undefined'){
+              config.build.test.suites.jasmine[config.project.details.name].options.outfile = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.outfile);
+            }
+
+            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.specs !== 'undefined'){
+              config.build.test.suites.jasmine[config.project.details.name].options.specs = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.specs);
+            }
+
           }
 
-          if(typeof config.build.test.suites.jasmine.options.spec !== 'undefined'){
-            config.build.test.suites.jasmine.options.spec = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.spec);
+        } else {
+
+          testTasks.push('jasmine');
+
+          config.build.test.suites.jasmine.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
+
+          if(typeof config.build.test.suites.jasmine.options !== 'undefined'){
+
+            if(typeof config.build.test.suites.jasmine.options.template !== 'undefined'){
+              config.build.test.suites.jasmine.options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.template);
+            }
+
+            if(typeof config.build.test.suites.jasmine.options.outfile !== 'undefined'){
+              config.build.test.suites.jasmine.options.outfile = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.outfile);
+            }
+
+            if(typeof config.build.test.suites.jasmine.options.specs !== 'undefined'){
+              config.build.test.suites.jasmine.options.specs = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.specs);
+            }
+
           }
         }
       }
