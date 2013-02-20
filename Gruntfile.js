@@ -95,6 +95,9 @@ module.exports = function(grunt) {
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
+    // Clean up project path, just in case it's missing a trailing slash
+    projectPath = path.resolve(projectPath) + path.sep;
+
     if(!patsy.utils.doesPathExist(projectPath + 'patsy.json')){
 
 
