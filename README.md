@@ -1,8 +1,6 @@
 # patsy [![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
 
-> A staging and build environment for web developers.
-
-_Note that this application is depended on some bleeding edge plugins, like the development version of [GruntJS][grunt]. YMMV._
+> A staging and build environment for frontend web developers.
 
 ## Why use patsy?
 
