@@ -130,7 +130,9 @@ module.exports = function(grunt) {
 
       if(config.build.test.suites.qunit){
         testTasks.push('qunit');
-        config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        if(typeof config.build.test.suites.qunit.src !== 'undefined'){
+          config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        }
         grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
