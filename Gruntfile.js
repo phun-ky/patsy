@@ -214,7 +214,7 @@ module.exports = function(grunt) {
       grunt.loadNpmTasks('grunt-reload');
       defaultTasks.push('reload');
 
-      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','dox','recess', 'reload']);
+      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','recess', 'reload']);
       if(testTasks.length !== 0 && config.build.options.testsOnWatch){
         watchTasks = watchTasks.concat(testTasks);
       }
@@ -242,7 +242,8 @@ module.exports = function(grunt) {
             ].concat(config.build.css.src),
             tasks: watchTasks,
             options : {
-              debounceDelay: 2500
+              debounceDelay: 2000,
+              spawn : false
             }
           }
         },
@@ -260,7 +261,8 @@ module.exports = function(grunt) {
             }
           },
           options: config.build.min.options || {
-            banner: '<%= banner %>'
+            banner: '<%= banner %>',
+            report : false
           }
         },
         jshint : {
@@ -385,9 +387,9 @@ module.exports = function(grunt) {
 
   if(testTasks.length !== 0){
     grunt.registerTask('test', testTasks);
-    grunt.registerTask('all', ['jshint','mustache', 'uglify','dox','recess'].concat(testTasks));
+    grunt.registerTask('all', ['jshint','mustache', 'uglify','recess'].concat(testTasks));
   } else {
-    grunt.registerTask('all', ['jshint','mustache', 'uglify','dox','recess']);
+    grunt.registerTask('all', ['jshint','mustache', 'uglify','recess']);
   }
 
 
