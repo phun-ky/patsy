@@ -115,56 +115,7 @@ module.exports = function(grunt) {
 
 
 
-      // A crude way to do this, but bare with us, this will improve
-      if(config.build.test.suites.jasmine){
-
-        grunt.loadNpmTasks('grunt-contrib-jasmine');
-
-        if(config.build.test.suites.jasmine[config.project.details.name]){
-
-          testTasks.push('jasmine');
-
-          config.build.test.suites.jasmine[config.project.details.name].src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].src);
-
-          if(typeof config.build.test.suites.jasmine[config.project.details.name].options !== 'undefined'){
-
-            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.template !== 'undefined'){
-              config.build.test.suites.jasmine[config.project.details.name].options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.template);
-            }
-
-            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.outfile !== 'undefined'){
-              config.build.test.suites.jasmine[config.project.details.name].options.outfile = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.outfile);
-            }
-
-            if(typeof config.build.test.suites.jasmine[config.project.details.name].options.specs !== 'undefined'){
-              config.build.test.suites.jasmine[config.project.details.name].options.specs = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine[config.project.details.name].options.specs);
-            }
-
-          }
-
-        } else {
-
-          testTasks.push('jasmine');
-
-          config.build.test.suites.jasmine.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.src);
-
-          if(typeof config.build.test.suites.jasmine.options !== 'undefined'){
-
-            if(typeof config.build.test.suites.jasmine.options.template !== 'undefined'){
-              config.build.test.suites.jasmine.options.template = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.template);
-            }
-
-            if(typeof config.build.test.suites.jasmine.options.outfile !== 'undefined'){
-              config.build.test.suites.jasmine.options.outfile = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.outfile);
-            }
-
-            if(typeof config.build.test.suites.jasmine.options.specs !== 'undefined'){
-              config.build.test.suites.jasmine.options.specs = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.jasmine.options.specs);
-            }
-
-          }
-        }
-      }
+      
 
       if(config.build.test.suites.nodeunit){
         testTasks.push('nodeunit');
@@ -211,10 +162,14 @@ module.exports = function(grunt) {
 
         }
       }
-      grunt.loadNpmTasks('grunt-reload');
-      defaultTasks.push('reload');
 
-      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','recess', 'reload']);
+      
+
+
+      //grunt.loadNpmTasks('grunt-reload');
+      //defaultTasks.push('reload');
+
+      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','recess']);
       if(testTasks.length !== 0 && config.build.options.testsOnWatch){
         watchTasks = watchTasks.concat(testTasks);
       }
@@ -250,8 +205,7 @@ module.exports = function(grunt) {
         // Tasks
         clean: {
           folder: '<%= basepath %><%= app.build.dist %>debug/*'
-        },
-        jasmine : config.build.test.suites.jasmine || {},
+        },        
         nodeunit : config.build.test.suites.nodeunit || {},
         qunit : config.build.test.suites.qunit || {},
         uglify : {
@@ -284,14 +238,14 @@ module.exports = function(grunt) {
             src : ['<%= basepath %><%= app.build.tmpl.src %>']
           },
           options: config.build.tmpl.options || {}
-        },
+        }/*,
         reload: {
           port: 8001,
           proxy: {
             host: config.project.environment.host || "localhost",
             port: config.project.environment.port || 8090
           }
-        },
+        }*/,
         dox: {
           files: {
             src: ['<%= basepath %><%= app.build.js %>'],
@@ -313,6 +267,8 @@ module.exports = function(grunt) {
 
         }
       };
+
+
 
 
     }
@@ -363,9 +319,7 @@ module.exports = function(grunt) {
     }
 
   }
-
-
-
+  
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');

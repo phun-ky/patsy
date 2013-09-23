@@ -13,7 +13,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt": "~0.4.0",    
+    "grunt": "~0.4.0",
     "grunt-lib-legacyhelpers": "~0.1.1",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-qunit": "~0.2.2",
@@ -21,18 +21,20 @@
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-cli": "latest",    
+    "grunt-cli": "latest",
     "grunt-recess": "~0.4.0",
     "grunt-dox": "git://github.com/phun-ky/grunt-dox.git",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "grunt-mustache": "~0.1.4",
     "colors": "~0.6.0-1",
     "connect": "~2.7.1",
-    "node-static": "~0.6.5",        
-    "commander": "~1.1.1",    
+    "node-static": "~0.6.5",
+    "commander": "~1.1.1",
     "xtend": "~1.0.3",
     "jsonschema": "~0.3.2",
-    "http-proxy": "~0.8.7"    
+    "http-proxy": "~0.8.7",
+    "grunt-template-jasmine-requirejs": "~0.1.6",
+    "glob": "~3.2.6"
   },
   "devDependencies": {
     "grunt-cli": "latest",
