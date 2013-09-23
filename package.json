@@ -1,13 +1,13 @@
 {
   "name": "patsy",
-  "version": "0.1.4-beta",
+  "version": "0.2.0-beta",
   "description": "A CLI based build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
   "bugs": "https://github.com/phun-ky/patsy/issues",
   "preferGlobal": "true",
   "engines": {
-    "node": ">= 0.8.14"
+    "node": ">= 0.9.0"
   },
   "scripts": {
     "test": "grunt test"
@@ -17,7 +17,6 @@
     "grunt-lib-legacyhelpers": "~0.1.1",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-qunit": "~0.2.2",
-    "grunt-contrib-jasmine": "~0.5.1",
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-watch": "~0.5.3",
@@ -33,7 +32,6 @@
     "xtend": "~1.0.3",
     "jsonschema": "~0.3.2",
     "http-proxy": "~0.8.7",
-    "grunt-template-jasmine-requirejs": "~0.1.6",
     "glob": "~3.2.6"
   },
   "devDependencies": {
@@ -70,7 +68,6 @@
     "dox-foundation",
     "grunt",
     "qunit",
-    "jasmine",
     "nodeunit",
     "reload",
     "reloadr",
