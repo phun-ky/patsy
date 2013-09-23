@@ -115,7 +115,6 @@ exports.nodeunit = {
 
     _cfg = config.load();       
 
-
     test.ok(typeof _cfg === 'undefined' || typeof _cfg !== 'object', 'Configuration file should not be found here, remove config file from patsy directory!');
 
 
@@ -139,9 +138,9 @@ exports.nodeunit = {
       verbose: false
     });
 
-    _cfg = config.load(path.normalize(process.cwd() + '/test/inc/project_folder/'));
+    _cfg = config.load(path.normalize(process.cwd() + '/test/inc/project_folder/'));    
 
-    test.ok(typeof _cfg !== 'undefined', 'Configuration file should be loaded!');
+    test.ok(typeof _cfg !== 'undefined' || typeof _cfg === 'object', 'Configuration file should be loaded!');
 
     test.done();
   }
