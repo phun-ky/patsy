@@ -113,10 +113,10 @@ exports.nodeunit = {
       verbose: false
     });
 
-    _cfg = config.load();   
+    _cfg = config.load();       
 
 
-    test.ok(typeof _cfg === undefined || typeof _cfg !== 'object', 'Configuration file should not be found here, remove config file from patsy directory!');
+    test.ok(typeof _cfg === 'undefined' || typeof _cfg !== 'object', 'Configuration file should not be found here, remove config file from patsy directory!');
 
 
 
