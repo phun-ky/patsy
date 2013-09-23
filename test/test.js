@@ -13,6 +13,14 @@ var pjson         = require('../package.json');
 var defaultConfig = require('../patsy.default.json');
 var exampelConfig = require('../patsy.example.json');
 
+/**
+ * Require util plugin from node
+ *
+ * @var     Object
+ * @source  NodeJS
+ */
+var util          = require('util');
+
 var colors  = require('colors');
 var path    = require('path');
 
@@ -105,12 +113,10 @@ exports.nodeunit = {
       verbose: false
     });
 
-    _cfg = config.load();
+    _cfg = config.load();   
 
 
-
-
-    test.ok(typeof _cfg === 'undefined', 'Configuration file should not be found here, remove config file from patsy directory!');
+    test.ok(typeof _cfg === undefined || typeof _cfg !== 'object', 'Configuration file should not be found here, remove config file from patsy directory!');
 
 
 
