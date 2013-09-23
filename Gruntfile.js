@@ -281,6 +281,7 @@ module.exports = function(grunt) {
 
       grunt.log.writeln('Running grunt on patsy...');
       grunt.loadNpmTasks('grunt-contrib-nodeunit');
+      grunt.loadNpmTasks('grunt-release');
       patsy.gruntConfig = {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
