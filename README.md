@@ -4,7 +4,8 @@
 
 ## Why use patsy?
 
-Short excerpt here with link to  [Why Patsy?](https://github.com/phun-ky/patsy/wiki/Why-patsy).
+Short: It speeds up your developing with frontend stuff.
+Long: [Why Patsy?](https://github.com/phun-ky/patsy/wiki/Why-patsy).
 
 > "Get on with it!"
 
@@ -22,10 +23,10 @@ To install and use patsy, take a look in our [getting started guide](https://git
 4. Concatinates minified files into one single file
 5. Automagic documentation generation
 6. Baking of LESS to CSS
-7. Automated testing via Nodeunit ( support for Jasmine and Qunit aswell )
+7. Automated testing via Nodeunit ( support for Qunit aswell )
 8. Proxy support
 9. Static file server support
-10. Live content update when saving files
+10. Live content update when saving files (*)
 
 ### We want patsy to do this aswell in the future
 
@@ -53,7 +54,9 @@ if documentation is missing or incomplete, please submit an [issue][issues].
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
-09/02/2013: Beate released!
+23/09/2013: Removed jasmine testing support for the time beeing, fixed NodeJS v0.10* path.resolve issue
+
+09/02/2013: Beta released!
 
 21/01/2013: Made patsy ready for beta-release. Added support for proxy, static file server and live reload.
 
