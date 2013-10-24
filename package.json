@@ -1,6 +1,6 @@
 {
   "name": "patsy",
-  "version": "0.2.1-beta",
+  "version": "0.2.2-beta",
   "description": "A CLI based build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
@@ -31,7 +31,7 @@
     "commander": "~1.1.1",
     "xtend": "~1.0.3",
     "jsonschema": "~0.3.2",
-    "http-proxy": "~0.8.7",
+    "http-proxy": "~0.10.3",
     "glob": "~3.2.6"
   },
   "devDependencies": {

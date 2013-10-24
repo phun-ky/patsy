@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 
 
 
-      
+
 
       if(config.build.test.suites.nodeunit){
         testTasks.push('nodeunit');
@@ -163,8 +163,12 @@ module.exports = function(grunt) {
         }
       }
 
-      
 
+      if(typeof config.build.tmpl.dest !== 'undefined'){
+
+        config.build.tmpl.dest = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.dest);
+
+      }
 
       //grunt.loadNpmTasks('grunt-reload');
       //defaultTasks.push('reload');
@@ -198,14 +202,15 @@ module.exports = function(grunt) {
             tasks: watchTasks,
             options : {
               debounceDelay: 2000,
-              spawn : false
+              spawn : false,
+              livereload: true
             }
           }
         },
         // Tasks
         clean: {
           folder: '<%= basepath %><%= app.build.dist %>debug/*'
-        },        
+        },
         nodeunit : config.build.test.suites.nodeunit || {},
         qunit : config.build.test.suites.qunit || {},
         uglify : {
@@ -234,7 +239,7 @@ module.exports = function(grunt) {
         },
         mustache:{
           files: {
-            dest : '<%= basepath %><%= app.build.js %>templates.js',
+            dest : config.build.tmpl.dest || '<%= basepath %><%= app.build.js %>templates.js',
             src : ['<%= basepath %><%= app.build.tmpl.src %>']
           },
           options: config.build.tmpl.options || {}
@@ -320,7 +325,7 @@ module.exports = function(grunt) {
     }
 
   }
-  
+
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
