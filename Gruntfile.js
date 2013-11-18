@@ -92,7 +92,7 @@ module.exports = function(grunt) {
   var watchTasks = [];
 
 
-
+  console.log('projectPath: ', projectPath);
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
@@ -132,6 +132,10 @@ module.exports = function(grunt) {
 
         if(typeof config.build.test.suites.qunit.src !== 'undefined'){
           config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+        }
+
+        if(typeof config.build.test.suites.qunit.all !== 'undefined'){
+          config.build.test.suites.qunit.all = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.all);
         }
 
         grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -203,7 +207,7 @@ module.exports = function(grunt) {
             options : {
               debounceDelay: 2000,
               spawn : false,
-              livereload: true
+              livereload: config.project.options.reload_port || true
             }
           }
         },
@@ -211,6 +215,14 @@ module.exports = function(grunt) {
         clean: {
           folder: '<%= basepath %><%= app.build.dist %>debug/*'
         },
+        /*connect : {
+          server : {
+            options: {
+              port: 8421,
+              base: '.'
+            }
+          }
+        },*/
         nodeunit : config.build.test.suites.nodeunit || {},
         qunit : config.build.test.suites.qunit || {},
         uglify : {
@@ -331,6 +343,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
+  // grunt.loadNpmTasks('grunt-contrib-connect');
+
   grunt.loadNpmTasks('grunt-dox');
   grunt.loadNpmTasks('grunt-mustache');
 
@@ -346,6 +360,9 @@ module.exports = function(grunt) {
   grunt.registerTask('default', defaultTasks);
 
   if(testTasks.length !== 0){
+
+    // testTasks.unshift('connect');
+
     grunt.registerTask('test', testTasks);
     grunt.registerTask('all', ['jshint','mustache', 'uglify','recess'].concat(testTasks));
   } else {

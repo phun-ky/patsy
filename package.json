@@ -32,7 +32,8 @@
     "xtend": "~1.0.3",
     "jsonschema": "~0.3.2",
     "http-proxy": "~0.10.3",
-    "glob": "~3.2.6"
+    "glob": "~3.2.6",
+    "grunt-contrib-connect": "~0.5.0"
   },
   "devDependencies": {
     "grunt-cli": "latest",
