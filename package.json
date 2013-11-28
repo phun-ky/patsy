@@ -24,7 +24,7 @@
     "grunt-recess": "~0.4.0",
     "grunt-dox": "git://github.com/phun-ky/grunt-dox.git",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-mustache": "~0.1.5",
+    "grunt-mustache": "~0.1.6",
     "colors": "~0.6.0-1",
     "connect": "~2.7.1",
     "node-static": "~0.6.5",
