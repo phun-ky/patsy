@@ -134,8 +134,16 @@ module.exports = function(grunt) {
           config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
         }
 
-        if(typeof config.build.test.suites.qunit.all !== 'undefined'){
-          config.build.test.suites.qunit.all = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.all);
+        if( typeof config.build.test.suites.qunit.all !== 'undefined' ){
+
+          if(typeof config.build.test.suites.qunit.all.options !== 'undefined'){
+
+          } else {
+
+            config.build.test.suites.qunit.all = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.all);
+
+          }
+
         }
 
         grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -174,6 +182,12 @@ module.exports = function(grunt) {
 
       }
 
+      if(typeof config.build.tmpl.src !== 'undefined'){
+
+        config.build.tmpl.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.src);
+
+      }
+
       //grunt.loadNpmTasks('grunt-reload');
       //defaultTasks.push('reload');
 
@@ -200,9 +214,8 @@ module.exports = function(grunt) {
           scripts : {
             files : [
               '<%= basepath %><%= app.build.js %>**/*.js',
-              '<%= basepath %><%= app.build.tmpl.src %>*.mustache',
               '!node_modules/**/*.js'
-            ].concat(config.build.css.src),
+            ].concat(config.build.css.src,config.build.tmpl.src),
             tasks: watchTasks,
             options : {
               debounceDelay: 2000,
@@ -252,7 +265,7 @@ module.exports = function(grunt) {
         mustache:{
           files: {
             dest : config.build.tmpl.dest || '<%= basepath %><%= app.build.js %>templates.js',
-            src : ['<%= basepath %><%= app.build.tmpl.src %>']
+            src : config.build.tmpl.src || ['<%= basepath %><%= app.build.tmpl.src %>']
           },
           options: config.build.tmpl.options || {}
         }/*,

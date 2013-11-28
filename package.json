@@ -1,6 +1,6 @@
 {
   "name": "patsy",
-  "version": "0.2.3-beta",
+  "version": "0.2.4-beta",
   "description": "A CLI based build system for frontend developers",
   "main": "patsy",
   "homepage": "https://github.com/phun-ky/patsy",
@@ -24,7 +24,7 @@
     "grunt-recess": "~0.4.0",
     "grunt-dox": "git://github.com/phun-ky/grunt-dox.git",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-mustache": "~0.1.4",
+    "grunt-mustache": "~0.1.5",
     "colors": "~0.6.0-1",
     "connect": "~2.7.1",
     "node-static": "~0.6.5",
