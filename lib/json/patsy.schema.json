@@ -51,7 +51,7 @@
       "type" : "object",
       "properties" : {
         "js": {
-          "type" : "string"
+          "type" : ["string", "array"]
         },
         "min": {
           "type" : "object"

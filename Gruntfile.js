@@ -114,7 +114,19 @@ module.exports = function(grunt) {
       config = patsy.config.load(projectPath);
 
 
+      if(config.build.js){
 
+        if(typeof config.build.js === 'string'){
+
+          config.build.js = [config.build.js + '**/*.js'];
+
+        }
+
+        config.build.js = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.js);
+
+
+
+      }
 
 
       if(config.build.test.suites.nodeunit){
@@ -207,15 +219,12 @@ module.exports = function(grunt) {
           '<%= app.project.details.name ? "for " + app.project.details.name + "" : "" %>' +
           '\n *\n' +
           ' * @version v<%= pkg.version %> \n' +
-          ' * @date <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+          ' * @date <%= grunt.template.today("yyyy-mm-dd h:MM:ss TT") %>\n' +
           '<%= pkg.homepage ? " * @link " + pkg.homepage + "\\n" : "" %> */\n',
         // Watch tasks
         watch: {
           scripts : {
-            files : [
-              '<%= basepath %><%= app.build.js %>**/*.js',
-              '!node_modules/**/*.js'
-            ].concat(config.build.css.src,config.build.tmpl.src),
+            files : config.build.js.concat(config.build.css.src,config.build.tmpl.src),
             tasks: watchTasks,
             options : {
               debounceDelay: 2000,
@@ -241,7 +250,7 @@ module.exports = function(grunt) {
         uglify : {
           project : {
             files : {
-              '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : [ '<%= basepath %><%= app.build.js %>**/*.js','<%= basepath %><%= app.build.js %>*.js']
+              '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : config.build.js
             }
           },
           options: config.build.min.options || {
@@ -255,17 +264,12 @@ module.exports = function(grunt) {
             white : false,
             passfail: true
           },
-          src: config.build.lint.src || [
-            '<%= basepath %><%= app.build.js %>**/*.js',
-            '!<%= basepath %><%= app.build.js %>templates.js',
-            '!<%= basepath %><%= app.build.dist %>**/*.js',
-            '!node_modules/**/*.js'
-          ]
+          src: config.build.lint.src || config.build.js
         },
         mustache:{
           files: {
-            dest : config.build.tmpl.dest || '<%= basepath %><%= app.build.js %>templates.js',
-            src : config.build.tmpl.src || ['<%= basepath %><%= app.build.tmpl.src %>']
+            dest : config.build.tmpl.dest || '<%= basepath %>templates.js',
+            src : config.build.tmpl.src || ['<%= basepath %>/**/*.mustache']
           },
           options: config.build.tmpl.options || {}
         }/*,
@@ -276,13 +280,6 @@ module.exports = function(grunt) {
             port: config.project.environment.port || 8090
           }
         }*/,
-        dox: {
-          files: {
-            src: ['<%= basepath %><%= app.build.js %>'],
-            dest: '<%= basepath %><%= app.build.docs.dest %>'
-          },
-          options: config.build.docs.options || {}
-        },
         recess: {
           dist: {
             src: config.build.css.src || [
