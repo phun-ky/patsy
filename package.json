@@ -17,7 +17,7 @@
     "grunt-lib-legacyhelpers": "~0.1.1",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-qunit": "~0.2.2",
-    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-cli": "latest",
