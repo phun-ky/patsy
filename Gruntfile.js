@@ -72,6 +72,13 @@ var config;
 var testTasks = [];
 
 /**
+ * Varholder for tasks to run
+ *
+ * @var     Array
+ */
+var tasksToRun = [];
+
+/**
  * Require xtend plugin for deep object extending
  *
  * @var     Object
@@ -165,14 +172,6 @@ module.exports = function(grunt) {
         config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
 
-      if(config.build.css.src){
-
-
-          config.build.css.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.css.src);
-
-
-      }
-
       if(config.build.min.options){
         config.build.min.options = xtend(config.build.min.options,{
           banner: '<%= banner %>'
@@ -187,28 +186,76 @@ module.exports = function(grunt) {
         }
       }
 
+      patsy.gruntConfig = {};
 
-      if(typeof config.build.tmpl.dest !== 'undefined'){
+      tasksToRun.push('jshint');
+      tasksToRun.push('uglify');
 
-        config.build.tmpl.dest = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.dest);
+
+      if(typeof config.build.css !== 'undefined'){
+
+        if(config.build.css.src){
+
+          config.build.css.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.css.src);
+
+        }
+
+        patsy.gruntConfig = xtend(patsy.gruntConfig,{
+          recess: {
+            dist: {
+              src: config.build.css.src || [
+                '<%= basepath %><%= app.build.css.src %>**/*.css',
+                '<%= basepath %><%= app.build.css.src %>**/*.less'
+              ],
+              dest: '<%= basepath %><%= app.build.css.dest %>',
+              options: config.build.css.options || { compile: true }
+            }
+          }
+        });
+
+        tasksToRun.push('recess');
+        grunt.loadNpmTasks('grunt-recess');
 
       }
 
-      if(typeof config.build.tmpl.src !== 'undefined'){
+      if(typeof config.build.tmpl !== 'undefined'){
 
-        config.build.tmpl.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.src);
+        if(typeof config.build.tmpl.dest !== 'undefined'){
+
+          config.build.tmpl.dest = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.dest);
+
+        }
+
+        if(typeof config.build.tmpl.src !== 'undefined'){
+
+          config.build.tmpl.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.tmpl.src);
+
+        }
+
+        patsy.gruntConfig = xtend(patsy.gruntConfig,{
+          mustache:{
+            files: {
+              dest : config.build.tmpl.dest || '<%= basepath %>templates.js',
+              src : config.build.tmpl.src || ['<%= basepath %>/**/*.mustache']
+            },
+            options: config.build.tmpl.options || {}
+          }
+        });
+
+        tasksToRun.push('mustache');
+        grunt.loadNpmTasks('grunt-mustache');
 
       }
 
       //grunt.loadNpmTasks('grunt-reload');
       //defaultTasks.push('reload');
 
-      watchTasks = watchTasks.concat(['jshint','mustache', 'uglify','recess']);
+      watchTasks = watchTasks.concat(tasksToRun);
       if(testTasks.length !== 0 && config.build.options.testsOnWatch){
         watchTasks = watchTasks.concat(testTasks);
       }
 
-      patsy.gruntConfig = {
+      patsy.gruntConfig = xtend(patsy.gruntConfig, {
         // Read patsys configuration file into pkg
         pkg: grunt.file.readJSON('package.json'),
         // Read the projects configuration file into app
@@ -224,7 +271,7 @@ module.exports = function(grunt) {
         // Watch tasks
         watch: {
           scripts : {
-            files : config.build.js.concat(config.build.css.src,config.build.tmpl.src),
+            files : config.build.js.concat(config.build.css ? config.build.css.src : [],config.build.tmpl ? config.build.tmpl.src : []),
             tasks: watchTasks,
             options : {
               debounceDelay: 2000,
@@ -266,35 +313,18 @@ module.exports = function(grunt) {
           },
           src: config.build.lint.src || config.build.js
         },
-        mustache:{
-          files: {
-            dest : config.build.tmpl.dest || '<%= basepath %>templates.js',
-            src : config.build.tmpl.src || ['<%= basepath %>/**/*.mustache']
-          },
-          options: config.build.tmpl.options || {}
-        }/*,
+        /*
         reload: {
           port: 8001,
           proxy: {
             host: config.project.environment.host || "localhost",
             port: config.project.environment.port || 8090
           }
-        }*/,
-        recess: {
-          dist: {
-            src: config.build.css.src || [
-              '<%= basepath %><%= app.build.css.src %>**/*.css',
-              '<%= basepath %><%= app.build.css.src %>**/*.less'
-            ],
-            dest: '<%= basepath %><%= app.build.css.dest %>',
-            options: config.build.css.options || { compile: true }
-          }
-        },
+        },*/
         globals: {
 
         }
-      };
-
+      });
 
 
 
@@ -356,9 +386,9 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.loadNpmTasks('grunt-dox');
-  grunt.loadNpmTasks('grunt-mustache');
 
-  grunt.loadNpmTasks('grunt-recess');
+
+
 
 
 
@@ -374,9 +404,9 @@ module.exports = function(grunt) {
     // testTasks.unshift('connect');
 
     grunt.registerTask('test', testTasks);
-    grunt.registerTask('all', ['jshint','mustache', 'uglify','recess'].concat(testTasks));
+    grunt.registerTask('all', tasksToRun.concat(testTasks));
   } else {
-    grunt.registerTask('all', ['jshint','mustache', 'uglify','recess']);
+    grunt.registerTask('all', tasksToRun);
   }
 
 
