@@ -98,8 +98,6 @@ module.exports = function(grunt) {
   var defaultTasks = [];
   var watchTasks = [];
 
-
-  console.log('projectPath: ', projectPath);
   // Do we have a projectPath defined
   if(typeof projectPath !== 'undefined'){
 
@@ -172,25 +170,43 @@ module.exports = function(grunt) {
         config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
 
-      if(config.build.min.options){
-        config.build.min.options = xtend(config.build.min.options,{
-          banner: '<%= banner %>'
-        });
-
-
-
-        if(config.build.min.options.sourceMap){
-
-          config.build.min.options.sourceMap = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.min.options.sourceMap);
-
-        }
-      }
-
       patsy.gruntConfig = {};
 
       tasksToRun.push('jshint');
-      tasksToRun.push('uglify');
 
+      if(typeof config.build.min !== 'undefined'){
+
+        patsy.gruntConfig = extend(patsy.gruntConfig,{
+          uglify : {
+            project : {
+              files : {
+                '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : config.build.js
+              }
+            },
+            options: config.build.min.options || {
+              banner: '<%= banner %>',
+              report : false
+            }
+          }
+        });
+
+        tasksToRun.push('uglify');
+
+        if(config.build.min.options){
+
+          config.build.min.options = xtend(config.build.min.options,{
+            banner: '<%= banner %>'
+          });
+
+          if(config.build.min.options.sourceMap){
+
+            config.build.min.options.sourceMap = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.min.options.sourceMap);
+
+          }
+
+        }
+
+      }
 
       if(typeof config.build.css !== 'undefined'){
 
@@ -294,17 +310,6 @@ module.exports = function(grunt) {
         },*/
         nodeunit : config.build.test.suites.nodeunit || {},
         qunit : config.build.test.suites.qunit || {},
-        uglify : {
-          project : {
-            files : {
-              '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : config.build.js
-            }
-          },
-          options: config.build.min.options || {
-            banner: '<%= banner %>',
-            report : false
-          }
-        },
         jshint : {
           options : config.build.lint.options || {
             indent : 2,
