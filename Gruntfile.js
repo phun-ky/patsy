@@ -176,7 +176,7 @@ module.exports = function(grunt) {
 
       if(typeof config.build.min !== 'undefined'){
 
-        patsy.gruntConfig = extend(patsy.gruntConfig,{
+        patsy.gruntConfig = xtend(patsy.gruntConfig,{
           uglify : {
             project : {
               files : {
