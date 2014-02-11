@@ -116,7 +116,7 @@ module.exports = function(grunt) {
       // Set config from patsy.json
       // Until we can access objects from inside grunt.initConfig with templating,
       // we've to load the file into another variable
-      config = patsy.config.load(projectPath);
+      config = patsy.config.load(patsy, projectPath);
 
 
       if(config.build.js){
