@@ -96,32 +96,6 @@ exports.nodeunit = {
 
     test.done();
   },
-  check_load_config_fails: function(test){
-
-    test.expect(1);
-
-    var _cfg;
-
-
-    /**
-     * Require config from the library
-     *
-     * @var     Object
-     * @source  patsy
-     */
-    var config      = require('../lib/config')({
-      verbose: false
-    });
-
-    _cfg = config.load();       
-
-    test.ok(typeof _cfg === 'undefined' || typeof _cfg !== 'object', 'Configuration file should not be found here, remove config file from patsy directory!');
-
-
-
-    test.done();
-
-  },
   test_project_load_config: function(test){
     // We've created a "test" project within this test folder to make sure patsy would operate as normal on a new project
 
@@ -138,7 +112,7 @@ exports.nodeunit = {
       verbose: false
     });
 
-    _cfg = config.load(path.normalize(process.cwd() + '/test/inc/project_folder/'));    
+    _cfg = config.load(patsy, path.normalize(process.cwd() + '/test/inc/project_folder/'));
 
     test.ok(typeof _cfg !== 'undefined' || typeof _cfg === 'object', 'Configuration file should be loaded!');
 
