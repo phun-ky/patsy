@@ -133,44 +133,55 @@ module.exports = function(grunt) {
 
       }
 
+      patsy.gruntConfig = {};
 
-      if(config.build.test.suites.nodeunit){
-        testTasks.push('nodeunit');
-        grunt.loadNpmTasks('grunt-contrib-nodeunit');
+      if(typeof config.build.test !== 'undefined'){
+
+        if(config.build.test.suites.nodeunit){
+          testTasks.push('nodeunit');
+          grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
 
-        config.build.test.suites.nodeunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.nodeunit.src);
+          config.build.test.suites.nodeunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.nodeunit.src);
+
+          patsy.gruntConfig = xtend(patsy.gruntConfig,{
+            nodeunit : config.build.test.suites.nodeunit || {}
+          });
 
 
-      }
-
-      if(config.build.test.suites.qunit){
-        testTasks.push('qunit');
-
-        if(typeof config.build.test.suites.qunit.src !== 'undefined'){
-          config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
         }
 
-        if( typeof config.build.test.suites.qunit.all !== 'undefined' ){
+        if(config.build.test.suites.qunit){
+          testTasks.push('qunit');
 
-          if(typeof config.build.test.suites.qunit.all.options !== 'undefined'){
+          if(typeof config.build.test.suites.qunit.src !== 'undefined'){
+            config.build.test.suites.qunit.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.src);
+          }
 
-          } else {
+          if( typeof config.build.test.suites.qunit.all !== 'undefined' ){
 
-            config.build.test.suites.qunit.all = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.all);
+            if(typeof config.build.test.suites.qunit.all.options !== 'undefined'){
+
+            } else {
+
+              config.build.test.suites.qunit.all = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.test.suites.qunit.all);
+
+            }
 
           }
 
+          patsy.gruntConfig = xtend(patsy.gruntConfig,{
+            qunit : config.build.test.suites.qunit || {}
+          });
+
+          grunt.loadNpmTasks('grunt-contrib-qunit');
         }
 
-        grunt.loadNpmTasks('grunt-contrib-qunit');
       }
 
       if(config.build.lint.src){
         config.build.lint.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.lint.src);
       }
-
-      patsy.gruntConfig = {};
 
       tasksToRun.push('jshint');
 
@@ -198,7 +209,10 @@ module.exports = function(grunt) {
             banner: '<%= banner %>'
           });
 
-          if(config.build.min.options.sourceMap){
+          if(
+            config.build.min.options.sourceMap &&
+            typeof config.build.min.options.sourceMap !== "boolean"
+          ){
 
             config.build.min.options.sourceMap = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.min.options.sourceMap);
 
@@ -308,8 +322,7 @@ module.exports = function(grunt) {
             }
           }
         },*/
-        nodeunit : config.build.test.suites.nodeunit || {},
-        qunit : config.build.test.suites.qunit || {},
+
         jshint : {
           options : config.build.lint.options || {
             indent : 2,
