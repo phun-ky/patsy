@@ -187,22 +187,6 @@ module.exports = function(grunt) {
 
       if(typeof config.build.min !== 'undefined'){
 
-        patsy.gruntConfig = xtend(patsy.gruntConfig,{
-          uglify : {
-            project : {
-              files : {
-                '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : config.build.js
-              }
-            },
-            options: config.build.min.options || {
-              banner: '<%= banner %>',
-              report : false
-            }
-          }
-        });
-
-        tasksToRun.push('uglify');
-
         if(config.build.min.options){
 
           config.build.min.options = xtend(config.build.min.options,{
@@ -219,6 +203,22 @@ module.exports = function(grunt) {
           }
 
         }
+
+        patsy.gruntConfig = xtend(patsy.gruntConfig,{
+          uglify : {
+            project : {
+              files : {
+                '<%= basepath %><%= app.build.dist ? app.build.dist + app.project.details.name + ".core.js" : app.build.min.dest %>' : config.build.js
+              }
+            },
+            options: config.build.min.options || {
+              banner: '<%= banner %>',
+              report : false
+            }
+          }
+        });
+
+        tasksToRun.push('uglify');
 
       }
 
@@ -245,6 +245,26 @@ module.exports = function(grunt) {
 
         tasksToRun.push('recess');
         grunt.loadNpmTasks('grunt-recess');
+
+      }
+
+      if(typeof config.build.docs !== 'undefined'){
+
+        if(typeof config.build.docs.files.src !== 'undefined'){
+
+          config.build.docs.files.src = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.docs.files.src);
+
+          config.build.docs.files.dest = config.build.docs.files.dest || 'docs/';
+          config.build.docs.files.dest = patsy.updateRelativePaths(config.project.environment.rel_path, config.build.docs.files.dest);
+
+          patsy.gruntConfig = xtend(patsy.gruntConfig,{
+            dox : config.build.docs
+          });
+
+          tasksToRun.push('dox');
+          grunt.loadNpmTasks('grunt-dox');
+
+        }
 
       }
 
@@ -276,9 +296,6 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-mustache');
 
       }
-
-      //grunt.loadNpmTasks('grunt-reload');
-      //defaultTasks.push('reload');
 
       watchTasks = watchTasks.concat(tasksToRun);
       if(testTasks.length !== 0 && config.build.options.testsOnWatch){
@@ -403,7 +420,7 @@ module.exports = function(grunt) {
 
   // grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.loadNpmTasks('grunt-dox');
+
 
 
 
