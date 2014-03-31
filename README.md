@@ -1,4 +1,8 @@
-# patsy [![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
+# patsy
+
+[![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
+[![Dependency Status](https://gemnasium.com/phun-ky/patsy.png)](https://gemnasium.com/phun-ky/patsy)
+[![NPM version](https://badge.fury.io/js/patsy.png)](http://badge.fury.io/js/patsy)
 
 > A staging and build environment for frontend web developers.
 
