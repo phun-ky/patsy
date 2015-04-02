@@ -1,3 +1,8 @@
+# Deprecated
+
+> Due to Grunt version > 0.4* and above with new plugins providing the needed features, this application is deprecated and no longer maintained.
+If you want to develop this further, please contact the author.
+
 # patsy
 
 [![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
