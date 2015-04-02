@@ -5,6 +5,7 @@ If you want to develop this further, please contact the author.
 
 # patsy
 
+[![deprecated](http://hughsk.github.io/stability-badges/dist/deprecated.svg)](http://github.com/hughsk/stability-badges)
 [![Build Status](https://travis-ci.org/phun-ky/patsy.png)](https://travis-ci.org/phun-ky/patsy)
 [![Dependency Status](https://gemnasium.com/phun-ky/patsy.png)](https://gemnasium.com/phun-ky/patsy)
 [![NPM version](https://badge.fury.io/js/patsy.png)](http://badge.fury.io/js/patsy)
